@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <title><?php echo $shop_info['title']; ?></title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <style media=print type="text/css"> .noprint{visibility:hidden}</style>
+  <style type="text/css">
+  body{ color:#000; font-family:Tahoma, Geneva, sans-serif; font-size:8px;} 
+
+  .tabelclass{font-size:12px;border-top:#000 solid 1px;border-left:#000 solid 1px;}
+  .tabelclass2{font-size:12px;}
+  .tabelclass td{border-right:#000 solid 1px;border-bottom:#000 solid 1px; padding-left:5px; height:10px;}   
+  </style>  
+  <script src="__PUBLIC__/js/jquery-1.9.1.min.js"></script>
+  <script src="__PUBLIC__/js/jquery.jqprint.js"></script>
+  <script type="text/javascript">
+  $(function(){
+    window.print();
+  })
+  </script>
+</head>
+
+<body>
+  <br />
+  <!-- <br /> -->
+  <div style="float:right;"><strong>O/N</strong>:<?php echo $order_info['order_sn']; ?></div>
+  <div style="clear:both;"></div>
+  <br />
+  <!-- <br /> -->
+  <div><div style="float:left;"><strong>O/N:Head office Tel:</strong>0723-737272<br>(Hilton Hotel bldg)</div><div style="float:left; padding-left:15%; font-size:13px;"><strong>ONLINE ORDER <!-- {$cash_info['receipt_no']} --></strong></div></div>
+<div style="clear:both;"></div> 
+<table border="0" cellspacing="0" cellpadding="0" width="100%" class="tabelclass2">
+    <tr>
+    <td width="33%"><strong>Branch</strong>:<?php echo $shop_info['title'];?><br>
+      <strong>Branch Tel</strong>:<?php echo $shop_info['tel'];?><br>
+      <strong>Card NO.</strong>:<?php echo $distance_info['cardno']?></td>
+    <td width="33%"><strong>Stock Source:</strong>central warehouse<br />
+      <strong>Date:</strong><?php echo date('Y-m-d H:i:s',$order_info['add_time']);?><br />
+      <strong>P.O.BOX:</strong></td>  </tr></table>
+<!-- <br />    -->                                     
+<table border="0" cellspacing="0" cellpadding="0" width="100%" class="tabelclass2">
+<tr>
+<td style="font-size:10px;"><strong>Payment method</strong>: Cash<?php if($receiptno['payment_method']=="cash"){echo '☑';}else{echo '□';}?>   M-Pesa<?php if($receiptno['payment_method']=="m-pesa"){echo '☑';}else{echo '□';}?>    Cheque<?php if($receiptno['payment_method']=="cheque"){echo '☑';}else{echo '□';}?>  Card<?php if($receiptno['payment_method']=="card"){echo '☑';}else{echo '□';}?>   Insurance<?php if($receiptno['payment_method']=="insurance_1" || $receiptno['payment_method']=="insurance_0"){echo '☑';}else{echo '□';}?><span style="border-bottom:1px solid #000; padding-left:5px; padding-right:5px; min-width:50px;"><?php if($receiptno['payment_method']=="insurance_1" || $receiptno['payment_method']=="insurance_0"){echo $receiptno['insurancetext'];}else{echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';}?></span></td></tr></table> 
+  <table border="0" cellspacing="0" cellpadding="0" class="tabelclass">
+    <tr>
+      <td style="width:30%"><strong>Name: </strong><?php echo $order_info['consignee'];?></td>
+      <td style="width:15%"><strong>Gender: </strong><?php echo $user_info['gender'];?></td>
+      <td style="width:10%"><strong>Age: </strong><?php if($user_info['age'] < 80) echo $user_info['age'];?></td>
+      <td style="width:15%"><strong>Tel: </strong><?php echo $user_info['c_mobile']; ?></td>
+      <td style="width:20%"><strong>Address: </strong><?php echo $user_info['c_address'];?></td>
+      <td style="width:30%"><strong>Email: </strong><?php echo $user_info['c_email']; ?></td>
+    </tr>
+  </table>    
+  <table border="0" cellspacing="0" cellpadding="0" width="100%" class="tabelclass" style="margin-bottom:10px;">
+    <tr>
+      <td><strong> Frame / Accessory </strong></td>
+      <td style="width:25%"><strong>Price</strong></td>
+      <td><strong>Lens</strong></td>
+      <td><strong>Price</strong></td>
+    </tr>
+    <foreach name="order_goods_lists" item="vo">  
+    <tr>
+      <td>{:getBrandNameById($vo['goods_brand'])}, {$vo['goods_model_no']}, {$vo['goods_attr']}&nbsp;</td>
+      <td><?php echo $vo['goods_price']?>&nbsp;</td>
+      <td><?php echo $sealstxt_info['lensname']?></td>
+      <td><?php echo $lensprice;?>&nbsp;</td>
+    </tr>
+    </foreach>
+    <tr>
+      <td><strong>Total Amount</strong></td>
+      <td><strong>Deposit</strong></td>
+      <td><strong>Balance</strong></td>
+      <td><strong>Discount</strong></td>
+    </tr>
+    <tr>
+      <td>&nbsp; Ksh. {$total_price}</td>
+      <?php if($receiptno['payment_price']!=0): ?>
+                    
+      <td><p>Kshs.{$receiptno['payment_price']}</td>   
+      <td><p>Kshs.{$initial_balance}</p></td>
+
+      <?php elseif($receiptno['payment_price']==0): ?>
+      <td>Insurance</td>
+      <td>N/A</td>
+      <?php endif; ?>
+      <td>{$discountseals}</td>
+    </tr>
+  <table border="0" cellspacing="0" cellpadding="0" width="100%" class="tabelclass" style="margin-bottom:5px;font-size:8px;">
+  <tr>
+    <td width="115" colspan="2" valign="middle"><p>&nbsp;</p></td>
+    <td width="71" valign="middle"><p align="center"><strong>SPH</strong></p></td>
+    <td width="68" valign="middle"><p align="center"><strong>CYL</strong></p></td>
+    <td width="74" valign="middle"><p align="center"><strong>AXIS</strong></p></td>
+    <td width="71" valign="middle"><p align="center"><strong>PRISM</strong></p></td>
+    <td width="64" valign="middle"><p align="center"><strong>BASE</strong></p></td>
+    <td width="78" valign="middle"><p align="center"><strong>O.VISON</strong></p></td>
+    <td width="68" valign="middle"><p align="center"><strong>VISION</strong></p></td>
+    <td width="79" valign="middle"><p align="center"><strong>ADD</strong></p></td>
+    <td width="44" valign="middle"><p align="center"><strong>PD</strong></p></td>
+  </tr>
+  <tr>
+    <td width="87" rowspan="2" valign="middle"><p align="center"><strong>DISTANCE</strong></p></td>
+    <td width="28" align="center" valign="middle"><p><strong>R</strong></p></td>
+    <td width="71" align="center" valign="middle"><p>&nbsp;<?php echo $distance_info['sph_right']?></p></td>
+    <td width="68" align="center" valign="middle"><p>&nbsp;<?php echo $distance_info['cyl_right']?></p></td>
+    <td width="74" align="center" valign="middle"><p>&nbsp;<?php echo $distance_info['axis_right']?></p></td>
+    <td width="71" align="center" valign="middle"><p>&nbsp;<?php echo $distance_info['prism_right']?></p></td>
+    <td width="64" align="center" valign="middle"><p>&nbsp;<?php echo $distance_info['base_right']?></p></td>
+    <td width="78" align="center" valign="middle"><p>&nbsp;<?php echo $distance_info['ovision_right']?></p></td>
+    <td width="68" align="center" valign="middle"><p>&nbsp;<?php echo $distance_info['vision_right']?></p></td>
+    <td width="79" align="center" valign="middle"><p>&nbsp;<?php echo $distance_info['add_right']?></p></td>
+    <td width="44" rowspan="2" align="center" valign="middle"><p>&nbsp;<?php echo $distance_info['pd_right']?></p></td>
+  </tr>
+  <tr>
+    <td width="28" align="center" valign="middle"><p><strong>L</strong></p></td>
+    <td width="71" align="center" valign="middle"><p>&nbsp;<?php echo $distance_info['sph_left']?></p></td>
+    <td width="68" align="center" valign="middle"><p>&nbsp;<?php echo $distance_info['cyl_left']?></p></td>
+    <td width="74" align="center" valign="middle"><p>&nbsp;<?php echo $distance_info['axis_left']?></p></td>
+    <td width="71" align="center" valign="middle"><p>&nbsp;<?php echo $distance_info['prism_left']?></p></td>
+    <td width="64" align="center" valign="middle"><p>&nbsp;<?php echo $distance_info['base_left']?></p></td>
+    <td width="78" align="center" valign="middle"><p>&nbsp;<?php echo $distance_info['ovision_left']?></p></td>
+    <td width="68" align="center" valign="middle"><p>&nbsp;<?php echo $distance_info['vision_left']?></p></td>
+    <td width="79" align="center" valign="middle"><p>&nbsp;<?php echo $distance_info['add_left']?></p></td>
+  </tr>
+</table>
+
+<table border="0" cellspacing="0" cellpadding="0" width="100%" class="tabelclass2">
+<tr>
+<td width="15%"><strong style="font-size:8px;">Special Marks:</strong></td><td  width="85%" style="border-bottom:1px solid #000;"><?php echo $sealstxt_info['special_marks'];?>&nbsp;</td></tr></table><br />
+<strong>Cashier</strong>:
+<?php echo $receiptno['cashier']?>                               <strong>Sales Person</strong>:
+<?php echo $receiptno['sales_person']?>                        <strong>Optometrist</strong>:
+<?php echo $receiptno['optometrist']?></p>
+</body>
+</html>

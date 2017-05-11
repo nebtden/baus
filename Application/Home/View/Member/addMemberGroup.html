@@ -1,0 +1,98 @@
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+	<title>Baus Optical</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<style type="text/css" media="all">
+		@import url(__PUBLIC__/css/style.css);
+		img {behavior:url('__PUBLIC__/js/iepngfix.htc') !important;}
+	</style>	
+	<script src="__PUBLIC__/js/jquery.js" type="text/javascript"></script>
+	<script src="__PUBLIC__/js/jquery_ui.js" type="text/javascript"></script>
+	<script src="__PUBLIC__/js/wysiwyg.js" type="text/javascript"></script>
+	<script src="__PUBLIC__/js/functions.js" type="text/javascript"></script>
+
+</head>
+<body>
+<div id="container"> <!-- Container -->
+	<include file="Public:sidebar" />
+	<div id="main"> <!-- Main, right side content -->
+		<div id="content"> <!-- Content begins here -->
+				
+				<form method="post" action="{:U('Member/saveMemberGroup')}" name="formd"><!-- Form -->
+				<!-- Fieldset -->
+				<fieldset><legend><h2>Add New Member Group</h2></legend>
+					
+					<div class="input_field">
+						<label for="group_name" style="width:150px;">Member Group Name: </label>
+ 						<input class="mediumfield" name="group_name"  id="group_name" type="text" value="" />
+					</div>
+                    <div class="input_field">
+						<label for="manager"  style="width:150px;">manager: </label>
+ 						<input name="manager" id="manager" type="checkbox" value="1" style="margin-top:10px"/>
+					</div>
+                    <div class="input_field">
+						<label for="seller"  style="width:150px;">seller: </label>
+ 						<input name="seller" id="seller" type="checkbox" value="1" style="margin-top:10px"/>
+					</div>
+                    <div class="input_field">
+						<label for="doctor"  style="width:150px;">doctor: </label>
+ 						<input name="doctor" id="doctor" type="checkbox" value="1" style="margin-top:10px"/>
+					</div>
+                    <div class="input_field">
+						<label for="cashier"  style="width:150px;">cashier: </label>
+ 						<input name="cashier" id="cashier" type="checkbox" value="1" style="margin-top:10px"/>
+					</div>
+                    <div class="input_field">
+						<label for="warehouse"  style="width:150px;">warehouse: </label>
+ 						<input name="warehouse" id="warehouse" type="checkbox" value="1" style="margin-top:10px"/>
+					</div>
+                    <div class="input_field">
+						<label for="corporate"  style="width:150px;">corporate: </label>
+ 						<input name="corporate" id="corporate" type="checkbox" value="1" style="margin-top:10px"/>
+					</div>
+                    <div class="input_field">
+						<label for="quality"  style="width:150px;">quality: </label>
+ 						<input name="quality" id="quality" type="checkbox" value="1" style="margin-top:10px"/>
+					</div>
+                    <div class="input_field">
+						<label for="balance"  style="width:150px;">balance: </label>
+ 						<input name="balance" id="balance" type="checkbox" value="1" style="margin-top:10px"/>
+					</div>
+
+                    <div class="input_field">
+						<label for="cash_confirm"  style="width:150px;">cash confirm: </label>
+ 						<input name="cash_confirm" id="cash_confirm" type="checkbox" value="1" style="margin-top:10px"/>
+					</div>
+
+                    <div class="input_field">
+						<label for="customer_care"  style="width:150px;">customer care: </label>
+ 						<input name="customer_care" id="customer_care" type="checkbox" value="1" style="margin-top:10px"/>
+					</div>
+
+                    <div class="input_field">
+						<label for="goods_manager"  style="width:150px;">goods manager: </label>
+ 						<input name="goods_manager" id="goods_manager" type="checkbox" value="1" style="margin-top:10px"/>
+					</div>
+
+                    <div class="input_field no_margin_bottom" style="padding-left:150px;">
+						<input class="submit" type="submit" value="Submit" />
+					</div>
+                    
+				</fieldset>
+				<!-- End of fieldset -->
+			</form>       
+
+				<div class="clear"><!-- --></div>
+
+		</div> <!-- END Content -->
+
+	</div> 	
+		<div id="footer"> 
+			<p> All rights reserved.</p>
+		</div>		
+</div> <!-- END Container -->
+</body>
+</html>

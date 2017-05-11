@@ -1,0 +1,6 @@
+/.idea
+/Application/Runtime/Cache
+/Application/Runtime/Data
+/Application/Runtime/Temp
+/Application/Runtime/Logs
+/Application/Common/Conf/config.php

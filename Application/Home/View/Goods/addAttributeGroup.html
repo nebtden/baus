@@ -1,0 +1,54 @@
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+	<title>Baus Optical</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<style type="text/css" media="all">
+		@import url(__PUBLIC__/css/style.css);
+		img {behavior:url('__PUBLIC__/js/iepngfix.htc') !important;}
+	</style>	
+	<script src="__PUBLIC__/js/jquery.js" type="text/javascript"></script>
+	<script src="__PUBLIC__/js/jquery_ui.js" type="text/javascript"></script>
+	<script src="__PUBLIC__/js/wysiwyg.js" type="text/javascript"></script>
+	<script src="__PUBLIC__/js/functions.js" type="text/javascript"></script>
+
+</head>
+<body>
+<div id="container"> <!-- Container -->
+	<include file="Public:sidebar" />
+	<div id="main"> <!-- Main, right side content -->
+		<div id="content"> <!-- Content begins here -->
+				
+				<form method="post" action="{:U('Goods/saveAttributeGroup')}" name="formd"><!-- Form -->
+				<!-- Fieldset -->
+				<fieldset><legend><h2>Add New Attribute Group</h2></legend>
+
+					
+					<div class="input_field">
+						<label for="attr_group_name" style="width:150px;">Attribute Group Name: </label>
+ 						<input class="mediumfield" name="attr_group_name"  id="attr_group_name" type="text" value="" />
+					</div>
+
+
+                    <div class="input_field no_margin_bottom" style="padding-left:150px;">
+						<input class="submit" type="submit" value="Submit" />
+					</div>
+                    
+				</fieldset>
+				<!-- End of fieldset -->
+			</form>       
+
+				<div class="clear"><!-- --></div>
+
+		</div> <!-- END Content -->
+
+	</div> 	
+		<div id="footer"> 
+			<p> All rights reserved.</p>
+		</div>		
+</div> <!-- END Container -->
+
+</body>
+</html>

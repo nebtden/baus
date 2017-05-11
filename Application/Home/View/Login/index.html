@@ -1,0 +1,29 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Baus Optical</title>
+		<style type="text/css">/*<![CDATA[*/
+			@import "__PUBLIC__/css/login.css";
+		/*]]>*/</style>
+	</head>
+    <body>
+	<div id="container">
+		<h1><img src="__PUBLIC__/images/logo.gif"></h1>
+		<div id="box">
+			<form action="{:U('Login/checklogin')}" method="post">
+			<p class="main">
+				<label>Username: </label>
+				<input name="username" id="username" type="text"> 
+				<label>Password: </label>
+				<input type="password" name="password" id="password" value="">	
+			</p>
+			<p class="space">
+				<input type="hidden" name="stype" id="stype" value="adminlogin">
+				<input type="submit" value="Login" class="login">
+			</p>
+			</form>
+		</div>
+	</div>
+
+</body></html>

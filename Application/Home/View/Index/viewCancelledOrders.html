@@ -1,0 +1,134 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+	<title>Baus Optical</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<style type="text/css" media="all">
+		@import url(__PUBLIC__/css/style.css);
+		img {behavior:url('__PUBLIC__/js/iepngfix.htc') !important;}
+		.h1 a{ color:#333;}
+	</style>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/datatables/media/css/jquery.dataTables.min.css" />
+	<link rel="stylesheet" href="__PUBLIC__/css/jquery-ui.css">
+</head>
+<body>
+<div id="container"> <!-- Container -->
+<include file="Public:sidebar" />
+	<!-- END Sidebar -->
+	<!-- Main, right side content -->
+	<div id="main"> 
+		<div id="content"> 
+				<!-- Content begins here -->
+				<h2><?php if($_GET['order_step'] != ''){ echo "Pending List Order"; }else{ echo "All Order List"; } ?></h2>
+				<!-- 筛选框 s-->	
+                <table cellspacing="0" cellpadding="0" border="0"><!-- Table -->
+					<form name="formname" method="get" action="" id="search_form">
+						<tr>
+							<td width="10%"><input class="mediumfield" name="key_words" type="text" value="" /></td>
+							<?php if($_GET['order_step'] == 5){ ?><td width="20%"><input name="is_print" type="checkbox" value="1" id="is_print" <?php if($_GET['is_print'] == 1){ echo 'checked';} ?>/> show no printed only</td> <input type="hidden" name="order_step" value="<?php echo $_GET['order_step']; ?>"> <?php } ?>
+							<td  width="70%"><input class="submit" type="submit" value="Submit" /></td>
+						</tr>
+					</form>
+				</table>
+				<script type="text/javascript">
+				 // $(function(){
+				 // 	$('#is_print').change(function(){
+				 // 		$('#search_form').submit();
+				 // 	})
+				 // })
+				</script>
+				<!-- 筛选框 e-->
+				<table id="list_table">
+					<thead>
+						<tr>
+							<th>Order NO.</th>
+                            <th>Account with Order</th>
+							<th>Shop</th>
+							<th>Order Time</th>
+							<th>Cancelled By</th>
+                            <th>Shop</th>
+							<th>Cancel Time</th>
+							<th>Cancel Remark</th>
+							<th>Reverse Status</th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php foreach($cancelled_orders as $vo):
+							$cancel_details = unserialize($vo['cancel_remark']);
+						 ?>
+						<tr >
+							<td>{$vo.order_sn}</td>
+							<td><?php echo getMemberNameById($cancel_details['account_with_order']); ?></td>
+                            <td><?php echo getShopNameById($vo['shop']);?></td>
+							<td><?php echo date('j F Y, H:i:s',$vo['add_time'])?></td>
+							<td>{$cancel_details['cancelled_by']}</td>
+							<td><?php echo getShopNameById($cancel_details['shop_that_cancelled']);?></td>
+                            <td><?php echo date('j F Y, H:i:s',$cancel_details['cancel_time']);?></td> 
+							<td>{$cancel_details['cancel_remark']}</td>
+							<td>
+								<center>
+									<a href="{:U('Index/reverseCancelledOrder',array('order_id'=>$vo['order_id']))}">
+										<img src="__PUBLIC__/iconsee/Synchronize_Arrows-48.png" alt="edit" width="16"/>
+									</a>
+								</center>
+							</td>
+						</tr>
+						<?php endforeach; ?>
+					</tbody>
+				</table>
+				
+				<div class="clear"><!-- --></div>
+
+		</div> 
+		<div id="footer"> 
+			<p> All rights reserved.</p>
+		</div>		
+	</div>
+
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"   integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="   crossorigin="anonymous"></script>
+<script src="__PUBLIC__/js/jquery-ui.min.js" type="text/javascript"></script>
+ <script src="__PUBLIC__/js/wysiwyg.js" type="text/javascript"></script>
+<!-- <script src="__PUBLIC__/js/functions.js" type="text/javascript"></script>  -->
+<script src="__PUBLIC__/datatables/media/js/jquery.dataTables.min.js" type="text/javascript"></script>
+
+<script>
+
+	// $(function() {
+
+	// 	$("#cancel-modal").dialog({
+	// 	      autoOpen: false,
+	// 		  height:150,
+	// 	      modal: true,
+	// 	      buttons: {
+	// 	        "Yes": function() {
+	// 	          $('#cancel_form').submit();
+	// 	        },
+	// 	        No: function() {
+	// 	          $(this).dialog( "close" );
+	// 	        }
+	// 	      }
+
+	// 	})
+
+	// })
+
+	//    	$(".btn").click(function(){
+	//   		var order_id = $(this).attr('id');
+	//   		var order_sn = $(this).attr('order');
+	//   		$('#order_id').val(order_id);
+	//   		$('#info').html(order_sn);
+	//   		//console.log(order_id);
+	// 		$( "#cancel-modal" ).dialog( "open" );		
+ //  		})
+
+
+	$(document).ready(function() {
+
+    	$('#list_table').DataTable({
+    		"order": [[ 3, "desc" ]]
+    	});
+	 });
+</script>
+</body>
+</html>

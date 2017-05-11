@@ -1,0 +1,94 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+	<title>Baus Optical</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<style type="text/css" media="all">
+		@import url(__PUBLIC__/css/style.css);
+		img {behavior:url('__PUBLIC__/js/iepngfix.htc') !important;}
+		.h1 a{ color:#333;}
+	</style>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/datatables/media/css/jquery.dataTables.min.css" />
+</head>
+<body>
+<div id="container"> <!-- Container -->
+<include file="Public:sidebar" />
+	<!-- END Sidebar -->
+	<!-- Main, right side content -->
+	<div id="main"> 
+		<div id="content"> 
+				<!-- Content begins here -->
+				<h2 style="float:left">Goods List</h2><div style="float:right;"><a href="{:U('Goods/addGoods')}" class="submit">Add New Goods</a></div>
+				<table cellspacing="0" cellpadding="0" border="0"><!-- Table -->
+					<form name="formname" method="get" action="" id="search_form"></form>
+						<tbody><tr>
+							<td width="10%"><input class="mediumfield" name="key_words" type="text" value=""></td>
+							<td width="70%"><input class="submit" type="submit" value="Search"></td>
+						</tr>
+					
+						</tbody>
+				</table>
+				<table cellspacing="0" cellpadding="0" border="0" id="tblgoods_list">
+					<thead>
+						<tr>
+							<th>Goods ID</th>
+							<th>Goods Category</th>
+                            <th>Goods Brand</th>
+                            <th>Goods Model</th>
+                            <th>Goods Attribute</th>
+                            <th>Goods Price</th>
+							<th>Operate</th>
+						</tr>
+					</thead>
+				
+					<tbody>
+                    	
+                    	<foreach name="goods_lists" item="vo">			
+						<tr >
+							<td>{$vo.goods_id}</td>
+							<td>{:getCategoryNameById($vo['goods_cat'])}</td>
+							<td>{:getBrandNameById($vo['goods_brand'])}</td>
+							<td>{$vo.goods_model_no}</td>
+							<td>
+							<?php 
+								if(getAttrNameById($vo['goods_attr'])==1 || getAttrNameById($vo['goods_attr'])==2): ?>
+
+								{$vo.goods_attr}
+
+							<?php else: ?>
+								{:getAttrNameById($vo['goods_attr'])}
+
+							<?php endif; ?>
+							</td>
+                            <td>{$vo.goods_price}</td>
+                            <td> <a href="{:U('goods/editGoods',array('goods_id'=>$vo['goods_id']))}"><img src="__PUBLIC__/iconsee/gear_48.png" alt="edit" width="16" /></a>
+                            <a href="{:U('goods/deleteGoods',array('goods_id'=>$vo['goods_id']))}"><img src="__PUBLIC__/iconsee/delete_48.png" alt="edit" width="16" /></a></td>
+						</tr>
+						</foreach>				
+						
+					</tbody>
+				</table>
+				
+				<div class="clear"><!-- --></div>
+
+				<div class="pagination">{$page}</div>
+
+	</div> 	
+		<div id="footer"> 
+			<p> All rights reserved.</p>
+		</div>		
+</div> <!-- END Container -->
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"   integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="   crossorigin="anonymous"></script>
+<script src="__PUBLIC__/js/jquery_ui.js" type="text/javascript"></script>
+<script src="__PUBLIC__/js/wysiwyg.js" type="text/javascript"></script>
+<script src="__PUBLIC__/datatables/media/js/jquery.dataTables.min.js" type="text/javascript"></script>
+<script>
+	$(document).ready(function(){
+		$('#tblgoods_list').DataTable({
+    		"order": [[ 0, "asc" ]]
+    	});
+	})
+</script>
+</body>
+</html>

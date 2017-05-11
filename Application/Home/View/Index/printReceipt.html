@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+	<title><?php echo $shop_info['title']; ?></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<style media=print type="text/css"> .noprint{visibility:hidden}</style>
+  <style type="text/css">
+  body{ color:#000; font-family:Tahoma, Geneva, sans-serif; font-size:10px;} 
+
+  .tabelclass{font-size:12px;border-top:#000 solid 1px;border-left:#000 solid 1px;}
+  .tabelclass2{font-size:12px;}
+  .tabelclass td{border-right:#000 solid 1px;border-bottom:#000 solid 1px; padding-left:5px; height:20px;}   
+  </style>	
+  <script src="__PUBLIC__/js/jquery-1.9.1.min.js"></script>
+	<script src="__PUBLIC__/js/jquery.jqprint.js"></script>
+  <script type="text/javascript">
+  $(function(){
+  	window.print();
+  })
+  </script>
+</head>
+<body>
+<br />
+  <br />
+  <div style="float:right;"><strong>O/N</strong>:<?php echo $order_info['order_sn']; ?></div>
+  <div style="clear:both;"></div>
+  <br />
+  <br />
+  <div><div style="float:left;"><strong>O/N:Head office Tel:</strong>0723-737272<br>(Hilton Hotel bldg)</div><div style="float:left; padding-left:15%; font-size:18px;">
+  <?php if($cash_receipt[0]=='D'): ?>
+    <strong>ONLINE ORDER - CASHIER COPY <!-- {$cash_info['receipt_no']} --></strong>
+    
+  <?php elseif($cash_receipt[0]=='B'): ?>
+    <strong>BALANCE RECEIPT - CASHIER COPY <!-- {$cash_info['receipt_no']} --></strong>
+  <?php endif; ?>
+  </div></div>
+<div style="clear:both;"></div> 
+<table border="0" cellspacing="0" cellpadding="0" width="100%" class="tabelclass2">
+    <tr>
+    <td width="33%"><strong>Branch</strong>:<?php echo $shop_info['title'];?><br>
+      <strong>Branch Tel</strong>:<?php echo $shop_info['tel'];?><br>
+      <strong>Card NO.</strong>:<?php echo $distance_info['cardno']?></td>
+    <td width="33%"><strong>Stock Source:</strong>central warehouse<br />
+      <strong>Date:</strong><?php echo date('Y-m-d H:i:s',$order_info['add_time']);?><br />
+      <strong>P.O.BOX:</strong><?php echo $order_info['address'];?></td>  </tr></table>
+<br />                                        
+<table border="0" cellspacing="0" cellpadding="0" width="100%" class="tabelclass2">
+<tr>
+<td style="font-size:15px;"><strong>Payment method</strong>: Cash<?php if($receiptno['payment_method']=="cash"){echo '☑';}else{echo '□';}?>   M-Pesa<?php if($receiptno['payment_method']=="m-pesa"){echo '☑';}else{echo '□';}?>    Cheque<?php if($receiptno['payment_method']=="cheque"){echo '☑';}else{echo '□';}?>  Card<?php if($receiptno['payment_method']=="card"){echo '☑';}else{echo '□';}?>   Insurance<?php if($receiptno['payment_method']=="insurance_1" || $receiptno['payment_method']=="insurance_0"){echo '☑';}else{echo '□';}?><span style="border-bottom:1px solid #000; padding-left:5px; padding-right:5px; min-width:50px;"><?php if($receiptno['payment_method']=="insurance_1" || $receiptno['payment_method']=="insurance_0"){echo $receiptno['insurancetext'];}else{echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';}?></span></td></tr></table> 
+<table border="0" cellspacing="0" cellpadding="0" class="tabelclass">
+    <tr>
+      <td style="width:30%"><strong>Name: </strong><?php echo $order_info['consignee'];?></td>
+      <td style="width:20%"><strong>Gender: </strong><?php echo $user_info['gender'];?></td>
+      <td style="width:20%"><strong>Age: </strong><?php if($user_info['age'] < 80) echo $user_info['age'];?></td>
+      <td style="width:25%"><strong>Tel: </strong><?php echo $user_info['c_mobile']; ?></td>
+      <td style="width:20%"><strong>Address: </strong><?php echo $user_info['c_address'];?></td>
+      <td style="width:30%"><strong>Email: </strong><?php echo $user_info['c_email']; ?></td>
+    </tr>
+  </table> 
+<table border="0" cellspacing="0" cellpadding="0" width="100%" class="tabelclass" style="margin-bottom:10px;">
+    <tr>
+      <td><strong> Frame / Accessory </strong></td>
+      <td style="width:25%"><strong>Price</strong></td>
+      <td><strong>Lens</strong></td>
+      <td><strong>Price</strong></td>
+    </tr>
+    <foreach name="order_goods_lists" item="vo">  
+    <tr>
+      <td>{:getBrandNameById($vo['goods_brand'])}, {$vo['goods_model_no']}, {$vo['goods_attr']}&nbsp;</td>
+      <td><?php echo $vo['goods_price']?>&nbsp;</td>
+      <td><?php echo $sealstxt_info['lensname']?></td>
+      <td><?php echo $lensprice;?>&nbsp;</td>
+    </tr>
+    </foreach>
+    <tr>
+      <td><strong>Total Amount</strong></td>
+      <td><strong>Deposit</strong></td>
+      <td><strong>Balance</strong></td>
+      <td><strong>Discount</strong></td>
+    </tr>
+    <tr>
+      <td>&nbsp; Ksh. {$total_price}</td>
+      <?php if($receiptno['payment_price']!=0): ?>
+                    
+      <td>Kshs.{$receiptno['payment_price']}</td>   
+      <td>Kshs.{$initial_balance}</td>
+
+      <?php elseif($receiptno['payment_price']==0): ?>
+      <td>Insurance</td>
+      <td>N/A</td>
+      <?php endif; ?>
+      <td>{$discountseals}</td>
+    </tr>
+  <!-- Balance Section for remaining balances -->
+
+  <!-- For Cash Balances -->
+  <?php if($receiptno['payment_price']!=0): ?>
+    <table>
+      <tr>
+          <?php if($cash_receipt[0]=='D'): ?>
+              <td><strong>Current Balance Remaining: {$initial_balance}</strong></td>
+          <?php elseif($cash_receipt[0]=='B'):?>
+              <td><strong>Paid Balance: {$cash_info['pay_amount']}</strong> &nbsp&nbsp<strong>Balance Remaining: {$initial_balance - $cash_info['pay_amount']}</strong></td>
+          <?php endif; ?>
+      </tr>
+    </table>
+    <!-- Insurance Balances if any -->
+  <?php elseif($receiptno['payment_price']==0): ?>
+    <table>
+      <tr>
+        <?php if($cash_receipt[0]=='B'): ?>
+        <td><strong>Paid Balance: {$cash_info['pay_amount']}</strong> &nbsp&nbsp<strong>Current Balance Remaining: {$initial_balance}</strong></td>
+      <?php endif; ?>
+      </tr>
+    </table>
+  <?php endif; ?>
+
+</body>
+</html>

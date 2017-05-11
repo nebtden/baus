@@ -1,0 +1,81 @@
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+	<title>Baus Optical</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<style type="text/css" media="all">
+		@import url(__PUBLIC__/css/style.css);
+		img {behavior:url('__PUBLIC__/js/iepngfix.htc') !important;}
+		input[type=checkbox] {margin-top: 10px}
+		.orderinfo_label{
+			display: inline-block;
+		    width: 30%;
+		  	text-align: left;
+		}
+	</style>
+
+</head>
+<body>
+<div id="container"> <!-- Container -->
+	<include file="Public:sidebar" />
+	<div id="main"> <!-- Main, right side content -->
+		<div id="content"> <!-- Content begins here -->
+				
+				<form method="post" action="{:U('Goods/saveCategory')}" name="formd"><!-- Form -->
+				<!-- Fieldset -->
+				<fieldset><legend><h2>Add New Category</h2></legend>
+
+                    <div class="input_field">
+						<label for="parent_cat_lists"  style="width:150px;">Parent Category: </label>
+ 						<select id="parent_id" name="parent_id">
+ 							<option value="0">TOP</option>
+ 						<foreach name="parent_cat_lists" item="vo">	
+ 							<option value="{$vo.cat_id}">{$vo.cat_name}</option>
+ 						</foreach>
+ 						</select>
+					</div>					
+
+					<div class="input_field">
+						<label for="cat_name" style="width:150px;">Category Name: </label>
+ 						<input class="mediumfield" name="cat_name"  id="cat_name" type="text" value="" />
+					</div>
+
+					<div class="input_field">
+						<label for="sort_order" style="width:150px;">Category Sort Order: </label>
+ 						<input class="mediumfield" name="sort_order"  id="sort_order" type="text" value="" />
+					</div>
+					<br />
+	 						<!-- <div style="min-height:120px;border:1px solid black;"> -->
+							  
+							<!-- </div> -->
+
+					<br />
+					<br />
+                    <div class="input_field no_margin_bottom" style="padding-left:150px;">
+						<input class="submit" type="submit" value="Submit" />
+					</div>
+
+
+                    
+				</fieldset>
+				<!-- End of fieldset -->
+			</form>       
+
+				<div class="clear"><!-- --></div>
+
+		</div> <!-- END Content -->
+
+	</div> 	
+		<div id="footer"> 
+			<p> All rights reserved.</p>
+		</div>		
+</div> <!-- END Container -->
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"   integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="   crossorigin="anonymous"></script>
+<script src="__PUBLIC__/js/jquery_ui.js" type="text/javascript"></script>
+<script src="__PUBLIC__/js/wysiwyg.js" type="text/javascript"></script>
+<!-- <script src="__PUBLIC__/js/functions.js" type="text/javascript"></script> -->
+
+</body>
+</html>

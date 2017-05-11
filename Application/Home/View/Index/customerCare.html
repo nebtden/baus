@@ -1,0 +1,115 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+	<title>Baus Optical</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<style type="text/css" media="all">
+		@import url(__PUBLIC__/css/style.css);
+		img {behavior:url('__PUBLIC__/js/iepngfix.htc') !important;}
+		.h1 a{ color:#333;}
+	</style>	
+
+	  <link rel="stylesheet" href="__PUBLIC__/css/jquery-ui.css">
+      <script src="__PUBLIC__/js/jquery.min.js"></script>
+	  <script src="__PUBLIC__/js/jquery-ui.min.js"></script>
+
+
+</head>
+<body>
+<div id="container"> <!-- Container -->
+<include file="Public:sidebar" />
+	<!-- END Sidebar -->
+	<!-- Main, right side content -->
+	<div id="main"> 
+		<div id="content"> 
+				<!-- Content begins here -->
+				<h2>Customer Care Order List</h2>
+				<!-- 筛选框 s-->	
+                <table cellspacing="0" cellpadding="0" border="0"><!-- Table -->
+					<form name="formname" method="get" action="" id="search_form">
+						<tr>
+							<td width="10%"><input class="mediumfield" name="key_words" type="text" value="" /></td>
+							<td  width="70%"><input class="submit" type="submit" value="Submit" /></td>
+						</tr>
+					</form>
+				</table>
+				<!-- 筛选框 e-->	
+				<table cellspacing="0" cellpadding="0" border="0">
+					<thead>
+						<tr>
+							<th>Order NO.</th>
+                            <th>Shop</th>
+							<th>Time</th>
+							<th>Consignee</th>
+							<th>Price</th>
+                            <th>Status</th>
+							<th>Operate</th>
+						</tr>
+					</thead>
+				
+					<tbody>
+                    	
+                    	<foreach name="order_info_lists" item="vo">			
+						<tr >
+							<td>{$vo.order_sn}</td>
+                            <td><?php echo getShopNameById($vo['shop']);?></td>
+							<td><?php echo date('Y-m-d H:i:s',$vo['add_time'])?></td>
+							<td>{$vo.consignee} [ tel:{$vo.tel} ] </td>
+							<td><?php echo $vo['goods_amount']+$vo['lensprice']-$vo['discountseals']; ?></td>
+                           <td style=" color:#F00;"><?php echo getOrderStepNameById($vo['order_step']);?></td> 
+							<td> 
+							<a href="javascript:" class='btn' id="{$vo.order_id}"><img src="__PUBLIC__/iconsee/gear_48.png" alt="edit" width="16"/></a> 
+							</td>
+						</tr>
+						 </foreach>				
+						
+					</tbody>
+				</table>
+				
+				<div class="clear"><!-- --></div>
+
+				<div class="pagination">{$page}</div>
+
+	</div> 	
+		<div id="footer"> 
+			<p> All rights reserved.</p>
+		</div>		
+</div> <!-- END Container -->
+
+<div id="dialog-modal" title="Customer Care">
+<form method="post" action="{:U('Index/customerCareProcess')}" name="formd" id="care_form">
+<input type="hidden" name="order_id" id="order_id">
+  Remark<br/>
+  <input type="text" name="customer_care_remark" style="width:200px">
+</form>
+</div>
+
+  <script>
+  $(function() {
+
+    $( "#dialog-modal").dialog({
+      autoOpen: false,
+	  height:150,
+      modal: true,
+      buttons: {
+        "Reverse Order": function() {
+          $('#care_form').submit();
+        },
+        Cancel: function() {
+          $( this ).dialog( "close" );
+        }
+      }
+
+    });  
+
+  	$(".btn").click(function(){
+  		var order_id = $(this).attr('id');
+  		$('#order_id').val(order_id);
+		$( "#dialog-modal" ).dialog( "open" );		
+  	})
+
+  });
+  </script>
+</body>
+</html>
