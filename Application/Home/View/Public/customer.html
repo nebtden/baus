@@ -10,9 +10,12 @@
 		<div class="sidebox">
 			<span class="stitle">Navigation</span>
 			<div id="navigation">
-				<!--<div class="navhead_blank">-->
-					<!--welcome to the baus,please select the top link to use-->
-				<!--</div>-->
+				<div class="sidenav"><!-- Sidenav -->
+					<?php if($member_group_info['manager'] == 1){ ?>
+					<div class="navhead_blank"><span><a href="{:U('Index/customer')}" title="">Customer</a></span></div>
+
+					<?php } ?>
+				</div>
 			
 		</div> <!-- END Navigation -->
 		</div>	

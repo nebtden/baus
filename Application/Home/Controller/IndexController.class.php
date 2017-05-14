@@ -139,7 +139,8 @@ class IndexController extends Controller {
         $shop_lists = M('shops')->select();
         $this->assign('shop_lists',$shop_lists);
     	$this->assign('page',$show);
-    	$this->display();    		
+    	session('group','customer');
+    	$this->display();
     }
 
     public function orderShow()

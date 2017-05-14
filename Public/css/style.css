@@ -32,7 +32,7 @@ html {
 
 body { 
  line-height : 1.5; 
- background : #fff url('../assets/bgtop.png') 0 0 repeat-x; 
+ /*background : #fff url('../assets/bgtop.png') 0 0 repeat-x; */
  font-size : 75%; 
  color : #333; 
  font-family : "Arial", Tahoma, sans-serif; 
@@ -287,7 +287,7 @@ height : 85px;
 #container #sidebar { 
 width : 251px; 
 margin-left:15px;
-margin-top:65px;
+/*margin-top:65px;*/
 float:left;
 } 
 
