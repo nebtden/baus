@@ -1,92 +1,108 @@
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<meta http-equiv="Content-Type"
+      content="text/html; charset=utf-8"/><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-	<title>Baus Optical</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<style type="text/css" media="all">
-		@import url(__PUBLIC__/css/style.css);@import url(__ROOT__/css/admin.css);
-		img {behavior:url('__PUBLIC__/js/iepngfix.htc') !important;}
-		.h1 a{ color:#333;}
-	</style>
-	<link rel="stylesheet" type="text/css" href="__PUBLIC__/datatables/media/css/jquery.dataTables.min.css" />
-	
+    <title>Baus Optical</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <style type="text/css" media="all">
+        @import url(__PUBLIC__/css/style.css);
+        @import url(__ROOT__/css/admin.css);
+
+        img {
+            behavior: url('__PUBLIC__/js/iepngfix.htc') !important;
+        }
+
+        .h1 a {
+            color: #333;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/datatables/media/css/jquery.dataTables.min.css"/>
+
 </head>
 <body>
-<include file="Public:header" />	<div class="main two"> <!-- Container -->
-<include file="Public:sidebar" />
-	<!-- END Sidebar -->
-	<!-- Main, right side content -->
-	<div class="query">
-		<div class="start">
-				<!-- Content begins here -->
-				<h2>Top Up List<br /> NOTE: Remember to print the current receipt</h2>
-				<table id="list_table">
-					<thead>
-						<tr>
-							<th>Order NO.</th>
-                            <th>Shop</th>
-							<th>Time</th>
-							<th>Consignee</th>
-							<th>Price</th>
-                            <th>Balance</th>
-							<th>Clear Balance</th>
-							<th>Print Receipt</th>
-							<th>Action</th>
-						</tr>
-					</thead>
-					<tbody>
-						<?php foreach($order_info_lists as $vo): ?>
-						<tr >
-							<td>{$vo.order_sn}</td>
-                            <td><?php echo getShopNameById($vo['shop']);?></td>
-							<td><?php echo date('j F Y, H:i:s',$vo['add_time'])?></td>
-							<td>{$vo.consignee} [tel:{$vo.mobile}] </td>
-							<td><center><?php $total = unserialize($vo['receiptno']);
+<include file="Public:header"/>
+<div class="main two"> <!-- Container -->
+    <include file="Public:finance"/>
+    <!-- END Sidebar -->
+    <!-- Main, right side content -->
+    <div class="query">
+    </div>
+    <div class="start">
+        <!-- Content begins here -->
+        <h2>Top Up List<br/> NOTE: Remember to print the current receipt</h2>
+        <table id="list_table">
+            <thead>
+            <tr>
+                <th>Order NO.</th>
+                <th>Shop</th>
+                <th>Time</th>
+                <th>Consignee</th>
+                <th>Price</th>
+                <th>Balance</th>
+                <th>Clear Balance</th>
+                <th>Print Receipt</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php foreach($order_info_lists as $vo): ?>
+            <tr>
+                <td>{$vo.order_sn}</td>
+                <td><?php echo getShopNameById($vo['shop']);?></td>
+                <td><?php echo date('j F Y, H:i:s',$vo['add_time'])?></td>
+                <td>{$vo.consignee} [tel:{$vo.mobile}]</td>
+                <td>
+                    <center><?php $total = unserialize($vo['receiptno']);
 									echo $total['total_order_amount'];
-							 ?></center></td>
-                            <td style=" color:blue;">
-                           		<center><?php echo getBalance($vo['order_id']); ?></center>
-							</td>
-							<td><center>
-								<a href="{:U('Index/detailsTopUp',array('order_id'=>$vo['order_id']))}">
-									<img src="__PUBLIC__/iconsee/gear_48.png" alt="edit" width="16" />
-								</a> 
-								</center>							
-							</td>
-							<td><a href="{:U('Index/printTopUpReceipt',array('order_id'=>$vo['order_id']))}" style="color:#000; font-weight:700" target="_blank">Top Up Receipt</a></td>
-							<td><?php if(getBalance($vo['order_id'])>0): ?>
-									Client has a balance
-								<?php elseif(getBalance($vo['order_id'])<=0): ?>
-									<a href="{:U('Index/clearClientFromList',array('order_id'=>$vo['order_id']))}" style="color:#000; font-weight:700">Clear</a>
-								<?php endif; ?>
-							</td>
-						</tr>
-						<?php endforeach; ?>
-					</tbody>
-				</table>
-				
-				<div class="clear"><!-- --></div>
+							 ?></center>
+                </td>
+                <td style=" color:blue;">
+                    <center><?php echo getBalance($vo['order_id']); ?></center>
+                </td>
+                <td>
+                    <center>
+                        <a href="{:U('Index/detailsTopUp',array('order_id'=>$vo['order_id']))}">
+                            <img src="__PUBLIC__/iconsee/gear_48.png" alt="edit" width="16"/>
+                        </a>
+                    </center>
+                </td>
+                <td><a href="{:U('Index/printTopUpReceipt',array('order_id'=>$vo['order_id']))}"
+                       style="color:#000; font-weight:700" target="_blank">Top Up Receipt</a></td>
+                <td><?php if(getBalance($vo['order_id'])>0): ?>
+                    Client has a balance
+                    <?php elseif(getBalance($vo['order_id'])<=0): ?>
+                    <a href="{:U('Index/clearClientFromList',array('order_id'=>$vo['order_id']))}"
+                       style="color:#000; font-weight:700">Clear</a>
+                    <?php endif; ?>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
 
-				<!-- <div class="pagination">{$page}</div> -->
+        <div class="clear"><!-- --></div>
 
-		</div> 
-		<div id="footer"> 
-			<p> All rights reserved.</p>
-		</div>		
-	</div>
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"   integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="   crossorigin="anonymous"></script>
+        <!-- <div class="pagination">{$page}</div> -->
+
+    </div>
+    <div id="footer">
+        <p> All rights reserved.</p>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"
+        integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
 <script src="__PUBLIC__/js/jquery_ui.js" type="text/javascript"></script>
- <script src="__PUBLIC__/js/wysiwyg.js" type="text/javascript"></script>
+<script src="__PUBLIC__/js/wysiwyg.js" type="text/javascript"></script>
 <!--<script src="__PUBLIC__/js/functions.js" type="text/javascript"></script> -->
 <script src="__PUBLIC__/datatables/media/js/jquery.dataTables.min.js" type="text/javascript"></script>
 
 <script>
-	$(document).ready(function() {
-    	$('#list_table').DataTable({
-    		"order": [[ 2, "desc" ]]
-    	});
-} );
+    $(document).ready(function () {
+        $('#list_table').DataTable({
+            "order": [[2, "desc"]]
+        });
+    });
 </script>
 </body>
 </html>

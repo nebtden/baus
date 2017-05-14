@@ -1,453 +1,458 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+		"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 	<title>Baus Optical</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link rel="stylesheet" type="text/css" href="__PUBLIC__/jquery.confirm/jquery.confirm.css" />
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/jquery.confirm/jquery.confirm.css" />
 	<style type="text/css" media="all">
-		@import url(__PUBLIC__/css/style.css);@import url(__ROOT__/css/admin.css);
+		@import url(__PUBLIC__/css/style.css);
+		@import url(__ROOT__/css/admin.css);
 		img {behavior:url('j__PUBLIC__/s/iepngfix.htc') !important;}
 		.error{color:red;}
 		.orderinfo_label{
 			display: inline-block;
-		    width: 30%;
-		  	text-align: left;
+			width: 30%;
+			text-align: left;
 		}
 		.tab_lab{
 			display: inline-block;
-		    width: 15%;
-		  	text-align: left;
+			width: 15%;
+			text-align: left;
 		}
 		.cash-option{
 			display: none;
 		}
 
-	</style>	
+	</style>
 	<link rel="stylesheet" type="text/css" href="__PUBLIC__/datatables/media/css/jquery.dataTables.min.css" />
 </head>
 <body>
-<include file="Public:header" />	<div class="main two"> <!-- Container -->
-<include file="Public:order" />
-	<div class="query"> <!-- Main, right side content -->
-		<div class="start" style="width:100%"> <!-- Content begins here -->
-     
-			<form method="post" action="{:U('Order/makeOrder')}" name="formd" id="form_order"><!-- Form -->
-				<!-- Fieldset -->
-				<fieldset><legend><h2>1. Customer Info</h2></legend>
+<include file="Public:header" />
+<div class="main two"> <!-- Container -->
+	<include file="Public:order" />
+	<div class="query" style="padding: 20px;"> <!-- Main, right side content -->
 
-					<div style="/*border:1px solid black;*/min-height:100px;">
-					  <div style="/*border:1px solid blue;*/height:100px;float:left;width:49.5%">
-					  		<input type="hidden" name="c_id" id="c_id">		
-					 		<div class="orderinfo_label">Customer Mobile</div> <input class="mediumfield" id="c_mobile" name="c_mobile" type="text" /><br />
-					 		<div class="orderinfo_label">Customer Name</div> <input class="mediumfield" id="c_name" name="c_name" type="text"/><span id="cunstomer_info" style="color:red"> </span><br />
-					 		<div class="orderinfo_label">Email</div> <input class="mediumfield" id="c_email" name="c_email" type="text"/>
-					  </div>
-					  <div style="/*border:1px solid green;*/height:100px;float:right;width:50%">
-					  	
-					  	<div class="orderinfo_label">Address</div> <input class="mediumfield" name="address" id="address" type="text"  /><br />
-					  	<div class="orderinfo_label">Gender</div>
-					  	<select name="c_gender">
+
+	</div>
+	<div class="start" style="width:100%"> <!-- Content begins here -->
+
+		<form method="post" action="{:U('Order/makeOrder')}" name="formd" id="form_order"><!-- Form -->
+			<!-- Fieldset -->
+			<fieldset><legend><h2>1. Customer Info</h2></legend>
+
+				<div style="/*border:1px solid black;*/min-height:100px;">
+					<div style="/*border:1px solid blue;*/height:100px;float:left;width:49.5%">
+						<input type="hidden" name="c_id" id="c_id">
+						<div class="orderinfo_label">Customer Mobile</div> <input class="mediumfield" id="c_mobile" name="c_mobile" type="text" /><br />
+						<div class="orderinfo_label">Customer Name</div> <input class="mediumfield" id="c_name" name="c_name" type="text"/><span id="cunstomer_info" style="color:red"> </span><br />
+						<div class="orderinfo_label">Email</div> <input class="mediumfield" id="c_email" name="c_email" type="text"/>
+					</div>
+					<div style="/*border:1px solid green;*/height:100px;float:right;width:50%">
+
+						<div class="orderinfo_label">Address</div> <input class="mediumfield" name="address" id="address" type="text"  /><br />
+						<div class="orderinfo_label">Gender</div>
+						<select name="c_gender">
 							<option value="-1">-- Select Gender --</option>
 							<option value="1">Male</option>
 							<option value="2">Female</option>
 						</select><br />
 						<div class="orderinfo_label">Age</div> <input class="mediumfield" id="c_age" name="c_age" type="text"/>
-					  </div>
 					</div>
-				</fieldset>
-				<!-- End of fieldset -->
+				</div>
+			</fieldset>
+			<!-- End of fieldset -->
 
-				<!-- Fieldset -->
-				<fieldset><legend><h2>2. Select Goods & Order Info</h2></legend>
-                    <div class="input_field">
-						<!-- <label for="parent_cat_lists"  style="width:150px;margin-left: -20px;">Please Select Category: </label> -->
- 						<select id="parent_id" name="parent_id">
- 							<option value="-1"> - Choose Category - </option>
- 						<foreach name="parent_cat_lists" item="vo">	
- 							<option value="{$vo.cat_id}">{$vo.cat_name}</option>
- 						</foreach>
- 						</select>
- 						<select id="goods_brand" name="goods_brand">
- 							<option value="-1"> - Choose Brand - </option>
- 						</select>
- 						<select id="goods_model" name="goods_model">
- 							<option value="-1"> - Choose Model No - </option>
- 						</select><br />
- 						<a class="submit" id="empty_goods_lists">Refresh Search</a>
-					</div>	
-					<table cellspacing="0" cellpadding="0" border="0" style="" ><!-- Table -->
-						<thead>
-							<tr>
-								<!-- <th>SKU</th> -->
-								<!-- <th>Goods Name</th> -->
-	                            <th>Goods Category</th>
-	                            <th>Goods Brand</th>
-	                            <th>Goods Model</th>
-	                            <th>Goods Price</th>
-	                            <th>Goods Color</th>
-	                            <th>Operate</th>
-							</tr>
-						</thead>
-						<tbody id="goods_lists">
-							
-                        </tbody>
-                    </table>
-                    <div class="orderinfo_label">Goods Remark</div><input class="bigfield" style="width:100px;" id="goods_remark" name="goods_remark" type="text" value="" />
-					 <div class="clear"><!-- --></div>
-
-					 <br />
-				</fieldset>
-				<!-- End of fieldset -->
-
-
-				<!-- Fieldset Lens, Prescripition -->
-				<fieldset><legend><h2>3. Lens & Prescription</h2></legend>
-					
-					<table cellspacing="0" cellpadding="0" border="0"><!-- Table -->
-						<thead>
-							<tr>
-								<th>Lens Name</th>
-								<th>Lens Price</th>
-	                            <th>Discount</th>
-	                            <th>time</th>
-	                            <th></th>
-							</tr>
-						</thead>
-						<tbody>
-                          <tr >
-							<td><input class="mediumfield" name="lensname" type="text" value="{$sealstxt_info.lensname}" /></td>
-							<td><input class="mediumfield" id="lensprice" name="lensprice" type="text" value="{$sealstxt_info.lensprice}"/></td>
-							<td><input class="mediumfield" id="discountseals" name="discountseals" type="text" value="" placeholder="If NO discount please enter 0" required /></td>		
-                 			<td><?php if($sealstxt_info['add_time'] != '') echo date('Y-m-d H:i:s',$sealstxt_info['add_time'])?></td>
-                          </tr>
-	                       <tr class="alt">
-								<td colspan="3" align="right">
-								Special Marks:<input class="bigfield" style="width:500px;" id="special_marks" name="special_marks" type="text" value="" /></td>
-	                            <td colspan="2"><strong>Final Price : </strong><span id='final_price'></span></td>
-							</tr>
-                        </tbody>
-                    </table>
-
-					<table cellspacing="0" cellpadding="0" border="0"><!-- Table -->
+			<!-- Fieldset -->
+			<fieldset><legend><h2>2. Select Goods & Order Info</h2></legend>
+				<div class="input_field">
+					<!-- <label for="parent_cat_lists"  style="width:150px;margin-left: -20px;">Please Select Category: </label> -->
+					<select id="parent_id" name="parent_id">
+						<option value="-1"> - Choose Category - </option>
+						<foreach name="parent_cat_lists" item="vo">
+							<option value="{$vo.cat_id}">{$vo.cat_name}</option>
+						</foreach>
+					</select>
+					<select id="goods_brand" name="goods_brand">
+						<option value="-1"> - Choose Brand - </option>
+					</select>
+					<select id="goods_model" name="goods_model">
+						<option value="-1"> - Choose Model No - </option>
+					</select><br />
+					<a class="submit" id="empty_goods_lists">Refresh Search</a>
+				</div>
+				<table cellspacing="0" cellpadding="0" border="0" style="" ><!-- Table -->
 					<thead>
-						<tr>
-							<th></th>
-							<th></th>
-							<th>SPH</th>
-							<th>CYL</th>
-							<th>AXIS</th>
-                            <th>PRISM</th>
-                            <th>BASE</th>
-							<th>O.VISION</th>
-							<th>VISION</th>
-                            <th>ADD</th>
-                            <th>PD</th>
-						</tr>
+					<tr>
+						<!-- <th>SKU</th> -->
+						<!-- <th>Goods Name</th> -->
+						<th>Goods Category</th>
+						<th>Goods Brand</th>
+						<th>Goods Model</th>
+						<th>Goods Price</th>
+						<th>Goods Color</th>
+						<th>Operate</th>
+					</tr>
 					</thead>
-									<tbody>
-                     <tr >
-							<td>Distance</td>
-							<td>R</td>
-							<td><input class="smallfield" name="sph_right" id="sph_right" type="text" value="" /></td>
-							<td><input class="smallfield" name="cyl_right"  id="cyl_right" type="text" value="" /></td>
-							<td><input class="smallfield" name="axis_right"   id="axis_right"  type="text" value="" /></td>
-							<td><input class="smallfield" name="prism_right"  id="prism_right" type="text" value="" /></td>
-							<td><input class="smallfield" name="base_right"   id="base_right" type="text" value="" /></td>
-							<td><input class="smallfield" name="ovision_right"  id="ovision_right" type="text" value="" /></td>
-                            <td><input class="smallfield" name="vision_right"  id="vision_right" type="text"  value="" /></td>
-							<td><input class="smallfield" name="add_right"  id="add_right"  type="text" value="" /></td>
-							<td><input class="smallfield" name="pd_right"  id="pd_right"  type="text" value="" /></td>
-						</tr>
-                          <tr class="alt">
-							<td>Distance</td>
-							<td>L</td>
-							<td><input class="smallfield" name="sph_left"  id="sph_left"  type="text" value="" /></td>
-							<td><input class="smallfield" name="cyl_left"  id="cyl_left"  type="text" value="" /></td>
-							<td><input class="smallfield" name="axis_left"  id="axis_left"  type="text" value="" /></td>
-							<td><input class="smallfield" name="prism_left"  id="prism_left"  type="text" value="" /></td>
-							<td><input class="smallfield" name="base_left"  id="base_left"  type="text" value="" /></td>
-							<td><input class="smallfield" name="ovision_left"  id="ovision_left"  type="text" value="" /></td>
-                            <td><input class="smallfield" name="vision_left"  id="vision_left"  type="text" value="" /></td>
-							<td><input class="smallfield" name="add_left"  id="add_left"  type="text" value="" /></td>
-							<td><input class="smallfield" name="pd_left"  id="pd_left"  type="hidden" value="" /></td>
-						</tr>
-                        
-                         <tr>
-							<td colspan="5">time: <?php if($distance_info['add_time'] != '') echo date('Y-m-d H:i:s',$distance_info['add_time'])?></td>
-                            <td colspan="5">Card NO.:<input class="mediumfield" name="cardno"  id="cardno"  type="text" value="" /></td>
-							<td></td>
-						</tr>
-                        
-                        </tbody>
-                        </table>
-                        <br />
-					Cashier: <input class="smallfield" style="width:100px;" id="cashier" name="cashier" type="text" value="" />      Sales Person: <input class="smallfield" style="width:100px;" id="sales_person" name="sales_person" type="text" value="" />      Optometrist: <input class="smallfield" style="width:100px;" id="optometrist" name="optometrist" type="text" value="" />
-				</fieldset>
-				<!-- End of fieldset -->
-				<fieldset><legend><h2>4. Payment Via</h2></legend>
-                    <div style="min-height:120px;">
-					  <div style="height:100px;float:left;width:49.5%">  		
-					 		<input name="pay_choice"  type="radio" value="cash" />Cash<br /><br />
+					<tbody id="goods_lists">
 
-					 		<div id="cash-option" style="display:none;">
-						 		<input class="cash-radio" name="payment_method" type="radio" value="cash" /> Quick Cash&nbsp;&nbsp;&nbsp;&nbsp; 
-			                    <input class="cash-radio" name="payment_method" type="radio" value="m-pesa" /> M-Pesa&nbsp;&nbsp;&nbsp;&nbsp;
-			                    <input class="cash-radio" name="payment_method" type="radio" value="cheque" /> Cheque&nbsp;&nbsp;&nbsp;&nbsp;
-			                    <input class="cash-radio" name="payment_method" type="radio" value="card" /> Card&nbsp;&nbsp;&nbsp;&nbsp;
-					  			<br /><br />
-					  			<div class="orderinfo_label">Deposit</div><input class="mediumfield" id="payment_price" name="payment_price" type="text" value="" /><br />
-					  			<div class="orderinfo_label">Remark</div><input class="mediumfield" name="initial_pay_remark" type="text" value="" />
-					  		</div>
-					  </div>
-					  <div style="height:100px;float:right;width:50%">
-					  		<input name="pay_choice" type="radio" value="insurance" /> Insurance <!-- <input class="mediumfield" style="display:none;" id="insurancetext" name="insurancetext" type="text" value="" /> --><br>
-					  		<br />
-					  		<div id="insurance-option" style="display:none;">
-					  			Customer has a  Smart Card <input name="payment_method" type="radio" value="insurance_1" />&nbsp;&nbsp;&nbsp;&nbsp;
-					  			Customer has no Smart Card <input name="payment_method" type="radio" value="insurance_0" /><br /><br />
-					  			Please Enter the Insurance Company Name <br />
-						 		<input class="mediumfield" id="insurancetext" name="insurancetext" type="text" value="" />
-					  		</div>
-					  </div>
+					</tbody>
+				</table>
+				<div class="orderinfo_label">Goods Remark</div><input class="bigfield" style="width:100px;" id="goods_remark" name="goods_remark" type="text" value="" />
+				<div class="clear"><!-- --></div>
+
+				<br />
+			</fieldset>
+			<!-- End of fieldset -->
+
+
+			<!-- Fieldset Lens, Prescripition -->
+			<fieldset><legend><h2>3. Lens & Prescription</h2></legend>
+
+				<table cellspacing="0" cellpadding="0" border="0"><!-- Table -->
+					<thead>
+					<tr>
+						<th>Lens Name</th>
+						<th>Lens Price</th>
+						<th>Discount</th>
+						<th>time</th>
+						<th></th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr >
+						<td><input class="mediumfield" name="lensname" type="text" value="{$sealstxt_info.lensname}" /></td>
+						<td><input class="mediumfield" id="lensprice" name="lensprice" type="text" value="{$sealstxt_info.lensprice}"/></td>
+						<td><input class="mediumfield" id="discountseals" name="discountseals" type="text" value="" placeholder="If NO discount please enter 0" required /></td>
+						<td><?php if($sealstxt_info['add_time'] != '') echo date('Y-m-d H:i:s',$sealstxt_info['add_time'])?></td>
+					</tr>
+					<tr class="alt">
+						<td colspan="3" align="right">
+							Special Marks:<input class="bigfield" style="width:500px;" id="special_marks" name="special_marks" type="text" value="" /></td>
+						<td colspan="2"><strong>Final Price : </strong><span id='final_price'></span></td>
+					</tr>
+					</tbody>
+				</table>
+
+				<table cellspacing="0" cellpadding="0" border="0"><!-- Table -->
+					<thead>
+					<tr>
+						<th></th>
+						<th></th>
+						<th>SPH</th>
+						<th>CYL</th>
+						<th>AXIS</th>
+						<th>PRISM</th>
+						<th>BASE</th>
+						<th>O.VISION</th>
+						<th>VISION</th>
+						<th>ADD</th>
+						<th>PD</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr >
+						<td>Distance</td>
+						<td>R</td>
+						<td><input class="smallfield" name="sph_right" id="sph_right" type="text" value="" /></td>
+						<td><input class="smallfield" name="cyl_right"  id="cyl_right" type="text" value="" /></td>
+						<td><input class="smallfield" name="axis_right"   id="axis_right"  type="text" value="" /></td>
+						<td><input class="smallfield" name="prism_right"  id="prism_right" type="text" value="" /></td>
+						<td><input class="smallfield" name="base_right"   id="base_right" type="text" value="" /></td>
+						<td><input class="smallfield" name="ovision_right"  id="ovision_right" type="text" value="" /></td>
+						<td><input class="smallfield" name="vision_right"  id="vision_right" type="text"  value="" /></td>
+						<td><input class="smallfield" name="add_right"  id="add_right"  type="text" value="" /></td>
+						<td><input class="smallfield" name="pd_right"  id="pd_right"  type="text" value="" /></td>
+					</tr>
+					<tr class="alt">
+						<td>Distance</td>
+						<td>L</td>
+						<td><input class="smallfield" name="sph_left"  id="sph_left"  type="text" value="" /></td>
+						<td><input class="smallfield" name="cyl_left"  id="cyl_left"  type="text" value="" /></td>
+						<td><input class="smallfield" name="axis_left"  id="axis_left"  type="text" value="" /></td>
+						<td><input class="smallfield" name="prism_left"  id="prism_left"  type="text" value="" /></td>
+						<td><input class="smallfield" name="base_left"  id="base_left"  type="text" value="" /></td>
+						<td><input class="smallfield" name="ovision_left"  id="ovision_left"  type="text" value="" /></td>
+						<td><input class="smallfield" name="vision_left"  id="vision_left"  type="text" value="" /></td>
+						<td><input class="smallfield" name="add_left"  id="add_left"  type="text" value="" /></td>
+						<td><input class="smallfield" name="pd_left"  id="pd_left"  type="hidden" value="" /></td>
+					</tr>
+
+					<tr>
+						<td colspan="5">time: <?php if($distance_info['add_time'] != '') echo date('Y-m-d H:i:s',$distance_info['add_time'])?></td>
+						<td colspan="5">Card NO.:<input class="mediumfield" name="cardno"  id="cardno"  type="text" value="" /></td>
+						<td></td>
+					</tr>
+
+					</tbody>
+				</table>
+				<br />
+				Cashier: <input class="smallfield" style="width:100px;" id="cashier" name="cashier" type="text" value="" />      Sales Person: <input class="smallfield" style="width:100px;" id="sales_person" name="sales_person" type="text" value="" />      Optometrist: <input class="smallfield" style="width:100px;" id="optometrist" name="optometrist" type="text" value="" />
+			</fieldset>
+			<!-- End of fieldset -->
+			<fieldset><legend><h2>4. Payment Via</h2></legend>
+				<div style="min-height:120px;">
+					<div style="height:100px;float:left;width:49.5%">
+						<input name="pay_choice"  type="radio" value="cash" />Cash<br /><br />
+
+						<div id="cash-option" style="display:none;">
+							<input class="cash-radio" name="payment_method" type="radio" value="cash" /> Quick Cash&nbsp;&nbsp;&nbsp;&nbsp;
+							<input class="cash-radio" name="payment_method" type="radio" value="m-pesa" /> M-Pesa&nbsp;&nbsp;&nbsp;&nbsp;
+							<input class="cash-radio" name="payment_method" type="radio" value="cheque" /> Cheque&nbsp;&nbsp;&nbsp;&nbsp;
+							<input class="cash-radio" name="payment_method" type="radio" value="card" /> Card&nbsp;&nbsp;&nbsp;&nbsp;
+							<br /><br />
+							<div class="orderinfo_label">Deposit</div><input class="mediumfield" id="payment_price" name="payment_price" type="text" value="" /><br />
+							<div class="orderinfo_label">Remark</div><input class="mediumfield" name="initial_pay_remark" type="text" value="" />
+						</div>
 					</div>
-					<br /><input  type="hidden" name="order_id" value="" /><input  type="hidden" name="step_name" value="editprice" /><input class="submit" type="submit" value="Make New Order" />
-			</form>
-                
-        <div class="clear"><!-- --></div>
+					<div style="height:100px;float:right;width:50%">
+						<input name="pay_choice" type="radio" value="insurance" /> Insurance <!-- <input class="mediumfield" style="display:none;" id="insurancetext" name="insurancetext" type="text" value="" /> --><br>
+						<br />
+						<div id="insurance-option" style="display:none;">
+							Customer has a  Smart Card <input name="payment_method" type="radio" value="insurance_1" />&nbsp;&nbsp;&nbsp;&nbsp;
+							Customer has no Smart Card <input name="payment_method" type="radio" value="insurance_0" /><br /><br />
+							Please Enter the Insurance Company Name <br />
+							<input class="mediumfield" id="insurancetext" name="insurancetext" type="text" value="" />
+						</div>
+					</div>
+				</div>
+				<br /><input  type="hidden" name="order_id" value="" /><input  type="hidden" name="step_name" value="editprice" /><input class="submit" type="submit" value="Make New Order" />
+		</form>
+
+		<div class="clear"><!-- --></div>
 
 
-		</div> <!-- END Content -->
+	</div> <!-- END Content -->
 
-	</div> 	
-		<div id="footer"> 
-			<p> All rights reserved.</p>
-		</div>		
-</div> <!-- END Container -->
+</div>
+<div id="footer">
+	<p> All rights reserved.</p>
+</div>
+
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"   integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="   crossorigin="anonymous"></script>
 <script src="__PUBLIC__/js/jquery_ui.js" type="text/javascript"></script>
 <script src="__PUBLIC__/jquery-validation-1.15.0/dist/jquery.validate.min.js" type="text/javascript"></script>
 <script src="__PUBLIC__/datatables/media/js/jquery.dataTables.min.js" type="text/javascript"></script>
 <script type="text/javascript">
-$(document).ready(function() {
-	
-
-	$('#goods_table').DataTable({
-    		"order": [[ 2, "desc" ]]
-    	});
+    $(document).ready(function() {
 
 
-   $('input[type="radio"]').click(function() {
-   			if($('input:radio[name="pay_choice"]:checked').val() == "cash")
-			{
-				$('#cash-option').show();
-				$('#insurance-option').hide();
-
-				$('#payment_price').prop('required', true);
-				$('#insurancetext').prop('required', false);
-			}else{
-				$('#insurance-option').show();
-				$('#cash-option').hide();
-
-				$('#insurancetext').prop('required', true);
-				$('#payment_price').prop('required', false);
-				
-
-				$('.cash-radio input').removeAttr('checked');
-				//$('.cash-radio input').buttonset('refresh');
-
-				
-			}
-   	  });
-});
-// Have final list
-$(function () {
-	$('#goods_model').change(function(){
-		var goods_model = $("#goods_model").val();
-		var goods_brand = $("#goods_brand").val();
-		var parent_id = $("#parent_id").val();
-		$.ajax({
-			type:"get",
-		    async:false,
-		    url:"{:U('Goods/getResultAjax')}",
-		    data:{model:goods_model,brand:goods_brand,parent_id:parent_id},
-		    success:function(data){
-		    	  $("#goods_lists").html(data);
-		    }
-		})
-		$('#goods_lists').trigger('change');
-	});
-})
-
-// Narrow to Model
-$(function () {
-	$('#goods_brand').change(function(){
-		var goods_brand = $("#goods_brand").val();
-		$.ajax({
-			type:"get",
-		    async:false,
-		    url:"{:U('Goods/getModelAjax')}",
-		    data:{brand:goods_brand},
-		    success:function(data){
-		    	  $("#goods_model").html(data);
-		    }
-		})
-		//$('#goods_model').trigger('change');
-	});
-})
-
-// Narrow to brands
-$(function(){
-
-	$('#parent_id').change(function(){
-		var parent_id = $("#parent_id").val();
-		$.ajax({
-			type:"get",
-		    async:false,
-		    url:"{:U('Goods/getBrandsAjax')}",
-		    data:{parent_id:parent_id},
-		    success:function(data){
-		    	  $("#goods_brand").html(data);
-		    }
-		})
-		$('#goods_brand').trigger('change');	
-	});
-
-	$('#empty_goods_lists').click(function()
-	{
-		$("#parent_id").val("-1");
-		$("#goods_brand").val("-1");
-		$("#goods_model").val("-1");
-		$("#goods_lists").empty();
-	});
-
-		if($('input:radio[name="pay_choice"]:checked').val() == "cash")
-		{
-			$("#class-option").show();
-			//$("#show_step4,#show_step5,#show_step6").css('display','');	
-		}else{
-			$("#class-option").hide();
-			//$("#show_step4,#show_step5,#show_step6").css('display','none');						
-		}
-	/*End Section*/
+        $('#goods_table').DataTable({
+            "order": [[ 2, "desc" ]]
+        });
 
 
+        $('input[type="radio"]').click(function() {
+            if($('input:radio[name="pay_choice"]:checked').val() == "cash")
+            {
+                $('#cash-option').show();
+                $('#insurance-option').hide();
+
+                $('#payment_price').prop('required', true);
+                $('#insurancetext').prop('required', false);
+            }else{
+                $('#insurance-option').show();
+                $('#cash-option').hide();
+
+                $('#insurancetext').prop('required', true);
+                $('#payment_price').prop('required', false);
+
+
+                $('.cash-radio input').removeAttr('checked');
+                //$('.cash-radio input').buttonset('refresh');
+
+
+            }
+        });
+    });
+    // Have final list
+    $(function () {
+        $('#goods_model').change(function(){
+            var goods_model = $("#goods_model").val();
+            var goods_brand = $("#goods_brand").val();
+            var parent_id = $("#parent_id").val();
+            $.ajax({
+                type:"get",
+                async:false,
+                url:"{:U('Goods/getResultAjax')}",
+                data:{model:goods_model,brand:goods_brand,parent_id:parent_id},
+                success:function(data){
+                    $("#goods_lists").html(data);
+                }
+            })
+            $('#goods_lists').trigger('change');
+        });
+    })
+
+    // Narrow to Model
+    $(function () {
+        $('#goods_brand').change(function(){
+            var goods_brand = $("#goods_brand").val();
+            $.ajax({
+                type:"get",
+                async:false,
+                url:"{:U('Goods/getModelAjax')}",
+                data:{brand:goods_brand},
+                success:function(data){
+                    $("#goods_model").html(data);
+                }
+            })
+            //$('#goods_model').trigger('change');
+        });
+    })
+
+    // Narrow to brands
+    $(function(){
+
+        $('#parent_id').change(function(){
+            var parent_id = $("#parent_id").val();
+            $.ajax({
+                type:"get",
+                async:false,
+                url:"{:U('Goods/getBrandsAjax')}",
+                data:{parent_id:parent_id},
+                success:function(data){
+                    $("#goods_brand").html(data);
+                }
+            })
+            $('#goods_brand').trigger('change');
+        });
+
+        $('#empty_goods_lists').click(function()
+        {
+            $("#parent_id").val("-1");
+            $("#goods_brand").val("-1");
+            $("#goods_model").val("-1");
+            $("#goods_lists").empty();
+        });
+
+        if($('input:radio[name="pay_choice"]:checked').val() == "cash")
+        {
+            $("#class-option").show();
+            //$("#show_step4,#show_step5,#show_step6").css('display','');
+        }else{
+            $("#class-option").hide();
+            //$("#show_step4,#show_step5,#show_step6").css('display','none');
+        }
+		/*End Section*/
 
 
 
 
-	$("#c_mobile").blur(function(){
-		var c_mobile = $(this).val();
-		$('#cunstomer_info').html('');
-		$.ajax({
-			type:"get",
-		    url:"{:U('Order/getCustomerInfoAjax')}",
-		    data:{c_mobile:c_mobile},
-		    dataType: "json",
-		    success:function(data){
-		    	console.log(data);
-		    	if(data.info != 'New Customer')
-		    	{
-			    	$('#c_id').val(data.c_id);
-			    	$('#c_name').val(data.c_name);
-			    	$('#c_name').attr('readonly','true');
-			    	$('#c_age').val(data.c_age);
-			    	$('#c_age').attr('readonly','true');
-			    	$('#c_email').val(data.c_email);
-			    	$('#c_email').attr('readonly','true');
-			    	$('#address').val(data.c_address);
-			    	$('#mobile').val(data.c_mobile);
-			    	$('#consignee').val(data.c_name);
-		    	}else{
-		    		$('#cunstomer_info').html(data.info);
-		    		$('#c_name').val('');
-		    		$('#c_name').removeAttr('readonly');
-		    		$('#c_age').val('');
-		    		$('#c_age').removeAttr('readonly');
-		    		$('#c_email').val('');
-		    		$('#c_email').removeAttr('readonly');
-		    		$('#address').val('');
-			    	$('#mobile').val(c_mobile);
-			    	$('#consignee').val('');
-		    	}
-		    }
-		})		
-	})
 
 
-	// $('#search_goods').click(function()  /* Start here */
-	// {
-	// 	// if($('#goods_model').val() > 0)
-	// 	// {
-	// 	// 	cat_id = $('#goods_cat').val();
-	// 	// }else{
-	// 	// 	cat_id = $('#parent_id').val();
-	// 	// }
+        $("#c_mobile").blur(function(){
+            var c_mobile = $(this).val();
+            $('#cunstomer_info').html('');
+            $.ajax({
+                type:"get",
+                url:"{:U('Order/getCustomerInfoAjax')}",
+                data:{c_mobile:c_mobile},
+                dataType: "json",
+                success:function(data){
+                    console.log(data);
+                    if(data.info != 'New Customer')
+                    {
+                        $('#c_id').val(data.c_id);
+                        $('#c_name').val(data.c_name);
+                        $('#c_name').attr('readonly','true');
+                        $('#c_age').val(data.c_age);
+                        $('#c_age').attr('readonly','true');
+                        $('#c_email').val(data.c_email);
+                        $('#c_email').attr('readonly','true');
+                        $('#address').val(data.c_address);
+                        $('#mobile').val(data.c_mobile);
+                        $('#consignee').val(data.c_name);
+                    }else{
+                        $('#cunstomer_info').html(data.info);
+                        $('#c_name').val('');
+                        $('#c_name').removeAttr('readonly');
+                        $('#c_age').val('');
+                        $('#c_age').removeAttr('readonly');
+                        $('#c_email').val('');
+                        $('#c_email').removeAttr('readonly');
+                        $('#address').val('');
+                        $('#mobile').val(c_mobile);
+                        $('#consignee').val('');
+                    }
+                }
+            })
+        })
 
-	// 	// $.get("{:U('Order/getGoodsListAjax')}",{cat_id:cat_id},function(data)
-	// 	// {
-	// 	// 	$('#goods_lists').html(data);	
-	// 	// });	
 
-	// 	if($('#goods_model').val() != -1 && $('#goods_brand').val() != -1 && $('#parent_id').val() != -1 ){
+        // $('#search_goods').click(function()  /* Start here */
+        // {
+        // 	// if($('#goods_model').val() > 0)
+        // 	// {
+        // 	// 	cat_id = $('#goods_cat').val();
+        // 	// }else{
+        // 	// 	cat_id = $('#parent_id').val();
+        // 	// }
 
-	// 		cat_id = $('#parent_id').val();
-	// 		brand = $('#goods_brand').val();
-	// 		model = $('#goods_model').val();
+        // 	// $.get("{:U('Order/getGoodsListAjax')}",{cat_id:cat_id},function(data)
+        // 	// {
+        // 	// 	$('#goods_lists').html(data);
+        // 	// });
 
-	// 		$.get("{:U('Order/getGoodsListAjax')}",{cat_id:cat_id,brand:brand,model:model},function(data)
-	// 		{
-	// 			if(data==""){
-	// 				alert('There are no goods with selected the search terms');
-	// 			}else{
-	// 				$('#goods_lists').html(data);
-	// 			}
-					
-	// 		});	
+        // 	if($('#goods_model').val() != -1 && $('#goods_brand').val() != -1 && $('#parent_id').val() != -1 ){
 
-	// 	}else{
-	// 		alert('Please select a category, brand or model number');
-	// 	}
-	
-	// });
+        // 		cat_id = $('#parent_id').val();
+        // 		brand = $('#goods_brand').val();
+        // 		model = $('#goods_model').val();
+
+        // 		$.get("{:U('Order/getGoodsListAjax')}",{cat_id:cat_id,brand:brand,model:model},function(data)
+        // 		{
+        // 			if(data==""){
+        // 				alert('There are no goods with selected the search terms');
+        // 			}else{
+        // 				$('#goods_lists').html(data);
+        // 			}
+
+        // 		});
+
+        // 	}else{
+        // 		alert('Please select a category, brand or model number');
+        // 	}
+
+        // });
 
 
-});
+    });
 
-$(function() {
+    $(function() {
 
-});
+    });
 
-$(function(){
- $("#form_order").validate({
-	    rules: {
-	      c_mobile:{
-	      	required : true,
-	      	digits: true,
-	      },
-	      c_name: "required",
-	      consignee: "required",
-	      payment_price: "required",
-	      mobile:{
-	      	required : true,
-	      	digits: true,
-	      },
-	    },
-	    messages: {
-	      c_mobile:{
-	      	required:"Mobile required",
-	      	digits:"Digits only",
-	      },
-	      c_name: "Name required",
-	      consignee:"consignee required",
-	      mobile:{
-	      	required:"mobile required",
-	      	digits:"digits only",
-	      },
-	    }
-	});
-})
+    $(function(){
+        $("#form_order").validate({
+            rules: {
+                c_mobile:{
+                    required : true,
+                    digits: true,
+                },
+                c_name: "required",
+                consignee: "required",
+                payment_price: "required",
+                mobile:{
+                    required : true,
+                    digits: true,
+                },
+            },
+            messages: {
+                c_mobile:{
+                    required:"Mobile required",
+                    digits:"Digits only",
+                },
+                c_name: "Name required",
+                consignee:"consignee required",
+                mobile:{
+                    required:"mobile required",
+                    digits:"digits only",
+                },
+            }
+        });
+    })
 </script>
 </body>
 </html>
