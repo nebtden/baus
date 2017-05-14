@@ -6,7 +6,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" type="text/css" href="jquery.confirm/jquery.confirm.css" />
 	<style type="text/css" media="all">
-		@import url(__PUBLIC__/css/style.css);@import url(__PUBLIC__/css/admin.css);
+		@import url(__PUBLIC__/css/style.css);@import url(__ROOT__/css/admin.css);
 		img {behavior:url('j__PUBLIC__/s/iepngfix.htc') !important;}
 
 		.orderinfo_label{
@@ -21,8 +21,8 @@
 <body>
 <include file="Public:header" />	<div class="main two"> <!-- Container -->
 <include file="Public:sidebar" />
-	<div id="main"> <!-- Main, right side content -->
-		<div id="content"> <!-- Content begins here -->
+	<div class="query"> <!-- Main, right side content -->
+		<div class="start"> <!-- Content begins here -->
 			<fieldset><legend><h2>Top Up Balances</h2></legend>
 				<form action="{:U('Index/clearTopUp')}" method="POST">
 					This order has a balance of Kshs.{$balance}<br /><br />

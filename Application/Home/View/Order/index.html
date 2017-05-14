@@ -7,7 +7,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" type="text/css" href="__PUBLIC__/jquery.confirm/jquery.confirm.css" />
 	<style type="text/css" media="all">
-		@import url(__PUBLIC__/css/style.css);@import url(__PUBLIC__/css/admin.css);
+		@import url(__PUBLIC__/css/style.css);@import url(__ROOT__/css/admin.css);
 		img {behavior:url('j__PUBLIC__/s/iepngfix.htc') !important;}
 		.error{color:red;}
 		.orderinfo_label{
@@ -30,8 +30,8 @@
 <body>
 <include file="Public:header" />	<div class="main two"> <!-- Container -->
 <include file="Public:order" />
-	<div id="main"> <!-- Main, right side content -->
-		<div id="content" style="width:100%"> <!-- Content begins here -->
+	<div class="query"> <!-- Main, right side content -->
+		<div class="start" style="width:100%"> <!-- Content begins here -->
      
 			<form method="post" action="{:U('Order/makeOrder')}" name="formd" id="form_order"><!-- Form -->
 				<!-- Fieldset -->

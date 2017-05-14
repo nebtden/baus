@@ -5,7 +5,7 @@
 	<title>Baus Optical</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<style type="text/css" media="all">
-		@import url(__PUBLIC__/css/style.css);@import url(__PUBLIC__/css/admin.css);
+		@import url(__PUBLIC__/css/style.css);@import url(__ROOT__/css/admin.css);
 		img {behavior:url('__PUBLIC__/js/iepngfix.htc') !important;}
 		input[type=radio] {margin-top: 10px}
 		.input_field .error{color:red;float:none;display: inline;}
@@ -18,8 +18,8 @@
 <body>
 <include file="Public:header" />	<div class="main two"> <!-- Container -->
 	<include file="Public:sidebar" />
-	<div id="main"> <!-- Main, right side content -->
-		<div id="content"> <!-- Content begins here -->
+	<div class="query"> <!-- Main, right side content -->
+		<div class="start"> <!-- Content begins here -->
 				
 				<form method="post" action="{:U('Goods/updateGoods')}" name="formd" id="goods_form"><!-- Form -->
 				<!-- Fieldset -->
