@@ -1,32 +1,25 @@
-	<div id="header"> <!-- Header -->
-		<div id="title">
-			Baus Optical		</div>
-		<div class="logged">
-			<p>Welcome, {$Think.session.member_name}</p>
-			<a href="{:U('Login/Logout')}" >Sign Out</a></p>
-		</div>
-	</div>	<!-- Sidebar -->	
-	<div id="sidebar"> 
-		<div class="sidebox">
-			<span class="stitle">Navigation</span>
-			<div id="navigation">
-				<div class="sidenav"><!-- Sidenav -->
+<div class="nav">
+	<ul class="on"  >
+		<ol >
+			<a class="" href="#">Navigation</a>
 
-					<?php if(($member_group_info['manager'] == 1) || ($member_group_info['seller'] == 1)){ ?>
+		</ol>
+		<li>
+			<?php if(($member_group_info['manager'] == 1) || ($member_group_info['seller'] == 1)){ ?>
 
-						<div class="navhead_blank"><span><a href="{:U('Index/viewprintTopUp')}" title=""> Top Up Payments</a></span></div>
-					<?php } ?>
+			<a href="{:U('Index/viewprintTopUp')}" title=""> Top Up Payments</a>
+			<?php } ?>
 
+			<?php if(($member_group_info['manager'] == 1) || ($member_group_info['cash_confirm'] == 1)){ ?>
+			<a href="{:U('index/cashConfirm',array('reverse_status'=>0))}" title="">Cash Confirm</a>
+			<?php } ?>
 
-					<?php if(($member_group_info['manager'] == 1) || ($member_group_info['cash_confirm'] == 1)){ ?>
-					<div class="navhead_blank"><span><a href="{:U('index/cashConfirm',array('reverse_status'=>0))}" title="">Cash Confirm</a></span></div>
-					<?php } ?>
+		</li>
+	</ul>
 
-
-
-					<?php } ?>	
-				</div>
-			
-		</div> <!-- END Navigation -->
-		</div>	
-	</div> 
+</div> <!-- END Navigation -->
+<div class="by">
+	<div class="right">
+		<!--<a href="/admin/order" class="list on"></a>-->
+	</div>
+</div>

@@ -1,0 +1,81 @@
+/* YUI 3.8.1 (build 5795) Copyright 2013 Yahoo! Inc. */
+html { color:#000; background:#fff; }
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td { margin:0; padding:0; }
+table { border-collapse:collapse;	border-spacing:0; }
+fieldset,img { border:0; }
+address,caption,cite,code,dfn,em,strong,th,var { font-style:normal; font-weight:normal; }
+ol, ul { list-style:none; }
+caption,th { text-align:left; }
+h1,h2,h3,h4,h5,h6 {	font-size:100%;	font-weight:normal; }
+q:before,q:after { content:''; }
+abbr,acronym { border:0; font-variant:normal; }
+sup { vertical-align:text-top; }
+sub { vertical-align:text-bottom; }
+input,textarea,select { font-family:inherit; font-size:inherit; font-weight:inherit; }
+legend { color:#000; }
+
+/* Global */
+body { font-size:12px; font-family:Arial, Helvetica, Verdana, sans-serif, 'Microsoft Yahei'; color:#666; }
+a { text-decoration:none; outline:none; color:#06F; }
+a:hover { color:#F60; }
+input, textarea { outline:none; }
+button { filter:chroma(color=#000000); height:auto; }
+i { float:left; width:16px; height:16px; }
+.left { float:left; }
+.right { float:right; }
+.mouseon:hover { background:#fdfdfd; }
+.pointer { cursor:pointer }
+.fix { zoom:1; }
+.fix:after { content:"."; display:block; clear:both; visibility:hidden; height:0; }
+.hidden { display:none; }
+.strong, strong, th { font-weight:bold; }
+.red { color:#e20000; }
+.green { color:#093; }
+.orange { color:#f60; }
+.blue { color:#06F; }
+.grey { color:#ccc; }
+.error { color:#f00; padding:4px 0 2px; }
+.radius {	-moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; }
+input.need { background:url(../images/need.png) right center no-repeat; }
+input.readonly { background-color:#f9f9f9; }
+input.spinner { padding:3px; }
+input.i, select.i, textarea.i { border:1px solid #ddd; padding:6px; border-radius:2px; }
+select.i { padding:5px; }
+.message, .warning, .success { border:1px solid #f6f6f6; border-width:1px 0; padding:9px 0 8px 32px; }
+.message { background:url(../images/ico/message.png) no-repeat 9px; }
+.warning { background:url(../images/ico/warning.png) no-repeat 9px; }
+.alert { position:absolute; background:#f60; color:#fff; border:1px solid #fff; padding:12px 40px 10px; font-size:14px; }
+.down { padding-left:10px; background:url(../images/order.down.png) no-repeat left center; }
+.up { padding-left:10px; background:url(../images/order.up.png) no-repeat left center; }
+
+/* Common */
+.lister { line-height:16px; }
+.lister tr td, .lister tr th { padding:4px 0; border-bottom:1px solid #f9f9f9; }
+.lister tr td.c0, .lister tr th.c0 { text-align:right; }
+.lister tr td.cc, .lister tr th.cc { text-align:center; }
+.lister tr.noline td, .lister tr.noline th { border-bottom:none; }
+.lister>ul { display:table; width:100%; border-bottom:1px solid #f9f9f9; }
+.lister>ul.r0 { font-weight:bold; }
+.lister>ul li { display:table-cell; padding:4px 0; }
+.lister>ul li.c0 { text-align:right; }
+.pager { padding-top:15px; text-align:right; }
+.pager a { display:inline-block; line-height:20px; padding:0 5px; min-width:10px; margin-left:5px; text-align:center; border:1px solid #f6f6f6; }
+.pager a:hover { background:#f6f6f6; }
+.pager a.on { color:#ccc; border-color:#fff; cursor:default; }
+.pager .counter { margin-right:15px; }
+.pager .counter span { margin:0 3px; font-weight:bold; }
+
+/* JUI Custom */
+.ui-autocomplete { max-height:230px; overflow:auto; overflow-x:hidden; z-index:1000; }
+.ui-widget-overlay { background:#eee url(images/overlay.png) 50% 50%; opacity:0.5; filter:Alpha(Opacity=50); }
+.custom-combobox { position:relative; display:inline-block; font-size:62.5%; }
+.custom-combobox-toggle { position:absolute; top:0; bottom:0; margin-left:-1px; padding:0; }
+.custom-combobox-input { margin:0; padding:0.3em; background:#fff; }
+.ui-dialog { padding:0; border:none; border-radius:0; }
+.ui-dialog .ui-dialog-titlebar { padding:10px; border:0; border-radius:0; background:#06C; color:#fff; }
+.ui-dialog .ui-dialog-titlebar-close { right:10px; background:none; border:0; background:url(../images/ico/close.white.png) no-repeat center; outline:none; }
+.ui-dialog .ui-state-default .ui-icon { background:none; border:0; }
+
+/*
+.ui-spinner { padding:2px 0; }
+*/

@@ -1,0 +1,130 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head><!-- AUTH{auth model=admin} --><!-- MARK{mark} -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Order | {$G.config.sitename} - {$G.config.siteinfo}</title>
+    <link href="/css/jqueryui.css" rel="stylesheet" type="text/css" />
+    <link href="/css/admin.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="/scripts/jquery.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.ui.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.form.js"></script>
+    <script type="text/javascript" src="/scripts/global.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $('.proccess').click(function(){
+                var href = $(this).attr('href');;
+                App.window({ href:href, title:'Order Proccess', width:900, height:600 });
+                return false;
+            });
+            $('#date').autodate();
+            $('#edate').autodate();
+        })
+    </script>
+    <style type="text/css">
+        .shift .ico { padding-left:32px; background:url(/images/ico/status.0.png) no-repeat 8px center; }
+        .shift .status-1 { background-image:url(/images/ico/status.1.png); }
+        .shift .status-2 { background-image:url(/images/ico/status.2.png); }
+        .shift .status-3 { background-image:url(/images/ico/status.3.png); }
+        .shift .status-4 { background-image:url(/images/ico/status.4.png); }
+        .lister tr td, .lister tr th { border-bottom-color:#eee; }
+        .lister tr td.status { padding-left:16px; }
+    </style>
+</head>
+
+<body>
+<div class="header">{include file="admin/header.php" subject=order}</div>
+<div class="main two">
+    <div class="nav">{include file="admin/order/nav.php"}</div>
+    <div class="by"><div class="right"><a href="/admin/order" class="list on"></a></div></div>
+    <div class="query">
+        <form method="get" action="/admin/order/">
+            <div><strong>Date</strong><input id="date" name="date" size="10" value="{$smarty.get.date}" class="i" />-<input id="edate" name="edate" size="10" value="{$smarty.get.edate}" class="i" /></div>
+            <div><strong>Responser</strong>
+                <select name="responserid" class="i">
+                    <option value="0"></option>
+                    {admin name=vv limit=20 order=admin_name admin_is_service=1}<option value="{$vv.id}" {if $smarty.get.responserid==$vv.id }selected{/if}> {$vv.username|ucfirst}</option>{/admin}
+                </select>
+            </div>
+            <div><strong>Keyword</strong><input id="keyword" name="keyword" size="20" value="{$smarty.get.keyword}" class="i" /></div>
+            <div><strong>Order sn</strong><input id="sn" name="sn" size="20" value="{$smarty.get.sn}" class="i" /></div>
+            <div><strong>Sku</strong><input id="sku" name="sku" size="20" value="{$smarty.get.sku}" class="i" /></div>
+            <!--   <div><strong>Delivery</strong><select id="delivery" name="delivery" class="i"><option></option><option value="0" {if $smarty.get.delivery==0 && $smarty.get.delivery!=''}selected{/if}>Self Collect</option><option value="1" {if $smarty.get.delivery==1}selected{/if}>Deliver To Doorstep</option></select></div>-->
+            <div><strong>Payment</strong><select id="payment" name="payment" class="i"><option></option><option value="0" {if $smarty.get.payment==0 && $smarty.get.payment!='' }selected{/if}>Pay in Advance</option><option value="1" {if $smarty.get.payment==1}selected{/if}>Pay on Delivery</option></select></div>
+            <div><strong>Store</strong><input id="store" name="store" size="20" value="{$smarty.get.store}" class="i" /></div>
+
+            {if $smarty.get.status=='100'} <div><strong>Order Status</strong><select name="o_status" class="i">
+                    <option></option>
+                    <option value="0" {if $smarty.get.o_status==0 && $smarty.get.o_status!='' }selected{/if}> Pending Confirm</option>
+                    <option value="10" {if $smarty.get.o_status==10}selected{/if}> Pending Package</option>
+                    <option value="15" {if $smarty.get.o_status==15}selected{/if}> Pending Dispatch</option>
+                    <option value="25" {if $smarty.get.o_status==25}selected{/if}> Pending Receive</option>
+                    <option value="50" {if $smarty.get.o_status==50}selected{/if}> Inbound Confirm</option>
+                    <option value="70" {if $smarty.get.o_status==70}selected{/if}> Completed</option>
+                    <option value="60" {if $smarty.get.o_status==60}selected{/if}> Cancelled</option>
+                </select></div>{/if}
+            <input type="hidden" name="desc" value="{$smarty.get.desc}" />
+            <input type="hidden" name="status" value="{$smarty.get.status}" />
+            <input type="hidden" name="type" value="{$smarty.get.type}" />
+            <div><button type="submit">Search</button></div>
+        </form>
+    </div>
+    <div class="start">
+
+        <p>&nbsp;</p>
+        <div class="shift">
+            <a href="/admin/order/?status=0" class="{if $smarty.get.status=='0' or $smarty.get.status==''}on{/if}">New Orders</a>
+            <a href="/admin/order/?status=1" class="{if $smarty.get.status=='1'}on{/if}">New Pre Orders</a>
+            <a href="/admin/order/?status=10" class="{if $smarty.get.status=='10'}on{/if}">Confirmed Orders</a>
+            <a href="/admin/order/?status=11" class="{if $smarty.get.status=='11'}on{/if}">Confirmed Pre Orders</a>
+            <a href="/admin/order/?status=100" class="{if $smarty.get.status=='100'}on{/if}">All Orders</a>
+
+        </div>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="lister">
+            <tr>
+                <th width="50"></th>
+                <th width="8%"><a href="{url s1=1 order='order_sn' desc=!$smarty.get.desc}" class="{if $order=='order_sn'}up{elseif $order=='order_sn DESC'}down{/if}">SN</a></th>
+                <th width="5%"></th>
+                <th>Buyer</th>
+                <th>Received Amount</th>
+                <th>Order Status</th>
+                <th>Delivery Date</th>
+                <th>Print Date</th>
+                <th class="c0"><a href="{url s1=1 order='order_amount' desc=!$smarty.get.desc}" class="{if $order=='order_amount'}up{elseif $order=='order_amount DESC'}down{/if}">Amount</a></th>
+            </tr>
+            {order name=v limit=10 page=$G.segment.1 order='order_id DESC' where=$where keyword=$smarty.get.keyword sku=$smarty.get.sku delivery=$smarty.get.delivery payment=$smarty.get.payment store=$smarty.get.store sn=$smarty.get.sn detail=1}
+            <tr class="mouseon">
+                <td class="status"><img src="/images/ico/status.{$v.status}.png" /></td>
+                <td>
+                    <a href="/admin/order/view/{$v.pay_sn}.html?porder=0" style="{if $v.order_state==0}text-decoration:line-through;color:#ccc;{/if}">{$v.sn}</a>   {if $v.pre_order!=0}Pre Order{/if} {if $v.pick_up==2}Global{/if}
+                    {if $v.pay_mark}<div class="green">Transaction NO.:<span class="red">{$v.pay_mark}</span></div>{/if}
+                    <div class="grey">{$v.store_name|ucfirst}{if $v.order_from==2} - Wap{/if}{if $v.order_from==3} - Android{/if}</div>
+                     <div class="green">{if $v.add_time} {else}-{/if}</div>
+                </td>
+                <td class="active">
+                    {if $v.signed==0}<a href="/admin/order/modify/{$v.pay_sn}.html?porder=0" class="modify"></a>{/if}
+                </td>
+                <td>
+                    {$v.reciver_firstname|ucfirst} {$v.reciver_lastname|ucfirst}  -
+                    <span class="orange" title="{$v.reciver_info.phone|replace:',':'<br>'}">{$v.reciver_info.phone}</span>
+                    <span>{if $v.payoption==0}- Self Collect{elseif $v.payoption==1}- Deliver To Doorstep{/if}</span>
+                    {if !$v.payment}<span class="green">- Pay in Advance</span>{/if}
+                    <div class="grey">{$v.reciver_info.address|ucfirst|default:'-'}</div>
+                    <ul>{foreach $v.products as $p}<li><a href="{$G.config.weburl}/item-{$p.goods_id}.html" target="_blank">{$p.goods_name}</a> <span class="grey">× {$p.goods_num}</span> {if $p.pick_up==1}<span class="red">for merchant stock</span>{/if} {if $p.goods_type==2}<span  class="red">Flash sales</span>{/if}</li>{/foreach}</ul>
+                </td>
+                <td ><strong>{$v.received+0|price}</strong></td>
+                <td><strong>{if $v.signed==0}Pending Confirm{/if}{if $v.signed==10}Pending Package{/if}{if $v.signed==15}Pending Dispatch{/if}{if $v.signed==25}Pending Receive{/if}{if $v.signed==70}Completed{/if}{if $v.signed==60}Cancelled{/if}{if $v.signed==50}Return Inbound{/if}</strong></td>
+                <td>{if $v.delivery_date}{$v.delivery_date|date_format:'%Y-%m-%d'}{else}-{/if}</td>
+                <td>{if $v.printdate!=0}{$v.printdate}{elseif $v.printwdate!=0}{$v.printwdate}{else}-{/if}</td>
+                <td class="c0 red" title="￥{round($v.order_amount/14, 2)}"><strong>{$v.amount|price}</strong><div class="grey">{$v.shipping_fee|price}</div><div class="grey">{$v.coupon_price|price}</div></td>
+            </tr>
+            {/order}
+        </table>
+        <div class="pager">{include file='admin/pager.php'}</div>
+    </div>
+</div>
+<div class="footer">{include file="admin/footer.php"}</div>
+</body>
+</html>

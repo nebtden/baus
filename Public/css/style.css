@@ -284,35 +284,30 @@ height : 85px;
 
 /* SIDEBAR */
 /* ---------------------------------------*/
-#container #sidebar { 
-width : 251px; 
-margin-left:15px;
-/*margin-top:65px;*/
-float:left;
-} 
 
-#sidebar .sidebox { 
-margin-bottom : 15px; 
-width : 231px; 
-background : #efefef url('../assets/sidebar_box_rep.png') 100% 0 repeat-y; 
+
+/*#sidebar .sidebox {
+margin-bottom : 15px;
+width : 231px;
+background : #efefef url('../assets/sidebar_box_rep.png') 100% 0 repeat-y;
 border-right:1px solid #efefef;
 border-top:1px solid #efefef;
-border-bottom: 5px solid #ccc; 
+border-bottom: 5px solid #ccc;
 padding:10px;
 -moz-border-radius-topright:5px;
 -webkit-border-top-right-radius:5px;
-} 
+}
 
-.sidebox p { 
+.sidebox p {
 margin:0;
 padding:0;
 margin-bottom:3px;
-} 
+}
 
-.sidebox p b { 
-font-weight : bold; 
-color : #eee; 
-} 
+.sidebox p b {
+font-weight : bold;
+color : #eee;
+}*/
 
 a.close {
  float:right;
@@ -706,7 +701,7 @@ margin-top:15px;
 
 table { 
  width : 100%; 
- border : 1px solid #666;
+ /*border : 1px solid #666;*/
 } 
 
 table table {
@@ -723,7 +718,7 @@ color : #fff;
 
 tbody tr td { 
 padding : 6px 5px; 
-background : #efefef; 
+/*background : #efefef; */
 color : #333; 
 } 
 

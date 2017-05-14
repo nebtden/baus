@@ -1,61 +1,57 @@
-	<div id="header"> <!-- Header -->
-		<div id="title">
-			Baus Optical		</div>
-		<div class="logged">
-			<p>Welcome, {$Think.session.member_name}</p>
-			<a href="{:U('Login/Logout')}" >Sign Out</a></p>
-		</div>
-	</div>	<!-- Sidebar -->	
-	<div id="sidebar"> 
-		<div class="sidebox">
-			<span class="stitle">Navigation</span>
-			<div id="navigation">
-				<div class="sidenav"><!-- Sidenav -->
+
+<div class="nav">
+    <ul class="on"  >
+        <ol >
+            <a class="" href="#">Navigation</a>
+
+        </ol>
 
 
+        <li  >
+            <?php if(($member_group_info['manager'] == 1) || ($member_group_info['seller'] == 1)){ ?>
+            <a href="{:U('Order/index')}" title="">New Order</a></span>
 
-					<?php if(($member_group_info['manager'] == 1) || ($member_group_info['seller'] == 1)){ ?>
-						<div class="navhead_blank"><span><a href="{:U('Order/index')}" title="">New Order</a></span></div>
+            <?php } ?>
 
-					<?php } ?>
-					
-					<?php if(($member_group_info['manager'] == 1) || ($member_group_info['corporate'] == 1)){ ?>
+            <?php if(($member_group_info['manager'] == 1) || ($member_group_info['corporate'] == 1)){ ?>
 
-						<?php if($member_group_info['group_name']=='corporate_manager'){ ?>
-							<div class="navhead_blank"><span><a href="{:U('Index/index',array('order_step'=>4))}" title="">Corporate Confirm</a></span></div>
-						<?php } ?>
-						<!-- Check on this? -->
-						<?php if($member_group_info['group_name']=='customer_care'){ ?>
-							<div class="navhead_blank"><span><a href="{:U('Index/index',array('order_step'=>5))}" title="">Customer Card Confirm</a></span></div>
-							<div class="navhead_blank"><span><a href="{:U('Index/index',array('order_step'=>6))}" title="">Customer Confirm</a></span></div>
-						<?php } ?>
+            <?php if($member_group_info['group_name']=='corporate_manager'){ ?>
+            <a href="{:U('Index/index',array('order_step'=>4))}" title="">Corporate Confirm</a></span>
+            <?php } ?>
+            <!-- Check on this? -->
+            <?php if($member_group_info['group_name']=='customer_care'){ ?>
+            <a href="{:U('Index/index',array('order_step'=>5))}" title="">Customer Card Confirm</a></span>
+            <a href="{:U('Index/index',array('order_step'=>6))}" title="">Customer Confirm</a></span>
+            <?php } ?>
 
-					<?php } ?>
+            <?php } ?>
 
-					<?php if($member_group_info['internal-print']){ ?>
-						<div class="navhead_blank"><span><a href="{:U('Index/index',array('order_step'=>7))}" title="">Print Order</a></span></div>
-					<?php } ?>
+            <?php if($member_group_info['internal-print']){ ?>
+            <a href="{:U('Index/index',array('order_step'=>7))}" title="">Print Order</a></span>
+            <?php } ?>
 
-					<?php if(($member_group_info['manager'] == 1) || ($member_group_info['warehouse'] == 1)){ ?>
-					<div class="navhead_blank"><span><a href="{:U('Index/index',array('order_step'=>8))}" title="">WorkShop Process</a></span></div>
-					<?php } ?>
+            <?php if(($member_group_info['manager'] == 1) || ($member_group_info['warehouse'] == 1)){ ?>
+            <a href="{:U('Index/index',array('order_step'=>8))}" title="">WorkShop Process</a></span>
+            <?php } ?>
 
-					<?php if($member_group_info['quality'] == 1 && $member_group_info['group_name']=='quality'){ ?>
-					<div class="navhead_blank"><span><a href="{:U('Index/index',array('order_step'=>9))}" title="">Quality Process</a></span></div>
-					<?php } ?>
+            <?php if($member_group_info['quality'] == 1 && $member_group_info['group_name']=='quality'){ ?>
+            <a href="{:U('Index/index',array('order_step'=>9))}" title="">Quality Process</a></span>
+            <?php } ?>
 
-					<?php if(($member_group_info['manager'] == 1) || ($member_group_info['balance'] == 1)){ ?>
-					<div class="navhead_blank"><span><a href="{:U('Index/index',array('order_step'=>11))}" title="">Balance & Close</a></span></div>
-					<?php } ?>
-
-
-					<?php if($member_group_info['group_name']=="admin"){ ?>
-					<div class="navhead_blank"><span><a href="{:U('index/viewCancelledOrders')}" title="">Cancelled Orders</a></span></div>
-					<?php } ?>
+            <?php if(($member_group_info['manager'] == 1) || ($member_group_info['balance'] == 1)){ ?>
+            <a href="{:U('Index/index',array('order_step'=>11))}" title="">Balance & Close</a></span>
+            <?php } ?>
 
 
-				</div>
-			
-		</div> <!-- END Navigation -->
-		</div>	
-	</div> 
+            <?php if($member_group_info['group_name']=="admin"){ ?>
+            <a href="{:U('index/viewCancelledOrders')}" title="">Cancelled Orders</a></span>
+            <?php } ?>
+        </li>
+
+    </ul>
+</div>
+<div class="by">
+    <div class="right">
+        <!--<a href="/admin/order" class="list on"></a>-->
+    </div>
+</div>

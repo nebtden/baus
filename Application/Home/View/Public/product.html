@@ -1,26 +1,25 @@
-	<div id="header"> <!-- Header -->
-		<div id="title">
-			Baus Optical		</div>
-		<div class="logged">
-			<p>Welcome, {$Think.session.member_name}</p>
-			<a href="{:U('Login/Logout')}" >Sign Out</a></p>
-		</div>
-	</div>	<!-- Sidebar -->	
-	<div id="sidebar"> 
-		<div class="sidebox">
-			<span class="stitle">Navigation</span>
-			<div id="navigation">
-				<div class="sidenav"><!-- Sidenav -->
+<div class="nav">
+	<ul class="on"  >
+		<ol >
+			<a class="" href="#">Navigation</a>
 
-					<?php if(($member_group_info['manager'] == 1) || ($member_group_info['goods_manager'] == 1)){ ?>
-					<div class="navhead_blank"><span><a href="{:U('Goods/goodsList')}" title="">Goods List</a></span></div>
-					<div class="navhead_blank"><span><a href="{:U('Goods/categoryList')}" title="">Category manager</a></span></div>
-					<div class="navhead_blank"><span><a href="{:U('Goods/brandList')}" title="">Brand manager</a></span></div>
-					<!-- <div class="navhead_blank"><span><a href="{:U('Goods/attributeGroupList')}" title="">Attribute Group Manager</a></span></div>
-					<div class="navhead_blank"><span><a href="{:U('Goods/attributeList')}" title="">Attribute Manager</a></span></div> -->
-					<?php } ?>	
-				</div>
-			
-		</div> <!-- END Navigation -->
-		</div>	
-	</div> 
+		</ol>
+
+
+		<li >
+			<?php if(($member_group_info['manager'] == 1) || ($member_group_info['goods_manager'] == 1)){ ?>
+			<div class="navhead_blank"><span><a href="{:U('Goods/goodsList')}" title="">Goods List</a></span></div>
+			<div class="navhead_blank"><span><a href="{:U('Goods/categoryList')}" title="">Category manager</a></span></div>
+			<div class="navhead_blank"><span><a href="{:U('Goods/brandList')}" title="">Brand manager</a></span></div>
+			<!-- <div class="navhead_blank"><span><a href="{:U('Goods/attributeGroupList')}" title="">Attribute Group Manager</a></span></div>
+            <div class="navhead_blank"><span><a href="{:U('Goods/attributeList')}" title="">Attribute Manager</a></span></div> -->
+			<?php } ?>
+		</li>
+
+	</ul> <!-- END Navigation -->
+</div>
+<div class="by">
+	<div class="right">
+		<!--<a href="/admin/order" class="list on"></a>-->
+	</div>
+</div>

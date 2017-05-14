@@ -1,25 +1,24 @@
-	<div id="header"> <!-- Header -->
-		<div id="title">
-			Baus Optical		</div>
-		<div class="logged">
-			<p>Welcome, {$Think.session.member_name}</p>
-			<a href="{:U('Login/Logout')}" >Sign Out</a></p>
-		</div>
-	</div>	<!-- Sidebar -->	
-	<div id="sidebar"> 
-		<div class="sidebox">
-			<span class="stitle">Navigation</span>
-			<div id="navigation">
-				<div class="sidenav"><!-- Sidenav -->
 
-					<?php if($member_group_info['manager'] == 1){ ?>
+<div class="nav">
+	<ul class="on"  >
+		<ol >
+			<a class="" href="#">Navigation</a>
 
-					<div class="navhead_blank"><span><a href="{:U('Index/changePassword')}" title="">Change password</a></span></div>
-					<div class="navhead_blank"><span><a href="{:U('Member/index')}" title="">Member</a></span></div>
-					<div class="navhead_blank"><span><a href="{:U('Member/memberGroup')}" title="">Member Group</a></span></div>
-					<?php } ?>
-				</div>
-			
-		</div> <!-- END Navigation -->
-		</div>	
-	</div> 
+		</ol>
+
+		<li  >
+			<?php if($member_group_info['manager'] == 1){ ?>
+
+			<a href="{:U('Index/changePassword')}" title="">Change password</a>
+			<a href="{:U('Member/index')}" title="">Member</a>
+			<a href="{:U('Member/memberGroup')}" title="">Member Group</a>
+			<?php } ?>
+		</li>
+
+	</ul>
+</div>
+<div class="by">
+	<div class="right">
+		<!--<a href="/admin/order" class="list on"></a>-->
+	</div>
+</div>

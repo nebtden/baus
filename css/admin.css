@@ -8,7 +8,7 @@ html { background:#fff; }
 /*.header li.logo{*/
     /*padding-right: 30px;*/
 /*}*/
-.header li.logo a { float:left; width:180px; height:60px; background:url(../images/logo.gif) center no-repeat; }
+.header li.logo a { float:left; width:230px; height:60px; background:url(../Public/images/logo.gif) center no-repeat; }
 .header li.module { top:22px; left:300px; font-size:15px; font-family:Verdana; }
 .header li.module a { float:left; padding:0 20px; border-left:1px solid #eee; color:#666; }
 .header li.module a.frist { border-left:none; padding-left:0; }
