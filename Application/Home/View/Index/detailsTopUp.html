@@ -1,86 +1,99 @@
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<meta http-equiv="Content-Type"
+      content="text/html; charset=utf-8"/><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-	<title>Baus Optical</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link rel="stylesheet" type="text/css" href="jquery.confirm/jquery.confirm.css" />
-	<style type="text/css" media="all">
-		@import url(__PUBLIC__/css/style.css);@import url(__ROOT__/css/admin.css);
-		img {behavior:url('j__PUBLIC__/s/iepngfix.htc') !important;}
+    <title>Baus Optical</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" type="text/css" href="jquery.confirm/jquery.confirm.css"/>
+    <style type="text/css" media="all">
+        @import url(__PUBLIC__/css/style.css);
+        @import url(__ROOT__/css/admin.css);
 
-		.orderinfo_label{
-			display: inline-block;
-		    width: 30%;
-		  	text-align: left;
-		}
-	</style>	
-	
+        img {
+            behavior: url('j__PUBLIC__/s/iepngfix.htc') !important;
+        }
+
+        .orderinfo_label {
+            display: inline-block;
+            width: 30%;
+            text-align: left;
+        }
+    </style>
+
 
 </head>
 <body>
-<include file="Public:header" />	<div class="main two"> <!-- Container -->
-<include file="Public:sidebar" />
-	<div class="query"> <!-- Main, right side content -->
-		<div class="start"> <!-- Content begins here -->
-			<fieldset><legend><h2>Top Up Balances</h2></legend>
-				<form action="{:U('Index/clearTopUp')}" method="POST">
-					This order has a balance of Kshs.{$balance}<br /><br />
-					<div>
-						Please select the payment method<br />
-						<input name="top_up_pay_method" class="test-with-prop" type="radio" value="cash"/> Quick Cash&nbsp;&nbsp;&nbsp;&nbsp; 
-		                <input name="top_up_pay_method" class="test-with-prop" type="radio" value="m-pesa" /> M-Pesa&nbsp;&nbsp;&nbsp;&nbsp;
-		                <input name="top_up_pay_method" class="test-with-prop" type="radio" value="cheque" /> Cheque&nbsp;&nbsp;&nbsp;&nbsp;
-		                <input name="top_up_pay_method" class="test-with-prop" type="radio" value="card" /> Card&nbsp;&nbsp;&nbsp;&nbsp;
-		            </div>
-		                <br /><br />
-			  			<div class="orderinfo_label"> Recevied Amount</div> <input type="text" id="recevied_amount" name="recevied_amount" value="" required /><br />
-			  			<div class="orderinfo_label"> Remark</div> <input type="text" name="remark" value="" /><br />
-			  			<div class="orderinfo_label">Balance</div> <input type="text" name="balance_remaining" value="" readonly /><br />
-			  			<input type="hidden" name="order_id" value="{$order_info['order_id']}">
-			  			<input id="save" class="submit" type="submit" value="Submit" />
-		  		</form>
-			</fieldset>
-		</div>
-	</div>
+<include file="Public:header"/>
+<div class="main two"> <!-- Container -->
+    <include file="Public:sidebar"/>
+    <div class="query"> <!-- Main, right side content -->
+
+    </div>
+    <div class="start"> <!-- Content begins here -->
+        <fieldset>
+            <legend><h2>Top Up Balances</h2></legend>
+            <form action="{:U('Index/clearTopUp')}" method="POST">
+                This order has a balance of Kshs.{$balance}<br/><br/>
+                <div>
+                    Please select the payment method<br/>
+                    <input name="top_up_pay_method" class="test-with-prop" type="radio" value="cash"/> Quick Cash&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input name="top_up_pay_method" class="test-with-prop" type="radio" value="m-pesa"/> M-Pesa&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input name="top_up_pay_method" class="test-with-prop" type="radio" value="cheque"/> Cheque&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input name="top_up_pay_method" class="test-with-prop" type="radio" value="card"/> Card&nbsp;&nbsp;&nbsp;&nbsp;
+                </div>
+                <br/><br/>
+                <div class="orderinfo_label"> Recevied Amount</div>
+                <input type="text" id="recevied_amount" name="recevied_amount" value="" required/><br/>
+                <div class="orderinfo_label"> Remark</div>
+                <input type="text" name="remark" value=""/><br/>
+                <div class="orderinfo_label">Balance</div>
+                <input type="text" name="balance_remaining" value="" readonly/><br/>
+                <input type="hidden" name="order_id" value="{$order_info['order_id']}">
+                <input id="save" class="submit" type="submit" value="Submit"/>
+            </form>
+        </fieldset>
+    </div>
+
 </div>
-	<script src="https://code.jquery.com/jquery-1.12.4.min.js"   integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="   crossorigin="anonymous"></script>
-	<script src="__PUBLIC__/js/jquery_ui.js" type="text/javascript"></script>
-	<script src="__PUBLIC__/js/wysiwyg.js" type="text/javascript"></script>
-	<!-- <script src="__PUBLIC__/js/functions.js" type="text/javascript"></script> -->
-	<script>
-	$(document).ready(function(){
-			$('#save').hide();
-		  $(".test-with-prop").on("click", function () {
-				if ($("input:radio[name=top_up_pay_method]").is(":checked")) {
-					$('#save').show();
-				}
-				// else{
-				//     alert('nothing');
-				// }
-			});
-	});
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"
+        integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="__PUBLIC__/js/jquery_ui.js" type="text/javascript"></script>
+<script src="__PUBLIC__/js/wysiwyg.js" type="text/javascript"></script>
+<!-- <script src="__PUBLIC__/js/functions.js" type="text/javascript"></script> -->
+<script>
+    $(document).ready(function () {
+        $('#save').hide();
+        $(".test-with-prop").on("click", function () {
+            if ($("input:radio[name=top_up_pay_method]").is(":checked")) {
+                $('#save').show();
+            }
+            // else{
+            //     alert('nothing');
+            // }
+        });
+    });
 
-	$('#recevied_amount').change(function(){
+    $('#recevied_amount').change(function () {
 
-			var recevied_amount = $('input:text[name="recevied_amount"]').val();
+        var recevied_amount = $('input:text[name="recevied_amount"]').val();
 
-			var balance_remaining = {$balance} - recevied_amount;
-			
-			console.log(balance_remaining);
+        var balance_remaining = {$balance} - recevied_amount;
 
-			if(isNaN(balance_remaining)){
-				$('#save').hide();
-				$('input:text[name="balance_remaining"]').val("Balance can only be digits")
-			}else if(balance_remaining<0){
-				$('#save').hide();
-				$('input:text[name="balance_remaining"]').val(balance_remaining);
-			}else{
-				$('#save').show();
-				$('input:text[name="balance_remaining"]').val(balance_remaining);
-			}
+        console.log(balance_remaining);
 
-	});
-	</script>
+        if (isNaN(balance_remaining)) {
+            $('#save').hide();
+            $('input:text[name="balance_remaining"]').val("Balance can only be digits")
+        } else if (balance_remaining < 0) {
+            $('#save').hide();
+            $('input:text[name="balance_remaining"]').val(balance_remaining);
+        } else {
+            $('#save').show();
+            $('input:text[name="balance_remaining"]').val(balance_remaining);
+        }
+
+    });
+</script>
 </body>
 </html>

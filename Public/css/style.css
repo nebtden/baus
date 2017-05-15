@@ -466,9 +466,9 @@ margin-bottom:5px;
 } 
 
 input, select {
-background : #222; 
-color : #ddd; 
-border : 1px solid #333;
+/*background : #222; */
+/*color : #ddd; */
+/*border : 1px solid #333;*/
 padding : 5px 8px; 
 margin : 2px 0;  
 -moz-border-radius:3px;

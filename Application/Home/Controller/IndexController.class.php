@@ -102,7 +102,13 @@ class IndexController extends Controller {
            $condition['add_time'] = array(array('egt',$sdate),array('elt',$edate));
         }
 
-        
+        if(I('get.mobile')){
+            $condition['mobile'] = I('get.mobile');
+        }
+
+        if(I('get.consignee')){
+            $condition['consignee'] = I('get.consignee');
+        }
         
 
         if(I('get.is_print'))
@@ -1328,6 +1334,12 @@ class IndexController extends Controller {
         $this->assign('customer_lists',$customer_lists);
         $this->assign('page',$show);
         $this->display();   
+    }
+
+
+    public function addCustomer(){
+        $customer_model = M('customer');
+        $this->display();
     }
 
     public function exportExcel()

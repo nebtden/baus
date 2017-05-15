@@ -1,0 +1,97 @@
+<meta http-equiv="Content-Type"
+      content="text/html; charset=utf-8"/><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+    <title>Baus Optical</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <style type="text/css" media="all">
+        @import url(__PUBLIC__/css/style.css);
+        @import url(__ROOT__/css/admin.css);
+
+        img {
+            behavior: url('__PUBLIC__/js/iepngfix.htc') !important;
+        }
+    </style>
+    <script src="__PUBLIC__/js/jquery.js" type="text/javascript"></script>
+    <script src="__PUBLIC__/js/jquery_ui.js" type="text/javascript"></script>
+    <script src="__PUBLIC__/js/wysiwyg.js" type="text/javascript"></script>
+    <script src="__PUBLIC__/js/functions.js" type="text/javascript"></script>
+
+</head>
+<body>
+<include file="Public:header"/>
+<div class="main two"> <!-- Container -->
+    <include file="Public:customer"/>
+    <div class="query"> <!-- Main, right side content -->
+    </div>
+    <div class="start"> <!-- Content begins here -->
+
+        <form method="post" action="{:U('Member/saveMember')}" name="formd"><!-- Form -->
+            <!-- Fieldset -->
+            <fieldset>
+                <legend><h2>Add New Customer</h2></legend>
+
+                <div class="input_field">
+
+
+                </div>
+
+
+                <div class="input_field">
+                    <label for="consignee" style="width:150px;">consignee: </label>
+                    <input class="mediumfield" name="consignee" id="consignee" type="text" value=""/>
+                </div>
+
+                <div class="input_field">
+                    <label for="mobile" style="width:150px;">mobile: </label>
+                    <input class="mediumfield" name="mobile" id="mobile" type="text" value=""/>
+                </div>
+
+
+                <div class="input_field">
+                    <label for="email" style="width:150px;">email: </label>
+                    <input class="mediumfield" name="email" id="email" type="email" value=""/>
+                </div>
+
+                <div class="input_field">
+                    <label for="address" style="width:150px;">address: </label>
+                    <input class="mediumfield" name="address" id="address" type="text" value=""/>
+                </div>
+
+                <div class="input_field no_margin_bottom" style="padding-left:150px;">
+                    <input class="submit" type="submit" value="Submit"/>
+                </div>
+
+            </fieldset>
+            <!-- End of fieldset -->
+        </form>
+
+        <div class="clear"><!-- --></div>
+
+    </div> <!-- END Content -->
+
+</div>
+<div id="footer">
+    <p> All rights reserved.</p>
+</div>
+</div> <!-- END Container -->
+<script type="text/javascript">
+    $(function () {
+        if ($('#member_role').val() == '1') {
+            $("#member_shop_show").hide();
+        } else {
+            $("#member_shop_show").show();
+        }
+
+        $('#member_role').change(function () {
+            if ($('#member_role').val() == '1') {
+                $("#member_shop_show").hide();
+            } else {
+                $("#member_shop_show").show();
+            }
+        })
+    })
+</script>
+</body>
+</html>
