@@ -22,9 +22,7 @@ class IndexController extends Controller {
         }
     }
 
-    public function index()
-    {
-    	$order_info_model = M('order_info');
+    private function getCondition(){
 
         //echo I('get.order_step')."<br />";
         if(I('get.order_step'))
@@ -63,22 +61,22 @@ class IndexController extends Controller {
                     break;
                 default:
                     $condition['order_step'] = ['between','-2,13'];
-                
+
             }
-            
+
         }else{
             $condition['order_step'] = ['between','-2,13'];
         }
 
 
-    	if(I('get.key_words'))
-    	{
-    		$key_words = I('get.key_words');
-    		$condition['order_sn'] = ['LIKE',"%$key_words%"];
-    		// $condition['consignee'] = ['LIKE',"%$key_words%"];
-    		// $condition['tel'] = ['LIKE',"%$key_words%"];
-    		// $condition['_logic'] = 'or';
-    	}
+        if(I('get.key_words'))
+        {
+            $key_words = I('get.key_words');
+            $condition['order_sn'] = ['LIKE',"%$key_words%"];
+            // $condition['consignee'] = ['LIKE',"%$key_words%"];
+            // $condition['tel'] = ['LIKE',"%$key_words%"];
+            // $condition['_logic'] = 'or';
+        }
         if(I('get.member_shop'))
         {
             $member_shop = I('get.member_shop');
@@ -99,7 +97,7 @@ class IndexController extends Controller {
             $condition['add_time'] = ['elt',$edate];
         }
         if(I('get.sdate') && I('get.edate')){
-           $condition['add_time'] = array(array('egt',$sdate),array('elt',$edate));
+            $condition['add_time'] = array(array('egt',$sdate),array('elt',$edate));
         }
 
         if(I('get.mobile')){
@@ -109,7 +107,7 @@ class IndexController extends Controller {
         if(I('get.consignee')){
             $condition['consignee'] = I('get.consignee');
         }
-        
+
 
         if(I('get.is_print'))
         {
@@ -120,42 +118,91 @@ class IndexController extends Controller {
                 $condition['printdate'] = ['neq',''];
             }
         }
-
         $member_id = session('member_id');
         $member_info = M('member')->where(['member_id'=>$member_id])->find();
-        
+
         if(($member_info['member_role'] == 2)) //Head office is 1 show all orders, if 2, show orders in other branches
         {
             $condition['shop'] = session('member_shop');
         }
-        
-    	$count = $order_info_model->where($condition)->count();
+        return $condition;
+    }
 
-    	$Page = new \Think\Page($count,14);
-    	$Page->setConfig('header','<li class="rows"><b>[%NOW_PAGE%</b>/<b>%TOTAL_PAGE%]</b> Total <b>%TOTAL_ROW%</b> records </li>');
-	    $Page->setConfig('prev','prev page');
-	    $Page->setConfig('next','next page');
-	    $Page->setConfig('last','last page');
-	    $Page->setConfig('first','first page');
-	    $Page->setConfig('theme','%FIRST% %UP_PAGE% %LINK_PAGE% %DOWN_PAGE%  %HEADER%');
-    	$show = $Page->show();
+    public function index()
+    {
+        $order_info_model = M('order_info');
 
-    	$order_info_lists = $order_info_model->where($condition)->order('order_id DESC')->limit($Page->firstRow.','.$Page->listRows)->select();
-    	$this->assign('order_info_lists',$order_info_lists);
+
+        $condition = $this->getCondition();
+
+
+        $count = $order_info_model->where($condition)->count();
+
+        $Page = new \Think\Page($count,14);
+        $Page->setConfig('header','<li class="rows"><b>[%NOW_PAGE%</b>/<b>%TOTAL_PAGE%]</b> Total <b>%TOTAL_ROW%</b> records </li>');
+        $Page->setConfig('prev','prev page');
+        $Page->setConfig('next','next page');
+        $Page->setConfig('last','last page');
+        $Page->setConfig('first','first page');
+        $Page->setConfig('theme','%FIRST% %UP_PAGE% %LINK_PAGE% %DOWN_PAGE%  %HEADER%');
+        $show = $Page->show();
+
+        $order_info_lists = $order_info_model->where($condition)->order('order_id DESC')->limit($Page->firstRow.','.$Page->listRows)->select();
+        $this->assign('order_info_lists',$order_info_lists);
         $shop_lists = M('shops')->select();
         $this->assign('shop_lists',$shop_lists);
-    	$this->assign('page',$show);
-    	session('group','customer');
-    	$this->display();
+        $this->assign('page',$show);
+        session('group','customer');
+        $this->display();
+    }
+
+
+
+    public function export(){
+        $order_info_model = M('order_info');
+
+
+        $condition = $this->getCondition();
+        $order_info_lists =
+            $order_info_model
+                ->where($condition)
+                ->field('order_id,mobile,consignee,address,')
+                ->order('order_id DESC')
+                ->select();
+        $file='SmallPackges'.date('YmdHis',time());
+        $downloads=ROOT_PATH.'public'.DS.'uploads/packages/'.$file.'.csv';
+        $fp = fopen($downloads, 'a');
+        $title = ['Order No','mobile','consignee','address'];
+        fputcsv($fp,$title);
+
+                foreach ($order_info_lists as $package_value) {
+                    $column = [];
+                    $column['p_sn'] = $package_value['p_sn'];
+                    $plist_list = getPlistCanBeSum($package_value['p_sn']);
+                    if(!is_array($plist_list)){
+                        $column['p_sn'] = $package_value['p_sn'];
+                        $column['goods_info'] = 'null';
+                        fputcsv($fp,$column);
+                    }
+                    foreach ($plist_list as $plist_info) {
+                        $column['p_sn'] = $package_value['p_sn'];
+                        $column['goods_info'] = $plist_info['en_name'];
+                        fputcsv($fp,$column);
+                    }
+                }
+
+        fclose($fp);
+        $downloadurl = 'http://'.$_SERVER['HTTP_HOST'].'/uploads/packages/'.$file.'.csv';
+        return show(1,$downloadurl,$packge_list);
     }
 
     public function orderShow()
     {
 
-    	$order_id = I('get.order_id');
-    	$order_info = M('order_info')->where(['order_id'=>$order_id])->find();
+        $order_id = I('get.order_id');
+        $order_info = M('order_info')->where(['order_id'=>$order_id])->find();
 
-    	$order_goods_lists = M('order_goods')->where(['order_id'=>$order_id])->select();
+        $order_goods_lists = M('order_goods')->where(['order_id'=>$order_id])->select();
 
         $sealstxt_info = unserialize($order_info['sealstxt']);
         $distance_info = unserialize($order_info['distance']);
@@ -189,8 +236,8 @@ class IndexController extends Controller {
             $this->assign('change',$change);
         }
 
-		$this->assign('order_goods_lists',$order_goods_lists);
-    	$this->assign('order_info',$order_info);
+        $this->assign('order_goods_lists',$order_goods_lists);
+        $this->assign('order_info',$order_info);
         $this->assign('sealstxt_info',$sealstxt_info);
         $this->assign('distance_info',$distance_info);
         $this->assign('receiptno',$receiptno);
@@ -203,29 +250,29 @@ class IndexController extends Controller {
         $this->assign('shop_arrive',$shop_arrive);
         $this->assign('receiptno2',$receiptno2);
         $this->assign('balance_remaining',$balance);
-    	$this->display();
+        $this->display();
     }
 
     public function orderProcess()
     {
-    	$step_name = I('post.step_name');
-    	$order_id = I('post.order_id');
+        $step_name = I('post.step_name');
+        $order_id = I('post.order_id');
         $order_info = M('order_info')->where(['order_id'=>$order_id])->find();
 
-    	if($step_name == 'editprice')
-    	{
-    		unset($update_data);
+        if($step_name == 'editprice')
+        {
+            unset($update_data);
             unset($data);
-            
-    		$data_seals['lensname'] = I('post.lensname');
-    		$data_seals['lensprice'] = I('post.lensprice');
-    		$data_seals['discountseals'] = I('post.discountseals');
+
+            $data_seals['lensname'] = I('post.lensname');
+            $data_seals['lensprice'] = I('post.lensprice');
+            $data_seals['discountseals'] = I('post.discountseals');
             $data_seals['special_marks'] = I('post.special_marks');
             $data_seals['add_time'] = time();
 
             $update_data['sealstxt'] = serialize($data_seals);
 
-            
+
             $data_distance['sph_right'] = I('post.sph_right');
             $data_distance['cyl_right'] = I('post.cyl_right');
             $data_distance['axis_right'] = I('post.axis_right');
@@ -248,7 +295,7 @@ class IndexController extends Controller {
             $data_distance['add_time'] = time();
 
             $update_data['distance'] = serialize($data_distance);
-            
+
             $data_receiptno['payment_price'] = I('post.payment_price');
             $data_receiptno['nopayment_price'] = I('post.nopayment_price');
             $data_receiptno['receiptno'] = I('post.receiptno');
@@ -265,7 +312,7 @@ class IndexController extends Controller {
             }else{
                 $update_data['order_step'] = 7;
             }
-            
+
             $update_data['receiptno'] = serialize($data_receiptno);
 
             $data_cash['order_id'] = $order_info['order_id'];
@@ -292,11 +339,11 @@ class IndexController extends Controller {
 
         /* ====== Step 4 Corporate Manager Section ====== */
 
-        if($step_name == 'editcorporate') 
+        if($step_name == 'editcorporate')
         {
             unset($update_data);
             unset($data);
-            
+
             $data['corporate_status_set'] = I('post.corporate_status_set');
             $data['corporate_amount'] = I('post.corporate_amount');
 
@@ -305,10 +352,10 @@ class IndexController extends Controller {
             $update_data['corporate'] = serialize($data);
 
             $receiptno = unserialize($order_info['receiptno']);
-            
+
             if($data['corporate_status_set'] == 'proceed')
             {
-                if($receiptno['payment_method']=='insurance_0'){ //check if smart card selected in new order 
+                if($receiptno['payment_method']=='insurance_0'){ //check if smart card selected in new order
 
                     $update_data['order_step'] = 7; // Proceed with NO smart card to step7
 
@@ -316,14 +363,14 @@ class IndexController extends Controller {
 
                     $update_data['order_step'] = 5;  // Proceed with smart card to step5
                 }
-                
+
             }elseif($data['corporate_status_set'] == 'less approval'){ // Less Approve option, so step5
 
                 $update_data['order_step'] = 5;
             }else{
                 $update_data['order_step'] = -1; //Cancelled Order
             }
-            
+
             M('order_info')->where(['order_id'=>$order_id])->save($update_data);
 
             if(M('order_info')->where(['order_id'=>$order_id])->save($update_data) !== FALSE)
@@ -341,7 +388,7 @@ class IndexController extends Controller {
         {
             unset($update_data);
             unset($data);
-            
+
             $data['customer_card_confirm'] = I('post.customer_card_confirm');
             $data['add_time'] = time();
 
@@ -371,7 +418,7 @@ class IndexController extends Controller {
         /* ====== Step5 Customer Insurance Card Report Section END ====== */
 
         /* ====== Step 5 (If corporate manager chooses less approval even with NO SMART CARD) ====== */
-        if($step_name == 'edit_customer_confirm') 
+        if($step_name == 'edit_customer_confirm')
         {
             unset($update_data);
             unset($data);
@@ -404,11 +451,11 @@ class IndexController extends Controller {
 
                     $update_data['order_step'] = I('post.balance_remaining')==0 ?6:5;
                 }
-                
+
 
                 $data['less_approve_action'] = I('post.less_approve_action');
-                
-                
+
+
                 $data['remark'] = I('post.remark');
 
                 $data['recevied_amount'] = I('post.recevied_amount');
@@ -433,10 +480,10 @@ class IndexController extends Controller {
                 $data['add_time'] = time();
 
                 $update_data['customer_confirm'] = serialize($data);
-                
- 
+
+
                 M('order_info')->where(['order_id'=>$order_id])->save($update_data); //update customer_confirm
-               
+
             }
 
             if(M('order_info')->where(['order_id'=>$order_id])->save($update_data) !== FALSE)
@@ -445,7 +492,7 @@ class IndexController extends Controller {
             }else{
                 $this->error('save fail',U('Index/orderShow',array('order_id'=>$order_id)));
             }
-            
+
 
         }
         /* ====== Step 5(If corporate manager chooses less approval even with NO SMART CARD) END ====== */
@@ -487,7 +534,7 @@ class IndexController extends Controller {
         {
             unset($update_data);
             unset($data);
-            
+
             $data['print_confirm'] = I('post.print_confirm');
             $data['add_time'] = time();
 
@@ -512,7 +559,7 @@ class IndexController extends Controller {
         {
             unset($update_data);
             unset($data);
-            
+
             $data['warehouse_state'] = I('post.warehouse_state');
             $data['stock_source'] = I('post.stock_source');
             $data['add_time'] = time();
@@ -534,7 +581,7 @@ class IndexController extends Controller {
         {
             unset($update_data);
             unset($data);
-            
+
             $data['products_shipped'] = I('post.products_shipped');
             $data['add_time'] = time();
 
@@ -555,7 +602,7 @@ class IndexController extends Controller {
         {
             unset($update_data);
             unset($data);
-            
+
             $data['shop_arrive_set'] = I('post.shop_arrive_set');
             $data['add_time'] = time();
 
@@ -576,7 +623,7 @@ class IndexController extends Controller {
         {
             unset($update_data);
             unset($data);
-            
+
             $data['receiptno2'] = I('post.receiptno2');
             $data['add_time'] = time();
 
@@ -585,9 +632,9 @@ class IndexController extends Controller {
                 $update_data['order_status_set'] = I('post.order_status_set');
                 $update_data['balance'] = 0;
             }else{
-                 //$update_data['order_step'] = 11;
-                 $update_data['order_status_set'] = "balance";
-                 $update_data['balance'] = I('post.final_bal')-I('post.balance_amount');
+                //$update_data['order_step'] = 11;
+                $update_data['order_status_set'] = "balance";
+                $update_data['balance'] = I('post.final_bal')-I('post.balance_amount');
             }
 
             $update_data['receiptno2'] = serialize($data);
@@ -673,13 +720,13 @@ class IndexController extends Controller {
 
         $order_goods_lists = M('order_goods')->where(['order_id'=>$order_id])->select();
 
-        $sealstxt_info = unserialize($order_info['sealstxt']); 
+        $sealstxt_info = unserialize($order_info['sealstxt']);
         $receiptno = unserialize($order_info['receiptno']);
         $distance_info = unserialize($order_info['distance']);
 
         //Check if insurance to calculate insurance cover
         if($receiptno['payment_method'] == 'insurance_1' || $receiptno['payment_method'] == "insurance_0")
-        {   
+        {
             $insurance_detail = unserialize($order_info['corporate']);
             $insurance_detail2 = unserialize($order_info['customer_confirm']);
 
@@ -696,7 +743,7 @@ class IndexController extends Controller {
         if($sex==0){$Gender="Secrecy";}
         if($sex==1){$Gender="Male";}
         if($sex==2){$Gender="Female";}
-       
+
         $age = $user_info['c_age'];
         $user_info['gender'] = $Gender;
         $user_info['age'] = $age;
@@ -715,7 +762,7 @@ class IndexController extends Controller {
             $lensprice = $sealstxt_info['lensprice'];
         }
 
-        foreach ($order_goods_lists as $goods_info) 
+        foreach ($order_goods_lists as $goods_info)
         {
             $total_goods += $goods_info['goods_number']*$goods_info['goods_price'];
         }
@@ -752,12 +799,12 @@ class IndexController extends Controller {
 
         $order_goods_lists = M('order_goods')->where(['order_id'=>$order_id])->select();
 
-        $sealstxt_info = unserialize($order_info['sealstxt']); 
+        $sealstxt_info = unserialize($order_info['sealstxt']);
         $receiptno = unserialize($order_info['receiptno']);
 
         //Check if insurance to calculate insurance cover
         if($receiptno['payment_method'] == 'insurance_1' || $receiptno['payment_method'] == "insurance_0")
-        {   
+        {
             $insurance_detail = unserialize($order_info['corporate']);
             $insurance_detail2 = unserialize($order_info['customer_confirm']);
 
@@ -774,7 +821,7 @@ class IndexController extends Controller {
         if($sex==0){$Gender="Secrecy";}
         if($sex==1){$Gender="Male";}
         if($sex==2){$Gender="Female";}
-       
+
         $age = $user_info['c_age'];
         $user_info['gender'] = $Gender;
         $user_info['age'] = $age;
@@ -793,7 +840,7 @@ class IndexController extends Controller {
             $lensprice = $sealstxt_info['lensprice'];
         }
 
-        foreach ($order_goods_lists as $goods_info) 
+        foreach ($order_goods_lists as $goods_info)
         {
             $total_goods += $goods_info['goods_number']*$goods_info['goods_price'];
         }
@@ -832,7 +879,7 @@ class IndexController extends Controller {
 
         $order_goods_lists = M('order_goods')->where(['order_id'=>$order_info['order_id']])->select();
 
-        $sealstxt_info = unserialize($order_info['sealstxt']); 
+        $sealstxt_info = unserialize($order_info['sealstxt']);
         $receiptno = unserialize($order_info['receiptno']);
 
         $sex = $user_info['c_gender'];
@@ -840,7 +887,7 @@ class IndexController extends Controller {
         if($sex==0){$Gender="Secrecy";}
         if($sex==1){$Gender="Male";}
         if($sex==2){$Gender="Female";}
-       
+
         $age = $user_info['c_age'];
         $user_info['gender'] = $Gender;
         $user_info['age'] = $age;
@@ -859,14 +906,14 @@ class IndexController extends Controller {
             $lensprice = $sealstxt_info['lensprice'];
         }
 
-        foreach ($order_goods_lists as $goods_info) 
+        foreach ($order_goods_lists as $goods_info)
         {
             $total_goods += $goods_info['goods_number']*$goods_info['goods_price'];
         }
 
         //Check if insurance to calculate insurance cover
         if($receiptno['payment_method'] == 'insurance_1' || $receiptno['payment_method'] == "insurance_0")
-        {   
+        {
             $insurance_detail = unserialize($order_info['corporate']);
 
             $insurance_detail2 = unserialize($order_info['customer_confirm']);
@@ -917,7 +964,7 @@ class IndexController extends Controller {
 
         $order_goods_lists = M('order_goods')->where(['order_id'=>$order_id])->select();
 
-        $sealstxt_info = unserialize($order_info['sealstxt']); 
+        $sealstxt_info = unserialize($order_info['sealstxt']);
         $receiptno = unserialize($order_info['receiptno']);
 
         $shop_info = M('shops')->where(['shop_id'=>$order_info['shop']])->find();
@@ -928,7 +975,7 @@ class IndexController extends Controller {
         if($sex==0){$Gender="Secrecy";}
         if($sex==1){$Gender="Male";}
         if($sex==2){$Gender="Female";}
-       
+
         $age = $user_info['c_age'];
         $user_info['gender'] = $Gender;
         $user_info['age'] = $age;
@@ -947,14 +994,14 @@ class IndexController extends Controller {
             $lensprice = $sealstxt_info['lensprice'];
         }
 
-        foreach ($order_goods_lists as $goods_info) 
+        foreach ($order_goods_lists as $goods_info)
         {
             $total_goods += $goods_info['goods_number']*$goods_info['goods_price'];
         }
 
         //Check if insurance to calculate insurance cover
         if($receiptno['payment_method'] == 'insurance_1' || $receiptno['payment_method'] == "insurance_0")
-        {   
+        {
             $insurance_detail = unserialize($order_info['corporate']);
 
             $insurance_detail2 = unserialize($order_info['customer_confirm']);
@@ -1006,7 +1053,7 @@ class IndexController extends Controller {
 
         $order_goods_lists = M('order_goods')->where(['order_id'=>$order_id])->select();
 
-        $sealstxt_info = unserialize($order_info['sealstxt']); 
+        $sealstxt_info = unserialize($order_info['sealstxt']);
         $receiptno = unserialize($order_info['receiptno']);
 
         $shop_info = M('shops')->where(['shop_id'=>$order_info['shop']])->find();
@@ -1017,7 +1064,7 @@ class IndexController extends Controller {
         if($sex==0){$Gender="Secrecy";}
         if($sex==1){$Gender="Male";}
         if($sex==2){$Gender="Female";}
-       
+
         $age = $user_info['c_age'];
         $user_info['gender'] = $Gender;
         $user_info['age'] = $age;
@@ -1036,25 +1083,25 @@ class IndexController extends Controller {
             $lensprice = $sealstxt_info['lensprice'];
         }
 
-        foreach ($order_goods_lists as $goods_info) 
+        foreach ($order_goods_lists as $goods_info)
         {
             $total_goods += $goods_info['goods_number']*$goods_info['goods_price'];
         }
 
         //Check if insurance to calculate insurance cover
         // if($receiptno['payment_method'] == 'insurance_1' || $receiptno['payment_method'] == "insurance_0")
-        // {   
-            $insurance_detail = unserialize($order_info['corporate']);
+        // {
+        $insurance_detail = unserialize($order_info['corporate']);
 
-            $insurance_detail2 = unserialize($order_info['customer_confirm']);
+        $insurance_detail2 = unserialize($order_info['customer_confirm']);
 
-            $total_price = $lensprice + $total_goods - $discountseals;
-            $initial_balance = $order_info['balance'];
+        $total_price = $lensprice + $total_goods - $discountseals;
+        $initial_balance = $order_info['balance'];
 
-            // /echo $initial_balance; die;
+        // /echo $initial_balance; die;
 
-            $this->assign('insurance_detail',$insurance_detail);
-            $this->assign('insurance_detail2',$insurance_detail2);
+        $this->assign('insurance_detail',$insurance_detail);
+        $this->assign('insurance_detail2',$insurance_detail2);
 
         $this->assign('cash_receipt',$cash_info[0]['receipt_no'][0]);
         $this->assign('cash_info',$cash_info[0]);
@@ -1113,7 +1160,7 @@ class IndexController extends Controller {
 
         $update_data['balance'] = $order_info['balance'] - $recevied_amount;
 
-        
+
         // if($customer_confirm['balance_remaining']==0 && $update_data['balance']==0){
 
         //     $receiptno = unserialize($order_info['receiptno']);
@@ -1125,7 +1172,7 @@ class IndexController extends Controller {
         //     //     $update_data['order_step'] = 7; // Can print the order
         //     // }
 
-            
+
         // }
         $data['add_time'] = time();
 
@@ -1155,7 +1202,7 @@ class IndexController extends Controller {
         }else{
             $this->error('save fail',U('Index/viewprintTopUp'));
         }
-            
+
     }
     public function clearClientFromList(){ // Remove order No from Top Up list
 
@@ -1202,7 +1249,7 @@ class IndexController extends Controller {
         }else{
             $this->error('Save fail',U('Index/viewprintTopUp'));
         }
-     
+
     }
     /* ====== Top Up Section END ====== */
 
@@ -1303,13 +1350,13 @@ class IndexController extends Controller {
             if($password == $member_info['member_pwd'])
             {
                 $member_model->where(['member_id'=>$member_id])->save(['member_pwd'=>md5($newpassword)]);
-                $this->success('change password success',U('Index/changePassword'));                    
+                $this->success('change password success',U('Index/changePassword'));
             }else{
                 $this->error('old password incorrect!',U('Index/changePassword'));
             }
 
         }else{
-           $this->display(); 
+            $this->display();
         }
     }
 
@@ -1333,13 +1380,29 @@ class IndexController extends Controller {
         $customer_lists = $customer_model->where($condition)->limit($Page->firstRow.','.$Page->listRows)->select();
         $this->assign('customer_lists',$customer_lists);
         $this->assign('page',$show);
-        $this->display();   
+        $this->display();
     }
 
 
     public function addCustomer(){
         $customer_model = M('customer');
         $this->display();
+    }
+
+    public function updateCustomer(){
+        $data['c_name'] = I('post.name');
+        $data['c_mobile'] = I('post.mobile');
+        $data['c_email'] = I('post.email');
+        $data['c_address'] = I('post.address');
+
+//        if()
+
+        if(M('member')->add($data))
+        {
+            $this->success('add member success',U('Member/index'));
+        }else{
+            $this->error('add member fail!',U('Member/addMember'));
+        }
     }
 
     public function exportExcel()
@@ -1397,12 +1460,12 @@ class IndexController extends Controller {
 
         $member_id = session('member_id');
         $member_info = M('member')->where(['member_id'=>$member_id])->find();
-        
+
         // if(($member_info['member_role'] == 2))
         // {
         //     $condition['shop'] = session('member_shop');
         // }
-        
+
         $count = $order_info_model->where($condition)->count();
 
         $Page = new \Think\Page($count,25);
@@ -1417,7 +1480,7 @@ class IndexController extends Controller {
         $order_info_lists = $order_info_model->where($condition)->order('order_id DESC')->limit($Page->firstRow.','.$Page->listRows)->select();
         $this->assign('order_info_lists',$order_info_lists);
         $this->assign('page',$show);
-        $this->display();           
+        $this->display();
     }
 
     public function customerCareProcess()
@@ -1432,12 +1495,12 @@ class IndexController extends Controller {
         {
             if(M('order_info')->where(['order_id'=>$order_id])->save($data_update) !== FALSE)
             {
-                $this->success('save success',U('Index/customerCare'));  
+                $this->success('save success',U('Index/customerCare'));
             }else{
-                $this->error('save failed',U('Index/customerCare'));  
+                $this->error('save failed',U('Index/customerCare'));
             }
         }else{
-            $this->error('save failed',U('Index/customerCare'));  
+            $this->error('save failed',U('Index/customerCare'));
         }
     }
 
@@ -1484,7 +1547,7 @@ class IndexController extends Controller {
             $condition['add_time'] = ['elt',$edate];
         }
         if(I('get.sdate') && I('get.edate')){
-           $condition['add_time'] = array(array('egt',$sdate),array('elt',$edate));
+            $condition['add_time'] = array(array('egt',$sdate),array('elt',$edate));
         }
 
         $cash_lists = $cash_model->where($condition)->select();
@@ -1506,7 +1569,7 @@ class IndexController extends Controller {
         $shop_lists = M('shops')->select();
         $this->assign('shop_lists',$shop_lists);
         $this->assign('page',$show);
-        $this->display();           
+        $this->display();
     }
 
     public function cashProcess()
@@ -1522,15 +1585,15 @@ class IndexController extends Controller {
         {
             if(M('cash')->where(['cash_id'=>$cash_id])->save($data_update) !== FALSE)
             {
-                $this->success('save success',U('Index/cashConfirm'));  
+                $this->success('save success',U('Index/cashConfirm'));
             }else{
-                $this->error('save failed',U('Index/cashConfirm'));  
+                $this->error('save failed',U('Index/cashConfirm'));
             }
         }else{
-            $this->error('save failed',U('Index/cashConfirm'));  
+            $this->error('save failed',U('Index/cashConfirm'));
         }
     }
 
-    
+
 
 }
