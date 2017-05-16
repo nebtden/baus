@@ -25,30 +25,13 @@
 <body>
 <include file="Public:header"/>
 <div class="main two"> <!-- Container -->
-    <include file="Public:sidebar"/>
+    <include file="Public:finance"/>
     <!-- END Sidebar -->
     <!-- Main, right side content -->
     <div class="query">
         <!-- Content begins here -->
         <h2>Cash List Today</h2>
-        <div id="tabs" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
-            <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all" role="tablist">
 
-
-                <li class="ui-state-default ui-corner-top <?php if($_GET['reverse_status'] == 0){ echo 'ui-tabs-active ui-state-active';} ?>">
-                    <a href="{:U('index/cashConfirm',array('reverse_status'=>0))}" class="ui-tabs-anchor">Pending
-                        confirm</a></li>
-                <li class="ui-state-default ui-corner-top <?php if($_GET['reverse_status'] == 1){ echo 'ui-tabs-active ui-state-active';} ?>">
-                    <a href="{:U('index/cashConfirm',array('reverse_status'=>1))}" class="ui-tabs-anchor"
-                       role="presentation">Confirm</a></li>
-                <li class="ui-state-default ui-corner-top <?php if($_GET['reverse_status'] == 2){ echo 'ui-tabs-active ui-state-active';} ?>">
-                    <a href="{:U('index/cashConfirm',array('reverse_status'=>2))}" class="ui-tabs-anchor"
-                       role="presentation">Abnormal Confirm</a></li>
-                <li class="ui-state-default ui-corner-top <?php if($_GET['reverse_status'] ==3){ echo 'ui-tabs-active ui-state-active';} ?>">
-                    <a href="{:U('index/cashConfirm',array('reverse_status'=>3))}" class="ui-tabs-anchor"
-                       role="presentation">Cancelled Orders</a></li>
-            </ul>
-        </div>
         <!-- 筛选框 s-->
         <table cellspacing="0" cellpadding="0" border="0">
             <form name="formname" method="get" action="" id="search_form">
@@ -78,7 +61,18 @@
         </table>
     </div>
     <div class="start">
-
+        <div class="shift">
+            <a href="{:U('index/cashConfirm',array('reverse_status'=>0))}" class="ui-tabs-anchor <?php  if($_GET['reverse_status']==0){ echo 'on';}?>">Pending
+                confirm</a>
+            <a href="{:U('index/cashConfirm',array('reverse_status'=>1))}" class="ui-tabs-anchor <?php  if($_GET['reverse_status']==1){ echo 'on';} ?>"
+               role="presentation">Confirm</a>
+            <a href="{:U('index/cashConfirm',array('reverse_status'=>2))}" class="ui-tabs-anchor <?php  if($_GET['reverse_status']==2){ echo 'on';}?>"
+               role="presentation">Abnormal Confirm</a>
+            <a href="{:U('index/cashConfirm',array('reverse_status'=>3))}" class="ui-tabs-anchor <?php  if($_GET['reverse_status']==3){ echo 'on';}?>"
+               role="presentation">Cancelled Orders</a>
+        </div>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
         <!-- 筛选框 e-->
         <table cellspacing="0" cellpadding="0" border="0" id="cash_table">
             <thead>
