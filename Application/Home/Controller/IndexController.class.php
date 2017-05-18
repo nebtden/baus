@@ -11,6 +11,10 @@ For receiptno. B means Balance.
 
 class IndexController extends Controller
 {
+    private $customer_type =[
+        1=>'Cash',
+        2=>'Insurance'
+    ];
 
     public function __construct()
     {
@@ -1372,6 +1376,9 @@ class IndexController extends Controller
         $show = $Page->show();
 
         $customer_lists = $customer_model->where($condition)->limit($Page->firstRow . ',' . $Page->listRows)->select();
+        foreach ($customer_lists as &$customer){
+            $customer['type']=$this->customer_type[$customer['c_type']];
+        }
         $this->assign('customer_lists', $customer_lists);
         $this->assign('page', $show);
         $this->display();
@@ -1402,21 +1409,28 @@ class IndexController extends Controller
         $data['c_mobile'] = I('post.mobile');
         $data['c_email'] = I('post.email');
         $data['c_address'] = I('post.address');
+        $data['c_type'] = I('post.type');
+        $data['c_amount'] = I('post.amount');
         $customer_model = M('customer');
 
         if(I('post.customer_id')){
 
             $result = $customer_model->where(['c_id'=>I('post.customer_id')])->save($data);
+            if ($result) {
+                $this->success('update member success', U('index/customer'));
+            } else {
+                $this->error('update member fail!');
+            }
+
         }else{
             $result = $customer_model->add($data);
+            if ($result) {
+                $this->success('add member success', U('index/customer'));
+            } else {
+                $this->error('add member fail!');
+            }
         }
 
-
-        if ($result) {
-            $this->success('add member success', U('index/customer'));
-        } else {
-            $this->error('add member fail!');
-        }
     }
 
 

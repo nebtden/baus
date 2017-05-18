@@ -58,6 +58,18 @@
                     <label for="address" style="width:150px;">address: </label>
                     <input class="mediumfield" name="address" id="address" type="text" value="{$customer.c_name}"/>
                 </div>
+                <div class="input_field">
+                    <label for="amount" style="width:150px;">amount: </label>
+                    <input class="mediumfield" name="amount" id="amount" type="text" value="{$customer.c_amount}"/>
+                </div>
+
+                <div class="input_field">
+                    <label for="c_type" style="width:150px;">type: </label>
+                    <select name="type">
+                        <option value="1">Cash</option>
+                        <option value="2">Insurance</option>
+                    </select>
+                </div>
 
                 <div class="input_field no_margin_bottom" style="padding-left:150px;">
                     <input class="submit" type="submit" value="Submit"/>

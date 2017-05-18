@@ -65,6 +65,8 @@
                 <th>address</th>
                 <th>mobile</th>
                 <th>email</th>
+                <th>Type</th>
+                <th>Amount</th>
                 <th>Operate</th>
                 <th>Delete</th>
             </tr>
@@ -79,6 +81,8 @@
                     <td>{$vo.c_address}</td>
                     <td>{$vo.c_mobile}</td>
                     <td>{$vo.c_email}</td>
+                    <td>{$vo.type}</td>
+                    <td>{$vo.c_amount}</td>
                     <td>   <a href="{:U('Index/editCustomer',array('customer_id'=>$vo['c_id']))}">
                         <img src="__PUBLIC__/iconsee/gear_48.png" alt="edit" width="16"/> </a>
                         &nbsp;&nbsp;&nbsp;
