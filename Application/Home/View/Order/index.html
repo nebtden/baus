@@ -53,8 +53,8 @@
 
 						<div class="orderinfo_label">Address</div> <input class="mediumfield" name="address" id="address" type="text"  /><br />
 						<div class="orderinfo_label">Gender</div>
-						<select name="c_gender">
-							<option value="-1">-- Select Gender --</option>
+						<select name="c_gender" id="c_gender">
+							<option value="0">-- Select Gender --</option>
 							<option value="1">Male</option>
 							<option value="2">Female</option>
 						</select><br />
@@ -364,7 +364,9 @@
                         $('#address').val(data.c_address);
                         $('#mobile').val(data.c_mobile);
                         $('#consignee').val(data.c_name);
+                        $('#c_gender').val(data.c_gender);
                     }else{
+                        $('#c_id').val(0);
                         $('#cunstomer_info').html(data.info);
                         $('#c_name').val('');
                         $('#c_name').removeAttr('readonly');
@@ -375,6 +377,7 @@
                         $('#address').val('');
                         $('#mobile').val(c_mobile);
                         $('#consignee').val('');
+                        $('#c_gender').val(0);
                     }
                 }
             })

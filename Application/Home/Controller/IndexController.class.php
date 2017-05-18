@@ -1358,7 +1358,7 @@ class IndexController extends Controller
             $condition['c_mobile'] = I('get.mobile');
         }
 
-        //$condition['c_mobile'] = I('get.mobile');
+        $condition['status'] = 1;
 
         $count = $customer_model->where($condition)->count();
 
@@ -1381,7 +1381,7 @@ class IndexController extends Controller
         $goods_id = I('get.customer_id');
         //$data['customer_id'] = 0;
 
-        if(M('customer')->where(['c_id'=>$goods_id])->delete())
+        if(M('customer')->where(['c_id'=>$goods_id])->save(['state'=>0]))
         {
             $this->success('Delete customer success',U('Index/customer'));
         }else{
