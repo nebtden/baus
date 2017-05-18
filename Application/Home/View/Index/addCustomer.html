@@ -27,7 +27,7 @@
     </div>
     <div class="start"> <!-- Content begins here -->
 
-        <form method="post" action="{:U('Member/saveMember')}" name="formd"><!-- Form -->
+        <form method="post" action="{:U('Index/saveCustomer')}" name="formd"><!-- Form -->
             <!-- Fieldset -->
             <fieldset>
                 <legend><h2>Add New Customer</h2></legend>
@@ -36,27 +36,27 @@
 
 
                 </div>
-
+                <input type="hidden" name="customer_id" value="{$customer.c_id}">
 
                 <div class="input_field">
                     <label for="name" style="width:150px;">name: </label>
-                    <input class="mediumfield" name="name" id="name" type="text" value=""/>
+                    <input class="mediumfield" name="name" id="name" type="text" value="{$customer.c_name}"/>
                 </div>
 
                 <div class="input_field">
                     <label for="mobile" style="width:150px;">mobile: </label>
-                    <input class="mediumfield" name="mobile" id="mobile" type="text" value=""/>
+                    <input class="mediumfield" name="mobile" id="mobile" type="text" value="{$customer.c_mobile}"/>
                 </div>
 
 
                 <div class="input_field">
                     <label for="email" style="width:150px;">email: </label>
-                    <input class="mediumfield" name="email" id="email" type="email" value=""/>
+                    <input class="mediumfield" name="email" id="email" type="email" value="{$customer.c_email}"/>
                 </div>
 
                 <div class="input_field">
                     <label for="address" style="width:150px;">address: </label>
-                    <input class="mediumfield" name="address" id="address" type="text" value=""/>
+                    <input class="mediumfield" name="address" id="address" type="text" value="{$customer.c_name}"/>
                 </div>
 
                 <div class="input_field no_margin_bottom" style="padding-left:150px;">
@@ -78,19 +78,7 @@
 </div> <!-- END Container -->
 <script type="text/javascript">
     $(function () {
-        if ($('#member_role').val() == '1') {
-            $("#member_shop_show").hide();
-        } else {
-            $("#member_shop_show").show();
-        }
 
-        $('#member_role').change(function () {
-            if ($('#member_role').val() == '1') {
-                $("#member_shop_show").hide();
-            } else {
-                $("#member_shop_show").show();
-            }
-        })
     })
 </script>
 </body>
