@@ -102,6 +102,10 @@ function getOrderStepNameById($id,$order_id)
 			return 'Closed';
 			break;
 
+        case '13':
+            return 'Finished';
+            break;
+
 		default:
 			return 'Waiting shop Process';
 			break;

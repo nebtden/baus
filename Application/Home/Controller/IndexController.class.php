@@ -1375,7 +1375,7 @@ class IndexController extends Controller
         $Page->setConfig('theme', '%FIRST% %UP_PAGE% %LINK_PAGE% %DOWN_PAGE%  %HEADER%');
         $show = $Page->show();
 
-        $customer_lists = $customer_model->where($condition)->limit($Page->firstRow . ',' . $Page->listRows)->select();
+        $customer_lists = $customer_model->where($condition)->order('c_id DESC')->limit($Page->firstRow . ',' . $Page->listRows)->select();
         foreach ($customer_lists as &$customer){
             $customer['type']=$this->customer_type[$customer['c_type']];
         }
