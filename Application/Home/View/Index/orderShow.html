@@ -687,10 +687,14 @@
 
 					<?php elseif($balance_remaining==0 && $order_info['order_step']==11): ?>
 					<a href="{:U('Index/printBalance',array('order_id'=>$order_info['order_id'],'cash_id'=>$cash_id))}" style="color:#000; font-weight:700" target="_blank">Click Here To Print Current Balance</a><br />
-					This Order has no balance and can be closed
+					<!--This Order has no balance and can be closed-->
+					<!--<input name="order_status_set" type="radio" value="no-balance" />-->
+					The Order has no balance and can be finish
 					<input name="order_status_set" type="radio" value="no-balance" />
 					<?php elseif($order_info['order_step']==12): ?>
 					The Order has been closed <a href="{:U('Index/printBalance',array('order_id'=>$order_info['order_id'],'cash_id'=>$cash_id))}" style="color:#000; font-weight:700" target="_blank">Click Here To Print Current Balance</a>
+					<?php elseif($order_info['order_step']==13): ?>
+					The Order has been finished! <a href="{:U('Index/printBalance',array('order_id'=>$order_info['order_id'],'cash_id'=>$cash_id))}" style="color:#000; font-weight:700" target="_blank">Click Here To Print Current Balance</a>
 					<?php endif; ?>
 					<br />
 

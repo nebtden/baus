@@ -601,7 +601,7 @@ class IndexController extends Controller
             $data['add_time'] = time();
 
             if (I('post.final_bal') - I('post.balance_amount') == 0) {
-                $update_data['order_step'] = 12;
+                $update_data['order_step'] = 13;
                 $update_data['order_status_set'] = I('post.order_status_set');
                 $update_data['balance'] = 0;
             } else {
