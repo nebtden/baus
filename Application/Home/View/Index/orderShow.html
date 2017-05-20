@@ -326,7 +326,7 @@
 		</div>
 		<script type="text/javascript">
             $(function(){
-                <?php if(($order_info['order_step'] != 4)||($member_group_info['corporate'] != 1) || ($member_group_info['group_name']=='customer_care')){ ?>
+                <?php if(($order_info['order_step'] != 4)||($member_group_info['corporate'] != 1) ){ ?>
                     $('#form_step4').find('input').attr('readonly','true');
                     $('#form_step4').find('.submit').css('display','none');
                 <?php } ?>

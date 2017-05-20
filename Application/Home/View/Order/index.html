@@ -99,7 +99,9 @@
 
 					</tbody>
 				</table>
-				<div class="orderinfo_label">Goods Remark</div><input class="bigfield" style="width:100px;" id="goods_remark" name="goods_remark" type="text" value="" />
+
+				<div class="orderinfo_label">Goods Remark</div>
+				<input class="bigfield" style="width:100px;" id="goods_remark" name="goods_remark" type="text" value="" />
 				<div class="clear"><!-- --></div>
 
 				<br />
@@ -217,7 +219,9 @@
 						</div>
 					</div>
 				</div>
-				<br /><input  type="hidden" name="order_id" value="" /><input  type="hidden" name="step_name" value="editprice" /><input class="submit" type="submit" value="Make New Order" />
+				<br />
+				<input  type="hidden" name="order_id" value="" /><input  type="hidden" name="step_name" value="editprice" />
+				<input class="submit" type="submit" value="Make New Order" />
 		</form>
 
 		<div class="clear"><!-- --></div>
@@ -278,6 +282,7 @@
                 url:"{:U('Goods/getResultAjax')}",
                 data:{model:goods_model,brand:goods_brand,parent_id:parent_id},
                 success:function(data){
+
                     $("#goods_lists").html(data);
                 }
             })
@@ -313,6 +318,7 @@
                 url:"{:U('Goods/getBrandsAjax')}",
                 data:{parent_id:parent_id},
                 success:function(data){
+                    console.log(data);
                     $("#goods_brand").html(data);
                 }
             })

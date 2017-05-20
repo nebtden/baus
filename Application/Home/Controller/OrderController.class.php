@@ -54,6 +54,7 @@ class OrderController extends Controller
         $c_mobile = I('post.c_mobile');
         $c_gender = I('post.c_gender');
         $c_age = I('post.c_age');
+        //var_dump($c_id);
 
         $address = I('post.address');
 
@@ -105,10 +106,11 @@ class OrderController extends Controller
             $data_seals['lensname'] = I('post.lensname');
             $data_seals['lensprice'] = I('post.lensprice');
         }
-
+        $data['customer_care'] = '';
 
         $data_seals['discountseals'] = I('post.discountseals');
         $data_seals['special_marks'] = I('post.special_marks');
+
         $data_seals['add_time'] = time();
 
         $data['sealstxt'] = serialize($data_seals);
@@ -185,6 +187,7 @@ class OrderController extends Controller
 
             $data_order_goods['goods_attr'] = $goods_info['goods_attr'];
             $data_order_goods['goods_remark'] = I('post.goods_remark');
+            $data_order_goods['goods_name'] = $goods_info['goods_name'];
 
             M('order_goods')->add($data_order_goods);
 

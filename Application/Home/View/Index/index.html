@@ -44,11 +44,11 @@
 					</td>
 					<td width="10%">
 						<select id="member_shop" name="member_shop" class="mediumfield">
-						<option value="0" >Select shop</option>
-						<foreach name="shop_lists" item="vo">
-							<option value="{$vo.shop_id}" <?php if($_GET['member_shop'] == $vo['shop_id']){ echo 'selected';} ?>>{$vo.title}</option>
-						</foreach>
-					</select>
+							<option value="0" >Select shop</option>
+							<foreach name="shop_lists" item="vo">
+								<option value="{$vo.shop_id}" <?php if($_GET['member_shop'] == $vo['shop_id']){ echo 'selected';} ?>>{$vo.title}</option>
+							</foreach>
+						</select>
 					</td>
 					<?php if($_GET['order_step'] == 5){ ?>
 					<td width="20%"><input name="is_print" type="checkbox" value="1" id="is_print" <?php if($_GET['is_print'] == 1){ echo 'checked';} ?>/> show no printed only</td>
@@ -104,9 +104,13 @@
 					<?php echo getOrderStepNameById($vo['order_step'],$vo['order_id']); ?>
 				</td>
 				<td>
-					<a href="{:U('Index/orderShow',array('order_id'=>$vo['order_id']))}"><img src="__PUBLIC__/iconsee/gear_48.png" alt="edit" width="16" /></a>
-					<?php if($vo['order_step'] == 7 && $member_group_info['internal-print']==1) { ?><a href="{:U('Index/printInternalOrder',array('order_id'=>$vo['order_id']))}" class="print" target="_blank"><img src="__PUBLIC__/iconsee/print.png" alt="edit" width="16"/></a>
-					<?php if($vo['printdate']>0){ ?><img src="__PUBLIC__/images/validate_success.png" alt="edit" width="16" /><?php } ?>
+
+					<?php if($vo['order_step'] == 7 && $member_group_info['internal-print']==1) { ?>
+					<a href="{:U('Index/printInternalOrder',array('order_id'=>$vo['order_id']))}" class="print" target="_blank">
+						<img src="__PUBLIC__/iconsee/print.png" alt="edit" width="16"/>
+					</a>
+					<?php if($vo['printdate']>0){ ?>
+					<img src="__PUBLIC__/images/validate_success.png" alt="edit" width="16" /><?php } ?>
 					<?php } ?>
 				</td>
 				<?php if($member_group_info['group_name']=="admin" && $vo['order_step']!=-1){ ?>
