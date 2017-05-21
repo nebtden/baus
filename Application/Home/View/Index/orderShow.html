@@ -335,6 +335,7 @@
                 if($('input:radio[name="corporate_status_set"]:checked').val() == "less approval")
                 {
                     $("#corporate_amount").css('display','');
+                    $("#corporate_amount").attr('readonly',false);
                     //$("#less_message").css('display', '');
 
                 }else{
@@ -396,6 +397,7 @@
                             <option value="-1">-- Select Less Approve Action --</option>
                             <option value="top_up">Top Up</option>
                             <option value="change_goods">Change Goods</option>
+                            <option value="discount">Discount</option>
                             <option value="cancel">Cancel Order</option>
                         </select>
                         <br />

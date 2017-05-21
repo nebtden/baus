@@ -423,6 +423,10 @@ class IndexController extends Controller
                     $data['balance_remaining'] = 0;
                     $update_data['balance'] = 0;
                     $update_data['topup'] = 0;
+                } elseif (I('post.less_approve_action') == 'discount'){
+                    $data['balance_remaining'] = 0;
+                    $update_data['balance'] = 0;
+                    $update_data['topup'] = 1;
                 }
 
                 //if smart card or not
