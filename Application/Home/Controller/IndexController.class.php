@@ -1545,10 +1545,8 @@ class IndexController extends Controller
         $cash_model = M('cash');
 
         if (I('get.reverse_status') < 3) {
-
             $condition['reverse_status'] = I('get.reverse_status');
             $condition['cancel_status'] = 0;
-
         } elseif (I('get.reverse_status') == 3) {
 
             $condition['cancel_status'] = 1;
