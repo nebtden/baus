@@ -15,6 +15,11 @@ CREATE TABLE `oms_insurance` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 
+ALTER TABLE `oms_order_info`
+DROP COLUMN `is_insurance_topup`,
+ADD COLUMN `is_insurance_topup`  tinyint(1) NOT NULL COMMENT '是否保险公司核销过' AFTER `order_closed_date`;
+
+
 
 
 
