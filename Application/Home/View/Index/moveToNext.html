@@ -1,58 +1,58 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+		"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 	<title>Baus Optical</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link rel="stylesheet" type="text/css" href="jquery.confirm/jquery.confirm.css" />
+	<link rel="stylesheet" type="text/css" href="jquery.confirm/jquery.confirm.css" />
 	<style type="text/css" media="all">
 		@import url(__PUBLIC__/css/style.css);@import url(__ROOT__/css/admin.css);
 		img {behavior:url('j__PUBLIC__/s/iepngfix.htc') !important;}
 
 		.orderinfo_label{
 			display: inline-block;
-		    width: 30%;
-		  	text-align: left;
+			width: 30%;
+			text-align: left;
 		}
-	</style>	
-	
+	</style>
+
 
 </head>
 <body>
 <include file="Public:header" />	<div class="main two"> <!-- Container -->
-<include file="Public:sidebar" />
+	<include file="Public:order" />
 	<div class="query"> <!-- Main, right side content -->
-		<div class="start"> <!-- Content begins here -->
-			<fieldset><legend><h2>Move To Step 8</h2></legend>
-				<form action="{:U('Index/move_next')}" method="POST">
-					This order is currently 
-					<?php if($step7_info['print_confirm']==2): ?>
-						waiting for the customer's personal frame
-					<?php elseif($step7_info['print_confirm']==3): ?>
-						waiting for the customer's personal lens
-					<?php elseif($step7_info['print_confirm']==4): ?>
-						on hold
-					<?php endif; ?>
-					<br /><br />
-					<div>
-						<br />
-						Remark
-						<input name="step7_remark" type="text" value=""/> &nbsp;&nbsp;&nbsp;&nbsp; 
-						<br />
-		                <input type="hidden" name="order_id" value="{$order_id}" />
-			  			<input id="save" class="submit" type="submit" value="Submit" />
-			  		</div>
-		  		</form>
-			</fieldset>
-		</div>
+	</div>
+	<div class="start"> <!-- Content begins here -->
+		<fieldset><legend><h2>Move To Step 8</h2></legend>
+			<form action="{:U('Index/move_next')}" method="POST">
+				This order is currently
+				<?php if($step7_info['print_confirm']==2): ?>
+				waiting for the customer's personal frame
+				<?php elseif($step7_info['print_confirm']==3): ?>
+				waiting for the customer's personal lens
+				<?php elseif($step7_info['print_confirm']==4): ?>
+				on hold
+				<?php endif; ?>
+				<br /><br />
+				<div>
+					<br />
+					Remark
+					<input name="step7_remark" type="text" value=""/> &nbsp;&nbsp;&nbsp;&nbsp;
+					<br />
+					<input type="hidden" name="order_id" value="{$order_id}" />
+					<input id="save" class="submit" type="submit" value="Submit" />
+				</div>
+			</form>
+		</fieldset>
 	</div>
 </div>
-	<script src="https://code.jquery.com/jquery-1.12.4.min.js"   integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="   crossorigin="anonymous"></script>
-	<script src="__PUBLIC__/js/jquery_ui.js" type="text/javascript"></script>
-	<script src="__PUBLIC__/js/wysiwyg.js" type="text/javascript"></script>
-	<!-- <script src="__PUBLIC__/js/functions.js" type="text/javascript"></script> -->
-	<script>
-	
-	</script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"   integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="   crossorigin="anonymous"></script>
+<script src="__PUBLIC__/js/jquery_ui.js" type="text/javascript"></script>
+<script src="__PUBLIC__/js/wysiwyg.js" type="text/javascript"></script>
+<!-- <script src="__PUBLIC__/js/functions.js" type="text/javascript"></script> -->
+<script>
+
+</script>
 </body>
 </html>
