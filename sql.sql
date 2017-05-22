@@ -5,6 +5,19 @@ ADD COLUMN `state`  tinyint(1) NOT NULL DEFAULT 1 COMMENT '1  默认正常  0 �
 ADD COLUMN `c_amount`  float(10,2) NOT NULL DEFAULT 0 COMMENT '消费总金额' AFTER `state`,
 ADD COLUMN `c_type`  tinyint(1) NOT NULL DEFAULT 1 COMMENT '消费类型 1 现金  2 保险公司' AFTER `c_amount`;
 
+CREATE TABLE `oms_insurance` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_id` int(11) NOT NULL,
+  `amount` float(10,2) NOT NULL DEFAULT '0.00' COMMENT '保险公司收取金额',
+  `type` tinyint(1) NOT NULL COMMENT '1 Mpesa  2 cash 3ETF ',
+  `remark` varchar(255) NOT NULL COMMENT '存储 mpesa、transit_id   等相关信息',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+
+
+
+
 --  保险公司不能有尾款 ，需要管理员操作
 --  保险公司不全款通过， 打折需要管理员操作
 --  保险公司进行更改  @龙魁

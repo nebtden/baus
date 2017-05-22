@@ -50,8 +50,9 @@
                 <th>Order NO.</th>
                 <th>mobile</th>
                 <th>Shop</th>
-
                 <th>Time</th>
+
+
                 <th>Consignee</th>
                 <th>Total Price</th>
                 <th>Corporate Status</th>
@@ -63,27 +64,26 @@
 
             <tbody>
 
-            <foreach name="order_lists" item="vo">
+            <foreach name="order_info_lists" item="vo">
                 <tr>
                     <td>{$vo.order_sn}</td>
                     <td>{$vo.mobile}</td>
                     <td><?php echo getShopNameById($vo['shop']);?></td>
 
-                    <td>{if $vo.add_time}{$vo.add_time|date_format:'%Y-%m-%d %H:%M'}{else}-{/if}</td>
-    <td></td>
+                    <td>{$vo.addtime}</td>
                     <td>{$vo.consignee}</td>
                     <td><?php $total = unserialize($vo['receiptno']);
 									echo $total['total_order_amount'];
 							 ?></td>
                     <td><?php $corporate = unserialize($vo['corporate']);
-									echo $total['corporate_status_set'];
+									echo $corporate['corporate_status_set'];
 							 ?></td>
                     <td><?php $corporate = unserialize($vo['corporate']);
-									echo $total['corporate_amount'];
+									echo $corporate['corporate_amount'];
 							 ?></td>
                      <td>
-                         <a href="{:U('Index/deleteCustomer',array('customer_id'=>$vo['c_id']))}" class="btn"  >
-                             <img src="__PUBLIC__/iconsee/delete_48.png" alt="edit" width="16"/>
+                         <a href="{:U('Finance/insuranceedit',array('order_id'=>$vo['order_id']))}" class="btn"  >
+                             <img src="__PUBLIC__/iconsee/gear_48.png" alt="edit" width="16"/>
                          </a>
                      </td>
 
