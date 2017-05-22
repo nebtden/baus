@@ -88,6 +88,7 @@ class OrderController extends Controller
         $data['email'] = $customer['c_email'];
         $data['mobile'] = I('post.c_mobile');;
         $data['address'] = $customer['c_address'];
+        $data['is_insurance_topup'] = 0;
 
         /* -------------------- */
         $data['pay_id'] = 0;

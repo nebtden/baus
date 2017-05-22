@@ -788,7 +788,10 @@ class IndexController extends Controller
         $this->assign('initial_balance', $initial_balance);
         $this->display();
 
-        M('order_info')->where(['order_id' => $order_id])->save(['printdate' => time()]);
+        M('order_info')->where(['order_id' => $order_id])->save([
+            'printdate' => time(),
+            'order_step'=>8
+        ]);
     }
 
     /* ====== prints customer order plus their prescription END ====== */
