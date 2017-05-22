@@ -1,0 +1,36 @@
+<meta http-equiv="Content-Type"
+      content="text/html; charset=utf-8"/><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+    <title>down </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <style type="text/css" media="all">
+        @import url(__PUBLIC__/css/style.css);
+        @import url(__ROOT__/css/admin.css);
+
+        img {
+            behavior: url('__PUBLIC__/js/iepngfix.htc') !important;
+        }
+
+        .h1 a {
+            color: #333;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/datatables/media/css/jquery.dataTables.min.css"/>
+
+</head>
+<body>
+<include file="Public:header"/>
+<a href="{$downloadurl}"> 下载链接</a>
+
+
+<script>
+    $(document).ready(function () {
+        $('#list_table').DataTable({
+            "order": [[2, "desc"]]
+        });
+    });
+</script>
+</body>
+</html>

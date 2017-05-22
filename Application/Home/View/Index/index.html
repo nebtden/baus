@@ -168,11 +168,14 @@
 		function exportExcel() {
             //var url = {:U('Index/exportExcel')};
             $('#a').val('export');
+            $("#search_form").attr('target','_blank');
+
             $("#search_form").submit();
         }
 
         function search() {
             $('#a').val('index');
+            $("#search_form").attr('target','_self');
             $("#search_form").submit();
         }
 

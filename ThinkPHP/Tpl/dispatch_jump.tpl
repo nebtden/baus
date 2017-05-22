@@ -31,6 +31,7 @@ body{ background: #fff; font-family: '微软雅黑'; color: #333; font-size: 16p
 <p class="detail"></p>
 <p class="jump">
 Page <a id="href" href="<?php echo($jumpUrl); ?>">redirct</a> Waitting time： <b id="wait"><?php echo($waitSecond); ?></b>
+    <a href="#" onclick="window.opener=null;window.open('','_self');window.close();">close this</a>
 </p>
 </div>
 <script type="text/javascript">
@@ -40,6 +41,7 @@ var interval = setInterval(function(){
 	var time = --wait.innerHTML;
 	if(time <= 0) {
 		location.href = href;
+
 		clearInterval(interval);
 	};
 }, 1000);

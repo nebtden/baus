@@ -1,5 +1,5 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+		"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 	<title>Baus Optical</title>
@@ -9,7 +9,7 @@
 		img {behavior:url('__PUBLIC__/js/iepngfix.htc') !important;}
 		input[type=radio] {margin-top: 10px}
 		.input_field .error{color:red;float:none;display: inline;}
-	</style>	
+	</style>
 	<script src="__PUBLIC__/jquery-validation-1.15.0/lib/jquery.js" type="text/javascript"></script>
 	<script src="__PUBLIC__/js/jquery_ui.js" type="text/javascript"></script>
 	<script src="__PUBLIC__/jquery-validation-1.15.0/dist/jquery.validate.min.js" type="text/javascript"></script>
@@ -17,157 +17,157 @@
 </head>
 <body>
 <include file="Public:header" />	<div class="main two"> <!-- Container -->
-	<include file="Public:sidebar" />
+	<include file="Public:product" />
 	<div class="query"> <!-- Main, right side content -->
-		<div class="start"> <!-- Content begins here -->
-				
-				<form method="post" action="{:U('Goods/updateGoods')}" name="formd" id="goods_form"><!-- Form -->
-				<!-- Fieldset -->
-				<fieldset><legend><h2>Edit Goods</h2></legend>
-					<input type="hidden" name="goods_id" value="{$goods_info.goods_id}">
-                    <div class="input_field">
-						<label for="parent_cat_lists"  style="width:150px;">Category: </label>
- 						<select id="parent_id" name="parent_id">
- 							<option value="-1"> - Choose Category - </option>
- 						<foreach name="parent_cat_lists" item="vo">	
- 							<option value="{$vo.cat_id}" <?php if($vo['cat_id'] == $parent_id) echo 'selected'; ?>>{$vo.cat_name}</option>
- 						</foreach>
- 						</select>
- 						<!-- <select id="goods_cat" name="goods_cat">
- 							<option value='-1'> - Choose SubCategory - </option>
- 							{$subcat_str}
- 						</select> -->
-					</div>
+	</div>
+	<div class="start"> <!-- Content begins here -->
 
-					<div class="input_field">
-						<label for="attribute_group" style="width:150px;">Goods Brand: </label>
-						<select id="goods_brand" name="goods_brand">
- 							<option value="-1"> - Choose Brand - </option>
-	 						<foreach name="brand_lists" item="vo">	
-	 							<option value="{$vo.brand_id}" <?php if($vo['brand_id'] == $goods_info['goods_brand']) echo 'selected'; ?>>{$vo.brand_name}</option>
-	 						</foreach>
- 						</select>
-					</div>
+		<form method="post" action="{:U('Goods/updateGoods')}" name="formd" id="goods_form"><!-- Form -->
+			<!-- Fieldset -->
+			<fieldset><legend><h2>Edit Goods</h2></legend>
+				<input type="hidden" name="goods_id" value="{$goods_info.goods_id}">
+				<div class="input_field">
+					<label for="parent_cat_lists"  style="width:150px;">Category: </label>
+					<select id="parent_id" name="parent_id">
+						<option value="-1"> - Choose Category - </option>
+						<foreach name="parent_cat_lists" item="vo">
+							<option value="{$vo.cat_id}" <?php if($vo['cat_id'] == $parent_id) echo 'selected'; ?>>{$vo.cat_name}</option>
+						</foreach>
+					</select>
+					<!-- <select id="goods_cat" name="goods_cat">
+                        <option value='-1'> - Choose SubCategory - </option>
+                        {$subcat_str}
+                    </select> -->
+				</div>
 
-					<div class="input_field">
-						<label for="goods_model_no" style="width:150px;">Goods Model No: </label>
- 						<input class="mediumfield" name="goods_model_no" id="goods_model_no" type="text" value="{$goods_info.goods_model_no}"/>
-					</div>
+				<div class="input_field">
+					<label for="attribute_group" style="width:150px;">Goods Brand: </label>
+					<select id="goods_brand" name="goods_brand">
+						<option value="-1"> - Choose Brand - </option>
+						<foreach name="brand_lists" item="vo">
+							<option value="{$vo.brand_id}" <?php if($vo['brand_id'] == $goods_info['goods_brand']) echo 'selected'; ?>>{$vo.brand_name}</option>
+						</foreach>
+					</select>
+				</div>
 
-					<div class="input_field">
-						<label for="goods_price" style="width:150px;">Goods Price: </label>
- 						<input class="mediumfield" name="goods_price" id="goods_price" type="text" value="{$goods_info.goods_price}"/>
-					</div>
+				<div class="input_field">
+					<label for="goods_model_no" style="width:150px;">Goods Model No: </label>
+					<input class="mediumfield" name="goods_model_no" id="goods_model_no" type="text" value="{$goods_info.goods_model_no}"/>
+				</div>
 
-					<div class="input_field">
-						<label for="goods_storage" style="width:150px;">Goods Storage: </label>
- 						<input class="mediumfield" name="goods_storage" id="goods_storage" type="text" value="{$goods_info.goods_storage}"/>
-					</div>
+				<div class="input_field">
+					<label for="goods_price" style="width:150px;">Goods Price: </label>
+					<input class="mediumfield" name="goods_price" id="goods_price" type="text" value="{$goods_info.goods_price}"/>
+				</div>
 
-					<div class="input_field">
-						<label for="attribute_group" style="width:150px;">Goods Attribute: </label>
-						<span id="show_attribute">{$goods_info.goods_attr}</span>
-						<input type="hidden" name="goods_attr" id="goods_attr">
-					</div>
+				<div class="input_field">
+					<label for="goods_storage" style="width:150px;">Goods Storage: </label>
+					<input class="mediumfield" name="goods_storage" id="goods_storage" type="text" value="{$goods_info.goods_storage}"/>
+				</div>
 
-                    <div class="input_field no_margin_bottom" style="padding-left:150px;">
-						<input class="submit" type="submit" value="Submit" />
-					</div>
+				<div class="input_field">
+					<label for="attribute_group" style="width:150px;">Goods Attribute: </label>
+					<span id="show_attribute">{$goods_info.goods_attr}</span>
+					<input type="hidden" name="goods_attr" id="goods_attr">
+				</div>
+
+				<div class="input_field no_margin_bottom" style="padding-left:150px;">
+					<input class="submit" type="submit" value="Submit" />
+				</div>
 
 
-                    
-				</fieldset>
-				<!-- End of fieldset -->
-			</form>       
 
-				<div class="clear"><!-- --></div>
+			</fieldset>
+			<!-- End of fieldset -->
+		</form>
 
-		</div> <!-- END Content -->
+		<div class="clear"><!-- --></div>
 
-	</div> 	
-		<div id="footer"> 
-			<p> All rights reserved.</p>
-		</div>		
+	</div> <!-- END Content -->
+
+	<div id="footer">
+		<p> All rights reserved.</p>
+	</div>
 </div> <!-- END Container -->
 <script type="text/javascript">
-$(function(){
-	var cat_id = 0;
-	$('#parent_id').change(function(){
-		var parent_id = $("#parent_id").val();
-		$.ajax({
-			type:"get",
-		    async:false,
-		    url:"{:U('Goods/getSubCategoryAjax')}",
-		    data:{parent_id:parent_id},
-		    success:function(data){
-		    	  $("#goods_cat").html(data);
-		    }
-		})
-		$('#goods_cat').trigger('change');
-		getAttrInfo();	
-	});
+    $(function(){
+        var cat_id = 0;
+        $('#parent_id').change(function(){
+            var parent_id = $("#parent_id").val();
+            $.ajax({
+                type:"get",
+                async:false,
+                url:"{:U('Goods/getSubCategoryAjax')}",
+                data:{parent_id:parent_id},
+                success:function(data){
+                    $("#goods_cat").html(data);
+                }
+            })
+            $('#goods_cat').trigger('change');
+            getAttrInfo();
+        });
 
-	$('#goods_cat').change(function(){
-		getAttrInfo();	
-	});
+        $('#goods_cat').change(function(){
+            getAttrInfo();
+        });
 
-	function getAttrInfo()
-	{
-		if($('#goods_cat').val() > 0)
-		{
-			cat_id = $('#goods_cat').val();
-		}else{
-			cat_id = $('#parent_id').val();
-			$.get("{:U('Goods/getAttributeDataAjax')}",{cat_id:cat_id},function(data)
-			{
-				$('#show_attribute').html(data);	
-			});
-			
-		}
-	}
-})
+        function getAttrInfo()
+        {
+            if($('#goods_cat').val() > 0)
+            {
+                cat_id = $('#goods_cat').val();
+            }else{
+                cat_id = $('#parent_id').val();
+                $.get("{:U('Goods/getAttributeDataAjax')}",{cat_id:cat_id},function(data)
+                {
+                    $('#show_attribute').html(data);
+                });
 
-$(function(){
+            }
+        }
+    })
 
- $("#goods_form").validate({
-	    rules: {
-	      goods_price:{
-	      	required : true,
-	      	number: true,
-	      },
-	      goods_storage:{
-	      	required : true,
-	      	digits: true,
-	      },
-	    },
+    $(function(){
 
-	    messages: {
-	      goods_price:{
-	      	required:"goods price required",
-	      	number:"number only",
-	      },
-	      goods_storage:{
-	      	required:"goods storage required",
-	      	digits:"digits only",
-	      },
-	    }
-	});
+        $("#goods_form").validate({
+            rules: {
+                goods_price:{
+                    required : true,
+                    number: true,
+                },
+                goods_storage:{
+                    required : true,
+                    digits: true,
+                },
+            },
 
-	$("#goods_form").submit(function(){
-		if($('#goods_brand').val() == -1)
-		{
-			alert('please choose brand');
-			return false;
-		}
+            messages: {
+                goods_price:{
+                    required:"goods price required",
+                    number:"number only",
+                },
+                goods_storage:{
+                    required:"goods storage required",
+                    digits:"digits only",
+                },
+            }
+        });
 
-		if($('#parent_id').val() == -1)
-		{
-			alert('please choose category');
-			return false;
-		}
+        $("#goods_form").submit(function(){
+            if($('#goods_brand').val() == -1)
+            {
+                alert('please choose brand');
+                return false;
+            }
 
-	})
-});
+            if($('#parent_id').val() == -1)
+            {
+                alert('please choose category');
+                return false;
+            }
+
+        })
+    });
 
 
 

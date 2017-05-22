@@ -15,6 +15,12 @@
 			>Cash Confirm</a>
 			<?php } ?>
 
+			<?php if(($member_group_info['manager'] == 1) || ($member_group_info['cash_confirm'] == 1)){ ?>
+			<a href="{:U('Finance/insurance')}" title="" class="">Insurance  verification</a>
+			<?php } ?>
+
+
+
 
 		</li>
 	</ul>
