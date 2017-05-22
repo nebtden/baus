@@ -164,32 +164,53 @@ class IndexController extends Controller
 
 
         $condition = $this->getCondition();
-        $order_info_lists = $order_info_model->where($condition)->field('order_id,mobile,consignee,address,')->order('order_id DESC')->select();
-        $file = 'SmallPackges' . date('YmdHis', time());
-        $downloads = ROOT_PATH . 'public' . DS . 'uploads/packages/' . $file . '.csv';
+        $order_info_lists = $order_info_model->where($condition)
+            ->field('order_sn,order_id,mobile,consignee,shop,add_time,receiptno,order_step')->order('order_id DESC')->select();
+        $file = 'Order' . date('YmdHis', time());
+        $downloads = dirname(dirname(dirname(dirname(__FILE__)))). DIRECTORY_SEPARATOR.'public' . DIRECTORY_SEPARATOR . 'downs' .DIRECTORY_SEPARATOR. $file . '.csv';
         $fp = fopen($downloads, 'a');
-        $title = ['Order No', 'mobile', 'consignee', 'address'];
+        $title = ['Order No', 'mobile', 'consignee', 'Shop','Time','Total Price','Status','goods_brand','goods_model_no','goods_number','goods_price','goods_attr'];
         fputcsv($fp, $title);
 
-        foreach ($order_info_lists as $package_value) {
-            $column = [];
-            $column['p_sn'] = $package_value['p_sn'];
-            $plist_list = getPlistCanBeSum($package_value['p_sn']);
-            if (!is_array($plist_list)) {
-                $column['p_sn'] = $package_value['p_sn'];
-                $column['goods_info'] = 'null';
-                fputcsv($fp, $column);
+        $model_goods = M('order_goods');
+//        `goods_name` varchar(120) NOT NULL,
+//  `goods_cat` int(10) NOT NULL,
+//  `goods_brand` varchar(45) NOT NULL,
+//  `goods_model_no` varchar(45) NOT NULL,
+//  `goods_number` int(2) NOT NULL,
+//  `goods_price` decimal(10,2) NOT NULL,
+//  `goods_attr` varchar(255) NOT NULL,
+
+        foreach ($order_info_lists as $order_info) {
+
+            $goods_info = $model_goods->where(['order_id'=>$order_info['order_id']])->select();
+            foreach ($goods_info as $goods){
+                $column = [];
+                $column['Order No'] = $order_info['order_sn'];
+                $column['mobile'] = $order_info['mobile'];
+                $column['consignee'] = $order_info['consignee'];
+                $column['Shop'] = getShopNameById($order_info['shop']);
+                $column['Time'] = date('j F Y, H:i:s',$order_info['add_time']);
+                $column['Total Price'] = unserialize($order_info['receiptno'])['total_order_amount'];
+                $column['Status'] = getOrderStepNameById($order_info['order_step'],$order_info['order_id']);
+
+                $column['goods_brand'] =  $goods['goods_brand'];
+                $column['goods_model_no'] =  $goods['goods_model_no'];
+                $column['goods_number'] =  $goods['goods_number'];
+                $column['goods_price'] =  $goods['goods_price'];
+                $column['goods_attr'] =  $goods['goods_attr'];
+
+
             }
-            foreach ($plist_list as $plist_info) {
-                $column['p_sn'] = $package_value['p_sn'];
-                $column['goods_info'] = $plist_info['en_name'];
-                fputcsv($fp, $column);
-            }
+
+
+            fputcsv($fp, $column);
+
         }
 
         fclose($fp);
-        $downloadurl = 'http://' . $_SERVER['HTTP_HOST'] . '/uploads/packages/' . $file . '.csv';
-        return show(1, $downloadurl, $packge_list);
+        $downloadurl = 'http://' . $_SERVER['HTTP_HOST'].'/public/downs/' . $file . '.csv';
+        $this->success('export success',$downloadurl);
     }
 
     public function orderShow()

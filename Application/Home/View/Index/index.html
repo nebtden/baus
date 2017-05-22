@@ -29,7 +29,7 @@
 			<form name="formname" method="get" action="" id="search_form">
 				<input value="Home" name="m" type="hidden" />
 				<input value="Index" name="c" type="hidden" />
-				<input value="index" name="a" type="hidden" />
+				<input value="index" name="a" id="a" type="hidden" />
 				<tr>
 					<td width="10%"><input name="sdate" value="<?php echo $_GET['sdate'];?>" class="laydate-icon" onclick="laydate()"></td>
 					<td width="10%"><input name="edate" value="<?php echo $_GET['edate'];?>" class="laydate-icon" onclick="laydate()"></td>
@@ -54,8 +54,17 @@
 					<td width="20%"><input name="is_print" type="checkbox" value="1" id="is_print" <?php if($_GET['is_print'] == 1){ echo 'checked';} ?>/> show no printed only</td>
 					<input type="hidden" name="order_step" value="<?php echo $_GET['order_step']; ?>">
 					<?php } ?>
+
+				</tr>
+				<tr>
+
 					<td >
-						<input class="submit" type="submit" value="Search" /></td>
+						<input class="submit" type="text" value="Search" onclick="search()" /></td>
+					</td>
+					<td>
+						<input class="submit" type="text" onclick="exportExcel()" value="Export" />
+					</td>
+
 				</tr>
 			</form>
 		</table>
@@ -156,9 +165,18 @@
 	<!-- <script src="__PUBLIC__/datatables/media/js/jquery.dataTables.min.js" type="text/javascript"></script> -->
 	<script src="__PUBLIC__/js/laydate/laydate.js"></script>
 	<script>
+		function exportExcel() {
+            //var url = {:U('Index/exportExcel')};
+            $('#a').val('export');
+            $("#search_form").submit();
+        }
+
+        function search() {
+            $('#a').val('index');
+            $("#search_form").submit();
+        }
 
         $(document).ready(function() {
-
             $("#cancel-modal").dialog({
                 autoOpen: false,
                 height:150,
