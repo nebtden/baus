@@ -93,7 +93,7 @@ class FinanceController extends Controller
             $result = $model->add($data);
 
             //更改订单表状态
-            M('order')->where(['order_id'=>$order_id])->save([
+            $result2 = M('order_info')->where(['order_id'=>$order_id])->save([
                 'is_insurance_topup'=>1
             ]);
 
