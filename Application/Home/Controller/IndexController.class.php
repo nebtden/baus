@@ -385,6 +385,8 @@ class IndexController extends Controller
             } else {
                 $update_data['order_step'] = -1; //Cancelled Order
             }
+            //
+            $update_data['is_insurance_checked'] = 1;
 
             M('order_info')->where(['order_id' => $order_id])->save($update_data);
 

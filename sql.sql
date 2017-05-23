@@ -16,8 +16,10 @@ CREATE TABLE `oms_insurance` (
 
 
 ALTER TABLE `oms_order_info`
-DROP COLUMN `is_insurance_topup`,
 ADD COLUMN `is_insurance_topup`  tinyint(1) NOT NULL COMMENT '是否保险公司核销过' AFTER `order_closed_date`;
+
+ALTER TABLE `oms_order_info`
+ADD COLUMN `is_insurance_checked`  tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否保险公司检查过' AFTER `order_closed_date`;
 
 
 

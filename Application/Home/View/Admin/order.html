@@ -82,11 +82,14 @@
 									echo $corporate['corporate_amount'];
 							 ?></td>
                      <td>
-                         <a href="{:U('Admin/editorder',array('order_id'=>$vo['order_id']))}" class="btn"  >
-                             <img src="__PUBLIC__/iconsee/gear_48.png" alt="edit" width="16"/>
+                         <a href="{:U('Admin/discount',array('order_id'=>$vo['order_id']))}" class="btn"  >
+                             <img src="__PUBLIC__/iconsee/discount.png" alt="edit" width="16"/>
                          </a>
                          <a href="{:U('Admin/returnBack',array('order_id'=>$vo['order_id']))}" class="btn"  >
                              <img src="__PUBLIC__/iconsee/back.png" alt="return to insurance" width="16"/>
+                         </a>
+                         <a href="{:U('Admin/balance',array('order_id'=>$vo['order_id']))}" class="btn"  >
+                             <img src="__PUBLIC__/iconsee/balance.png" alt="return to insurance" width="16"/>
                          </a>
                      </td>
 
