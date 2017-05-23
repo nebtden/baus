@@ -195,15 +195,26 @@
 			<!-- End of fieldset -->
 			<fieldset><legend><h2>4. Payment Via</h2></legend>
 				<div style="min-height:120px;">
-					<div style="height:100px;float:left;width:49.5%">
-						<input name="pay_choice"  type="radio" value="cash" />Cash<br /><br />
+					<div style="height:150px;float:left;width:49.5%">
 
-						<div id="cash-option" style="display:none;">
-							<input class="cash-radio" name="payment_method" type="radio" value="cash" /> Quick Cash&nbsp;&nbsp;&nbsp;&nbsp;
-							<input class="cash-radio" name="payment_method" type="radio" value="m-pesa" /> M-Pesa&nbsp;&nbsp;&nbsp;&nbsp;
-							<input class="cash-radio" name="payment_method" type="radio" value="cheque" /> Cheque&nbsp;&nbsp;&nbsp;&nbsp;
-							<input class="cash-radio" name="payment_method" type="radio" value="card" /> Card&nbsp;&nbsp;&nbsp;&nbsp;
-							<input class="cash-radio" name="payment_method" type="radio" value="EFT" /> EFT
+						<div id="cash-option"  >
+							cash:<input class="cash-radio" name="cash" type="text" />
+							cash remark:<input class="cash-radio" name="cash_remark" type="text" />
+							&nbsp;&nbsp;&nbsp;<br>
+							M-Pesa：	<input class="cash-radio" name="m-pesa" type="text" />
+							M-Pesa remark：	<input class="cash-radio" name="m-pesa_remark" type="text" />
+							<br>
+							Cheque：<input class="cash-radio" name="cheque" type="text" />
+							Cheque remark：<input class="cash-radio" name="cheque_remark" type="text" />
+
+							<br>
+							Card：<input class="cash-radio" name="card" type="text"  />
+							Card remark：<input class="cash-radio" name="card_remark" type="text"  />
+							&nbsp;&nbsp;&nbsp;<br>
+							EFT：<input class="cash-radio" name="eft" type="text" />
+							EFT remark：<input class="cash-radio" name="eft_remark" type="text" />
+
+							<br>
 							<br /><br />
 							<div class="orderinfo_label">Deposit</div><input class="mediumfield" id="payment_price" name="payment_price" type="text" value="" /><br />
 							<div class="orderinfo_label">Remark</div><input class="mediumfield" name="initial_pay_remark" type="text" value="" />

@@ -149,7 +149,12 @@ class OrderController extends Controller
         $data_receiptno['cashier'] = I('post.cashier');
         $data_receiptno['sales_person'] = I('post.sales_person');
         $data_receiptno['optometrist'] = I('post.optometrist');
-        $data_receiptno['payment_method'] = I('post.payment_method');
+        if(I('post.payment_method')){
+            $data_receiptno['payment_method'] = I('post.payment_method');
+        }else{
+            $data_receiptno['payment_method'] = 'combine';
+        }
+
         $data_receiptno['insurancetext'] = I('post.insurancetext');
         $data_receiptno['add_time'] = time();
 
@@ -193,6 +198,12 @@ class OrderController extends Controller
             M('order_goods')->add($data_order_goods);
 
             $order_info = M('order_info')->find($order_id);
+
+            //收取买家费用
+            if(I('post.cash')){
+
+            }
+
 
             $data_cash['order_id'] = $order_info['order_id'];
             $data_cash['order_sn'] = $order_info['order_sn'];

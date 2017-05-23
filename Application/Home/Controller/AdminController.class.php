@@ -82,11 +82,32 @@ class AdminController extends Controller
     }
 
     public function balance(){
+
         $order_id =  I('get.order_id');
         $order_info = M('order_info')->where(['order_id' => $order_id])->find();
 
         $this->assign('order_info', $order_info);
         $this->display();
+    }
+
+    public function balancesave(){
+
+        $balance  = I('post.balance');
+            $order_id = I('post.order_id');
+            $updatedata = [];
+            $updatedata['order_step'] = 4;
+            $updatedata['corporate'] = '';
+            $updatedata['is_insurance_checked'] = 0;
+            $result = M('order_info')
+                ->where(['order_id'=>$order_id])
+                ->save($updatedata);
+            if ($result) {
+                $this->success('return to insurance success! ', U('Admin/order'));
+            } else {
+                $this->error('return to insurance  fail!');
+        }
+
+
     }
 
 
@@ -97,6 +118,23 @@ class AdminController extends Controller
 
         $this->assign('order_info', $order_info);
         $this->display();
+    }
+
+    public function discountsave(){
+
+        $order_id = I('post.order_id');
+        $updatedata = [];
+        $updatedata['balance'] = 0;
+        $updatedata['corporate'] = '';
+        $updatedata['is_insurance_checked'] = 0;
+        $result = M('order_info')
+            ->where(['order_id'=>$order_id])
+            ->save($updatedata);
+        if ($result) {
+            $this->success('return to insurance success! ', U('Admin/order'));
+        } else {
+            $this->error('return to insurance  fail!');
+        }
     }
 
 

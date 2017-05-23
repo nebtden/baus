@@ -22,7 +22,7 @@
 <body>
 <include file="Public:header"/>
 <div class="main two"> <!-- Container -->
-    <include file="Public:customer"/>
+    <include file="Public:finance"/>
     <div class="query"> <!-- Main, right side content -->
     </div>
     <div class="start"> <!-- Content begins here -->
@@ -30,31 +30,25 @@
         <form method="post" action="{:U('Finance/saveinsurance')}" name="formd"><!-- Form -->
             <!-- Fieldset -->
             <fieldset>
-                <legend><h2>Insurance edit</h2></legend>
+                <legend><h2>move amount to balance</h2></legend>
 
                 <div class="input_field">
-
+                    {$order_info.order_id}
 
                 </div>
                 <input type="hidden" name="order_id" value="{$order_info.order_id}">
 
 
                 <div class="input_field">
-                    <label for="amount" style="width:150px;">amount: </label>
+                    <label for="amount" style="width:150px;"> balance: </label>
                     <input class="mediumfield" name="amount" id="amount" type="text" value=""/>
                 </div>
 
-                <div class="input_field">
-                    <label for="c_type" style="width:150px;">method: </label>
-                    <select name="type">
-                        <option value="1">discount</option>
 
-                    </select>
-                </div>
 
                 <div class="input_field">
                     <label for="amount" style="width:150px;">remark: </label>
-                    <input class="mediumfield" name="remark" id="remark" type="text" value="" placeholder="please insert certificate like trans_id,pay sn ...etc"/>
+                    <input class="mediumfield" name="remark" id="remark" type="text" value="" placeholder=""/>
                 </div>
 
                 <div class="input_field no_margin_bottom" style="padding-left:150px;">

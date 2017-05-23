@@ -113,7 +113,7 @@
 					<?php echo getOrderStepNameById($vo['order_step'],$vo['order_id']); ?>
 				</td>
 				<td>
-
+					<a href="{:U('Index/orderShow',array('order_id'=>$vo['order_id']))}"><img src="__PUBLIC__/iconsee/gear_48.png" alt="edit" width="16" /></a>
 					<?php if($vo['order_step'] == 7 && $member_group_info['internal-print']==1) { ?>
 					<a href="{:U('Index/printInternalOrder',array('order_id'=>$vo['order_id']))}" class="print" target="_blank">
 						<img src="__PUBLIC__/iconsee/print.png" alt="edit" width="16"/>
