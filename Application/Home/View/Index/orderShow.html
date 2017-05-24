@@ -285,68 +285,6 @@
 
         <div class="clear"><!-- --></div>
 
-
-        <!-- step4 s-->
-        <div id="show_step4">
-            <form method="post" action="{:U('Index/orderProcess')}" name="formd" id="form_step4"><!-- Form -->
-                <!-- Fieldset -->
-                <fieldset><legend><h2>4, Corporate manager</h2></legend>
-
-                    <table cellspacing="0" cellpadding="0" border="0"><!-- Table -->
-                        <tbody>
-
-                        <tr>
-                            <td>
-                                <input name="corporate_status_set" type="radio" value="proceed" <?php if($corporate['corporate_status_set'] == 'proceed') echo 'checked';?>/> Proceed <br>
-                                <input name="corporate_status_set" type="radio" value="less approval" <?php if($corporate['corporate_status_set'] == 'less approval') echo 'checked';?>/> Less approval
-                                <b style="color:red" id="less_message">* Please Enter Amount For This Option *</b>
-                                <input class="mediumfield" style="width:100px;" id="corporate_amount" name="corporate_amount" type="text" value="{$corporate['corporate_amount']}" /><br>
-                                <input name="corporate_status_set" type="radio" value="decline" <?php if($corporate['corporate_status_set'] == 'decline') echo 'checked';?>/> Declined
-                            </td>
-
-                            <!-- <td id='topupleo'>
-                                Need Customer Card Confirm <input name="customer_card_confirm_set" type="radio" value="1" <?php if($corporate['customer_card_confirm_set'] == 1) echo 'checked';?>/> YES <input name="customer_card_confirm_set" type="radio" value="0" <?php if($corporate['customer_card_confirm_set'] == 2) echo 'checked';?>/> NO<br>
-                            </td> -->
-
-                            <td>Time: <?php if($corporate['add_time'] != '') echo date('Y-m-d H:i:s',$corporate['add_time'])?></td>
-                            <td><input  type="hidden" name="order_id" value="{$order_info.order_id}" /><input  type="hidden" name="step_name" value="editcorporate" /><input class="submit" type="submit" value="Submit" /></td>
-                        </tr>
-
-                        </tbody></table>
-                </fieldset>
-                <!-- End of fieldset -->
-            </form>
-        </div>
-        <script type="text/javascript">
-            $(function(){
-                <?php if(($order_info['order_step'] != 4)||($member_group_info['corporate'] != 1) ){ ?>
-                    $('#form_step4').find('input').attr('readonly','true');
-                    $('#form_step4').find('.submit').css('display','none');
-                <?php } ?>
-                if($('input:radio[name="corporate_status_set"]:checked').val() == "less approval")
-                {
-                    $("#corporate_amount").css('display','');
-                    $("#corporate_amount").attr('readonly',false);
-                    //$("#less_message").css('display', '');
-
-                }else{
-                    $("#corporate_amount").css('display','none');
-                    //$("#less_message").css('display', 'none');
-                }
-
-                $('input:radio[name="corporate_status_set"]').change(function(){
-                    var p_method = $('input:radio[name="corporate_status_set"]:checked').val();
-                    if(p_method == "less approval")
-                    {
-                        $("#corporate_amount").css('display','');
-                    }else{
-                        $("#corporate_amount").css('display','none');
-                    }
-                })
-
-            })
-        </script>
-        <div class="clear"><!-- --></div>
         <!-- step4 e-->
 
         <!-- step5 s-->

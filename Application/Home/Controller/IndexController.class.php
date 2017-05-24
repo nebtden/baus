@@ -361,49 +361,6 @@ class IndexController extends Controller
             }
         }
 
-        /* ====== Step 4 Corporate Manager Section ====== */
-
-        if ($step_name == 'editcorporate') {
-            unset($update_data);
-            unset($data);
-
-            $data['corporate_status_set'] = I('post.corporate_status_set');
-            $data['corporate_amount'] = I('post.corporate_amount');
-
-            $data['add_time'] = time();
-
-            $update_data['corporate'] = serialize($data);
-
-            $receiptno = unserialize($order_info['receiptno']);
-
-            if ($data['corporate_status_set'] == 'proceed') {
-                if ($receiptno['payment_method'] == 'insurance_0') { //check if smart card selected in new order
-
-                    $update_data['order_step'] = 7; // Proceed with NO smart card to step7
-
-                } else if ($receiptno['payment_method'] == 'insurance_1') {
-
-                    $update_data['order_step'] = 5;  // Proceed with smart card to step5
-                }
-
-            } elseif ($data['corporate_status_set'] == 'less approval') { // Less Approve option, so step5
-
-                $update_data['order_step'] = 5;
-            } else {
-                $update_data['order_step'] = -1; //Cancelled Order
-            }
-            //
-            $update_data['is_insurance_checked'] = 1;
-
-            M('order_info')->where(['order_id' => $order_id])->save($update_data);
-
-            if (M('order_info')->where(['order_id' => $order_id])->save($update_data) !== FALSE) {
-                $this->success('save success', U('Index/orderShow', array('order_id' => $order_id)));
-            } else {
-                $this->error('save fail', U('Index/orderShow', array('order_id' => $order_id)));
-            }
-        }
-        /* ====== Step 4, Corporate Manager Section END ====== */
 
 
         /* ====== Step5: Insurance Proceed Customer Insurance Card Report Section ====== */
