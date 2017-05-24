@@ -131,6 +131,7 @@ class IndexController extends Controller
 
     public function index()
     {
+
         $order_info_model = M('order_info');
 
 

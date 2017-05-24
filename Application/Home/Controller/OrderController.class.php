@@ -56,6 +56,7 @@ class OrderController extends Controller
         $c_age = I('post.c_age');
         //var_dump($c_id);
 
+
         $address = I('post.address');
 
         if ($c_id > 0) {
@@ -200,89 +201,12 @@ class OrderController extends Controller
             $order_info = M('order_info')->find($order_id);
 
             //收取买家费用
-            if(I('post.cash')){
-                $data_cash['order_id'] = $order_info['order_id'];
-                $data_cash['order_sn'] = $order_info['order_sn'];
-                $data_cash['pay_amount'] = I('post.cash');
-                $data_cash['total_order_amount'] = $total_order_amount;
-                $data_cash['payment_method'] = 'cash';
-                $data_cash['receipt_no'] = 'D' . $orders_count;
-                $data_cash['payment_remark'] = I('post.cash_remark');
-                $data_cash['reverse_status'] = 0;
-                $data_cash['member_id'] = session('member_id');
-                $data_cash['cancel_status'] = 0;
-                $data_cash['add_time'] = time();
+            $payed_money = insertpaidmoney($order_info,$total_order_amount,$orders_count);
 
-                M('cash')->add($data_cash);
-            }
-
-            //收取买家费用
-            if(I('post.m_pesa')){
-                $data_cash['order_id'] = $order_info['order_id'];
-                $data_cash['order_sn'] = $order_info['order_sn'];
-                $data_cash['pay_amount'] = I('post.m_pesa');
-                $data_cash['total_order_amount'] = $total_order_amount;
-                $data_cash['payment_method'] = 'm_pesa';
-                $data_cash['receipt_no'] = 'D' . $orders_count;
-                $data_cash['payment_remark'] = I('post.m_pesa_remark');
-                $data_cash['reverse_status'] = 0;
-                $data_cash['member_id'] = session('member_id');
-                $data_cash['cancel_status'] = 0;
-                $data_cash['add_time'] = time();
-
-                M('cash')->add($data_cash);
-            }
-
-            //收取买家费用
-            if(I('post.cheque')){
-                $data_cash['order_id'] = $order_info['order_id'];
-                $data_cash['order_sn'] = $order_info['order_sn'];
-                $data_cash['pay_amount'] = I('post.cheque');
-                $data_cash['total_order_amount'] = $total_order_amount;
-                $data_cash['payment_method'] = 'cheque';
-                $data_cash['receipt_no'] = 'D' . $orders_count;
-                $data_cash['payment_remark'] = I('post.cheque_remark');
-                $data_cash['reverse_status'] = 0;
-                $data_cash['member_id'] = session('member_id');
-                $data_cash['cancel_status'] = 0;
-                $data_cash['add_time'] = time();
-
-                M('cash')->add($data_cash);
-            }
-
-            //收取买家费用
-            if(I('post.card')){
-                $data_cash['order_id'] = $order_info['order_id'];
-                $data_cash['order_sn'] = $order_info['order_sn'];
-                $data_cash['pay_amount'] = I('post.card');
-                $data_cash['total_order_amount'] = $total_order_amount;
-                $data_cash['payment_method'] = 'card';
-                $data_cash['receipt_no'] = 'D' . $orders_count;
-                $data_cash['payment_remark'] = I('post.card_remark');
-                $data_cash['reverse_status'] = 0;
-                $data_cash['member_id'] = session('member_id');
-                $data_cash['cancel_status'] = 0;
-                $data_cash['add_time'] = time();
-
-                M('cash')->add($data_cash);
-            }
-
-            //收取买家费用
-            if(I('post.eft')){
-                $data_cash['order_id'] = $order_info['order_id'];
-                $data_cash['order_sn'] = $order_info['order_sn'];
-                $data_cash['pay_amount'] = I('post.eft');
-                $data_cash['total_order_amount'] = $total_order_amount;
-                $data_cash['payment_method'] = 'eft';
-                $data_cash['receipt_no'] = 'D' . $orders_count;
-                $data_cash['payment_remark'] = I('post.eft_remark');
-                $data_cash['reverse_status'] = 0;
-                $data_cash['member_id'] = session('member_id');
-                $data_cash['cancel_status'] = 0;
-                $data_cash['add_time'] = time();
-                M('cash')->add($data_cash);
-            }
-
+            //更新余额
+            M('order_info')->where(['order_step'=>7,'order_id'=>$order_id])->save([
+                'balance' => $total_order_amount-$payed_money
+            ]);
 
 
 
