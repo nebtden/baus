@@ -197,28 +197,28 @@
 			<fieldset><legend><h2>4. Payment Via</h2></legend>
 				<div style="min-height:120px;">
 					<div style="height:150px;float:left;width:49.5%">
-
-						<div id="cash-option"  >
-							cash:<input class="cash-radio" name="cash" type="text" />
-							cash remark:<input class="cash-radio" name="cash_remark" type="text" />
+						cash/m-pesa/chequ/card/eft:<input type="radio" name="pay_choice" value="cash">
+						<div id="cash-option" id="class-option" >
+							cash:<input class="cash-radio" name="cash" type="number" value="0" />
+							cash remark:<input class="cash-radio" name="cash_remark" type="text" value="0"/>
 							&nbsp;&nbsp;&nbsp;<br>
-							M-Pesa：	<input class="cash-radio" name="m_pesa" type="text" />
+							M-Pesa：	<input class="cash-radio" name="m_pesa" type="number" value="0" />
 							M-Pesa remark：	<input class="cash-radio" name="m_pesa_remark" type="text" />
 							<br>
-							Cheque：<input class="cash-radio" name="cheque" type="text" />
+							Cheque：<input class="cash-radio" name="cheque" type="number" value="0" />
 							Cheque remark：<input class="cash-radio" name="cheque_remark" type="text" />
 
 							<br>
-							Card：<input class="cash-radio" name="card" type="text"  />
+							Card：<input class="cash-radio" name="card" type="number" value="0" />
 							Card remark：<input class="cash-radio" name="card_remark" type="text"  />
 							&nbsp;&nbsp;&nbsp;<br>
-							EFT：<input class="cash-radio" name="eft" type="text" />
+							EFT：<input class="cash-radio" name="eft" type="number"  value="0" />
 							EFT remark：<input class="cash-radio" name="eft_remark" type="text" />
 
 							<br>
 							<br /><br />
-							<div class="orderinfo_label">Deposit</div><input class="mediumfield" id="payment_price" name="payment_price" type="text" value="" /><br />
-							<div class="orderinfo_label">Remark</div><input class="mediumfield" name="initial_pay_remark" type="text" value="" />
+							<!--<div class="orderinfo_label">Deposit</div><input class="mediumfield" id="payment_price" name="payment_price" type="text" value="" /><br />-->
+							<!--<div class="orderinfo_label">Remark</div><input class="mediumfield" name="initial_pay_remark" type="text" value="" />-->
 						</div>
 					</div>
 					<div style="height:100px;float:right;width:50%">
@@ -266,14 +266,14 @@
                 $('#cash-option').show();
                 $('#insurance-option').hide();
 
-                $('#payment_price').prop('required', true);
+                //$('#payment_price').prop('required', true);
                 $('#insurancetext').prop('required', false);
             }else{
                 $('#insurance-option').show();
                 $('#cash-option').hide();
 
                 $('#insurancetext').prop('required', true);
-                $('#payment_price').prop('required', false);
+               // $('#payment_price').prop('required', false);
 
 
                 $('.cash-radio input').removeAttr('checked');
@@ -355,11 +355,6 @@
             //$("#show_step4,#show_step5,#show_step6").css('display','none');
         }
 		/*End Section*/
-
-
-
-
-
 
         $("#c_mobile").blur(function(){
             var c_mobile = $(this).val();
@@ -455,7 +450,7 @@
                 },
                 c_name: "required",
                 consignee: "required",
-                payment_price: "required",
+               // payment_price: "required",
                 mobile:{
                     required : true,
                     digits: true,
