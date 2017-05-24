@@ -118,23 +118,29 @@ class OrderController extends Controller
 
 
         $address = I('post.address');
+        $customer['c_mobile'] = $c_mobile;
+        $customer['c_name'] = $c_name;
+        $customer['c_email'] = $c_email;
+        $customer['c_address'] = $address;
+        $customer['c_gender'] = $c_gender;
+        $customer['c_age'] = $c_age;
 
         if ($c_id > 0) {
             $data['user_id'] = $c_id;
+            $customer_model = M('customer');
+
+
+            //更新信息
+            $updatecustomer = $customer;
+            unset($updatecustomer['c_mobile']);
+            M('customer')->where(['c_id'=>$c_id])->save($updatecustomer);
+
+            $customer = $customer_model->where(['c_id'=>$c_id])->find();
         } else {
-            $data_customer['c_mobile'] = $c_mobile;
-            $data_customer['c_name'] = $c_name;
-            $data_customer['c_email'] = $c_email;
-            $data_customer['c_address'] = $address;
-            $data_customer['c_gender'] = $c_gender;
-            $data_customer['c_age'] = $c_age;
-            $res_id = M('customer')->add($data_customer);
+
+            $res_id = M('customer')->add($customer);
             $data['user_id'] = $res_id;
         }
-
-        $customer_model = M('customer');
-        $customer = $customer_model->where(['c_id'=>$c_id])->find();
-
 
 
         $goods_id = I('post.goods_id');

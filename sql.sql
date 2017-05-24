@@ -21,7 +21,9 @@ ADD COLUMN `is_insurance_topup`  tinyint(1) NOT NULL COMMENT '是否保险公司
 ALTER TABLE `oms_order_info`
 ADD COLUMN `is_insurance_checked`  tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否保险公司检查过' AFTER `order_closed_date`;
 
-
+-- 数据库更改
+ALTER TABLE `oms_customer`
+MODIFY COLUMN `c_mobile`  varchar(15) NOT NULL AFTER `c_name`;
 
 
 

@@ -186,10 +186,13 @@
                         </tbody>
                     </table>
                     <br />
-                    Cashier: <input class="smallfield" style="width:100px;" id="cashier" name="cashier" type="text" value="{$receiptno.cashier}" />      Sales Person: <input class="smallfield" style="width:100px;" id="sales_person" name="sales_person" type="text" value="{$receiptno.sales_person}" />      Optometrist: <input class="smallfield" style="width:100px;" id="optometrist" name="optometrist" type="text" value="{$receiptno.optometrist}" />
+                    Cashier: <input class="smallfield" style="width:100px;" id="cashier" name="cashier" type="text" value="{$receiptno.cashier}" />
+                    Sales Person: <input class="smallfield" style="width:100px;" id="sales_person" name="sales_person" type="text" value="{$receiptno.sales_person}" />
+                    Optometrist: <input class="smallfield" style="width:100px;" id="optometrist" name="optometrist" type="text" value="{$receiptno.optometrist}" />
                 </fieldset>
                 <fieldset><legend><h2>3. Deposit</h2></legend>
                     <div style="height:150px;float:left;width:49.5%">
+
                         Payment method:<br /><br />
 
                         <?php if($receiptno['payment_method'] == 'insurance_0'): ?>

@@ -58,7 +58,8 @@
 							<option value="1">Male</option>
 							<option value="2">Female</option>
 						</select><br />
-						<div class="orderinfo_label">Age</div> <input class="mediumfield" id="c_age" name="c_age" type="text"/>
+						<div class="orderinfo_label">Age</div>
+						<input class="mediumfield" id="c_age" name="c_age" type="text"/>
 					</div>
 				</div>
 			</fieldset>
@@ -374,11 +375,11 @@
                     {
                         $('#c_id').val(data.c_id);
                         $('#c_name').val(data.c_name);
-                        $('#c_name').attr('readonly','true');
+                        //$('#c_name').attr('readonly','true');
                         $('#c_age').val(data.c_age);
-                        $('#c_age').attr('readonly','true');
+                        //$('#c_age').attr('readonly','true');
                         $('#c_email').val(data.c_email);
-                        $('#c_email').attr('readonly','true');
+                        //$('#c_email').attr('readonly','true');
                         $('#address').val(data.c_address);
                         $('#mobile').val(data.c_mobile);
                         $('#consignee').val(data.c_name);
