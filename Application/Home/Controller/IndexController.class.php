@@ -481,24 +481,30 @@ class IndexController extends Controller
 
                 $data['remark'] = I('post.remark');
 
-                $data['recevied_amount'] = I('post.recevied_amount');
-                $data['less_approve_pay_method'] = I('post.less_approve_pay_method');
 
-                $cash_count = M('cash')->field('count(cash_id) as cash_count')->select();
-                $cash_count = $cash_count[0]['cash_count'] + 1;
+                $data['less_approve_pay_method'] = 'combine';
 
-                $data_cash['order_id'] = $order_info['order_id'];
-                $data_cash['order_sn'] = $order_info['order_sn'];
-                $data_cash['pay_amount'] = I('post.recevied_amount');
-                $data_cash['payment_method'] = I('post.less_approve_pay_method');
-                $data_cash['receipt_no'] = 'B' . $cash_count;
-                $data_cash['payment_remark'] = I('post.remark');
-                $data_cash['reverse_status'] = 0;
-                $data_cash['cancel_status'] = 0;
-                $data_cash['member_id'] = session('member_id');
-                $data_cash['add_time'] = time();
 
-                M('cash')->add($data_cash);
+                //收取买家费用
+                $payed_money = insertpaidmoney($order_info,'');
+                $data['recevied_amount'] = $payed_money;
+                //更新余额
+                M('order_info')->where(['order_step'=>7,'order_id'=>$order_id])->save([
+                    'balance' => 0
+                ]);
+
+//                $data_cash['order_id'] = $order_info['order_id'];
+//                $data_cash['order_sn'] = $order_info['order_sn'];
+//                $data_cash['pay_amount'] = I('post.recevied_amount');
+//                $data_cash['payment_method'] = I('post.less_approve_pay_method');
+//                $data_cash['receipt_no'] = 'B' . $cash_count;
+//                $data_cash['payment_remark'] = I('post.remark');
+//                $data_cash['reverse_status'] = 0;
+//                $data_cash['cancel_status'] = 0;
+//                $data_cash['member_id'] = session('member_id');
+//                $data_cash['add_time'] = time();
+//
+//                M('cash')->add($data_cash);
 
                 $data['add_time'] = time();
 

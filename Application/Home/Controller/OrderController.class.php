@@ -141,7 +141,6 @@ class OrderController extends Controller
         $data['distance'] = serialize($data_distance);
 
         $orders_count = M('order_info')->field('count(order_id) as order_count')->select();
-
         $orders_count = $orders_count[0]['order_count'] + 1;
 
         $data_receiptno['payment_price'] = I('post.payment_price');

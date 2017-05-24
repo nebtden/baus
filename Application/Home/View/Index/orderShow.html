@@ -388,22 +388,26 @@
                             <option value="-1">-- Select Less Approve Action --</option>
                             <option value="top_up">Top Up</option>
                             <option value="change_goods">Change Goods</option>
-                            <option value="discount">Discount</option>
                             <option value="cancel">Cancel Order</option>
                         </select>
                         <br />
 
                         <div class="less_approve_pay">
-                            Please select the payment method<br />
-                            <input name="less_approve_pay_method" type="radio" value="cash" checked/> Quick Cash&nbsp;&nbsp;&nbsp;&nbsp;
-                            <input name="less_approve_pay_method" type="radio" value="m-pesa" /> M-Pesa&nbsp;&nbsp;&nbsp;&nbsp;
-                            <input name="less_approve_pay_method" type="radio" value="cheque" /> Cheque&nbsp;&nbsp;&nbsp;&nbsp;
-                            <input name="less_approve_pay_method" type="radio" value="card" /> Card&nbsp;&nbsp;&nbsp;&nbsp;
-                            <input name="less_approve_pay_method" type="radio" value="ETF" /> ETF&nbsp;&nbsp;&nbsp;&nbsp;
+                            cash:<input class="cash-radio" name="cash" type="text" />
+                            cash remark:<input class="cash-radio" name="cash_remark" type="text" />
+                            &nbsp;&nbsp;&nbsp;<br>
+                            M-Pesa：	<input class="cash-radio" name="m_pesa" type="text" />
+                            M-Pesa remark：	<input class="cash-radio" name="m_pesa_remark" type="text" />
+                            <br>
+                            Cheque：<input class="cash-radio" name="cheque" type="text" />
+                            Cheque remark：<input class="cash-radio" name="cheque_remark" type="text" />
 
-                            <br /><br />
-                            <div class="orderinfo_label"> Recevied Amount</div> <input type="text" id="recevied_amount" name="recevied_amount" value="" /><br />
-                            <div class="orderinfo_label"> Remark</div> <input type="text" name="remark" value="" />
+                            <br>
+                            Card：<input class="cash-radio" name="card" type="text"  />
+                            Card remark：<input class="cash-radio" name="card_remark" type="text"  />
+                            &nbsp;&nbsp;&nbsp;<br>
+                            EFT：<input class="cash-radio" name="eft" type="text" />
+                            EFT remark：<input class="cash-radio" name="eft_remark" type="text" />
                         </div>
                         <?php endif; ?>
                     </div>
