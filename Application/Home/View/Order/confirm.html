@@ -1,0 +1,131 @@
+<meta http-equiv="Content-Type"
+      content="text/html; charset=utf-8"/><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+    <title>insurance </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <style type="text/css" media="all">
+        @import url(__PUBLIC__/css/style.css);
+        @import url(__ROOT__/css/admin.css);
+
+        img {
+            behavior: url('__PUBLIC__/js/iepngfix.htc') !important;
+        }
+    </style>
+    <script src="__PUBLIC__/js/jquery.js" type="text/javascript"></script>
+    <script src="__PUBLIC__/js/jquery_ui.js" type="text/javascript"></script>
+    <script src="__PUBLIC__/js/wysiwyg.js" type="text/javascript"></script>
+    <script src="__PUBLIC__/js/functions.js" type="text/javascript"></script>
+
+</head>
+<body>
+<include file="Public:header"/>
+<div class="main two"> <!-- Container -->
+    <include file="Public:order"/>
+    <div class="query"> <!-- Main, right side content -->
+    </div>
+    <div class="start"> <!-- Content begins here -->
+
+
+        <div id="show_step5_1">
+            <form method="post" action="{:U('Order/confirmsave')}" name="formd" id="form_step5_1"><!-- Form -->
+                <!-- Fieldset -->
+                <fieldset><legend><h2>5, Customer Less Approve</h2></legend>
+                    <div id="step5_6" style="height:150px;float:left;width:49.5%">
+                        <div class="orderinfo_label">Less Approve Action</div>
+                        <?php if($customer_confirm['less_approve_action']): ?>
+                        This step is complete
+                        <?php else: ?>
+                        <select id="less_approve" name="less_approve_action">
+                            <option value="-1">-- Select Less Approve Action --</option>
+                            <option value="top_up">Top Up</option>
+                            <option value="change_goods">Change Goods</option>
+                            <option value="cancel">Cancel Order</option>
+                        </select>
+                        <br />
+
+                        <div class="less_approve_pay" >
+                            cash:<input class="cash-radio" name="cash" type="number" value="0" />
+                            cash remark:<input class="cash-radio" name="cash_remark" type="text" value="0"/>
+                            &nbsp;&nbsp;&nbsp;<br>
+                            M-Pesa：	<input class="cash-radio" name="m_pesa" type="number" value="0" />
+                            M-Pesa remark：	<input class="cash-radio" name="m_pesa_remark" type="text" />
+                            <br>
+                            Cheque：<input class="cash-radio" name="cheque" type="number" value="0" />
+                            Cheque remark：<input class="cash-radio" name="cheque_remark" type="text" />
+
+                            <br>
+                            Card：<input class="cash-radio" name="card" type="number" value="0" />
+                            Card remark：<input class="cash-radio" name="card_remark" type="text"  />
+                            &nbsp;&nbsp;&nbsp;<br>
+                            EFT：<input class="cash-radio" name="eft" type="number"  value="0" />
+                            EFT remark：<input class="cash-radio" name="eft_remark" type="text" />
+
+                            <br>
+                            <br /><br />
+                            <!--<div class="orderinfo_label">Deposit</div><input class="mediumfield" id="payment_price" name="payment_price" type="text" value="" /><br />-->
+                            <!--<div class="orderinfo_label">Remark</div><input class="mediumfield" name="initial_pay_remark" type="text" value="" />-->
+                        </div>
+
+
+                        <?php endif; ?>
+                    </div>
+                    <div style="height:150px;float:right;width:50%">
+                        <div class="less_approve_pay">
+                            <!-- place balance remaining -->
+                            <div class="orderinfo_label">Balance</div> <input type="text" name="balance_remaining" <?php if($customer_confirm['balance_remaining']){ echo 'value="'.$customer_confirm['balance_remaining'].'" ';}else{ echo 'value=""'; }?> readonly/> <br />
+                        </div>
+                        <div id="approve_action">
+                            <input type="hidden" name="order_id" value="{$order_info.order_id}" />
+                            <input type="hidden" name="step_name" value="edit_customer_confirm" />
+                            <input class="submit" type="submit" value="Submit" />
+                        </div>
+
+                        <?php if($customer_confirm['less_approve_action'] == 'top_up'):	?>
+                        The Customer did a Top Up for Kshs.{$customer_confirm['recevied_amount']}.<br />{$customer_confirm['balance_remaining']} Balance. Paid via {$customer_confirm['less_approve_pay_method']}
+                        <?php elseif($customer_confirm['less_approve_action'] == 'change_goods'): ?>
+                        The Customer  Changed Goods for Kshs.{$customer_confirm['recevied_amount']}. And remained with Kshs.{$customer_confirm['balance_remaining']}
+                        <br />{$customer_confirm['remark']}
+                        <?php elseif($customer_confirm['less_approve_action'] == 'cancel'): ?>
+                        The Customer Cancelled the Order. <br />
+                        <?php endif; ?><br />
+                        <?php if($customer_confirm['balance_remaining'] && $customer_confirm['less_approve_action'] == 'top_up'): ?>
+                        <p style="color:black;font-weight:700">Awaiting Clearing of Balance</p>
+                        <?php endif;  ?>
+                    </div>
+                </fieldset>
+                <!-- End of fieldset -->
+            </form>
+        </div>
+
+    </div> <!-- END Content -->
+
+</div>
+<div id="footer">
+    <p> All rights reserved.</p>
+</div>
+</div> <!-- END Container -->
+<script type="text/javascript">
+    $(document).ready(function(){
+
+
+
+        $('#less_approve').change(function(){
+            //alert('Value change to ' + $(this).attr('value'));
+            if($(this).attr('value')=='top_up' || $(this).attr('value')=='change_goods'){
+                $('.less_approve_pay').show();
+                $('#approve_action').show();
+            }else{
+                $('.less_approve_pay').hide();
+                $('#approve_action').show();
+            }
+
+            if($(this).attr('value')==-1){
+                $('#approve_action').hide();
+            }
+        })
+    });
+</script>
+</body>
+</html>
