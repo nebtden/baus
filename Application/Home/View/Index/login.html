@@ -1,29 +1,102 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
-	
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<title>Baus Optical</title>
-		<style type="text/css">/*<![CDATA[*/
-			@import "__PUBLIC__/css/login.css";
-		/*]]>*/</style>
-	</head>
-    <body>
-	<include file="Public:header" />	<div class="main two">
-		<h1><img src="__PUBLIC__/images/logo.gif"></h1>
-		<div id="box">
-			<form action="{:U('Index/checklogin')}" method="post">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Kilimall - Live Smart | Online Shopping for Electronics, Music, Fashion, Toys &amp; more</title>
+	<link href="/css/jqueryui.css" rel="stylesheet" type="text/css" />
+	<link href="/css/admin.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="/scripts/jquery.js"></script>
+	<script type="text/javascript" src="/scripts/jquery.ui.js"></script>
+	<script type="text/javascript" src="/scripts/global.js"></script>
+	<script type="text/javascript">
+        var F = {
+            para: [
+                { background:'#b1a389', image:'url(/images/admin/theme/music.jpg)' },
+                { background:'url(/images/admin/theme/grey.png)', image:'url(/images/admin/theme/shipping.jpg)' },
+                { background:'url(/images/admin/theme/green.jpg)', image:'none' }
+            ],
+            init: function() {
+                $('#keepit>a').click(function(){
+                    $(this).toggleClass('on');
+                    var keep = $(this).hasClass('on');
+                    if(keep) $('#keepwarning').show();
+                    else $('#keepwarning').hide();
+                    $(this).next().val(keep?1:0);
+                });
+                if(''!=$.trim($('#username').val())) $('#username').css('background', '#eef3f8');
+                if(''!=$.trim($('#password').val())) $('#password').css('background', '#eef3f8');
+                $('#username').focus(function(){ $(this).css('background-color', '#eef3f8'); })
+                $('#username').focusout(function(){ if(''==$.trim($(this).val())) $(this).css('background', 'none'); })
+                $('#password').focus(function(){ $(this).css('background-color', '#eef3f8'); })
+                $('#password').focusout(function(){ if(''==$.trim($(this).val())) $(this).css('background', 'none'); })
+                $('.header').find('.theme>a').click(function(){ F.draw($(this).attr('id').substr(1)); });
+                this.draw();
+            },
+            draw: function(n) {
+                if(typeof(n)=='undefined' || n>=this.para.length) n = App.getcookie('theme') ? App.getcookie('theme') : 2;
+                $('.main').css('background', this.para[n].background);
+                $('.start').css('background-image', this.para[n].image);
+                $('.header').find('.theme>a').removeClass('on');
+                $('.header').find('.theme>a.t'+n).addClass('on');
+                App.setcookie('theme', n);
+            }
+        }
+        $(function(){ F.init(); })
+	</script>
+	<style type="text/css">
+		.header .theme { right:15px; top:24px; }
+		.header .theme a { display:inline-block; width:10px; height:10px; margin-left:10px; border:1px solid #fff; }
+		.header .theme a.on { border:1px solid #999; }
+		.header .theme a.t0 { background:#dac39a; }
+		.header .theme a.t1 { background:#d6d6d6; }
+		.header .theme a.t2 { background:#60be20; }
+		.start { position:relative; margin:0 auto; width:960px; height:400px; padding:0; background:no-repeat center; }
+		.login { position:absolute; right:25px; top:23px; width:320px; height:350px; border:1px solid #ddd; background:url(/images/admin/login.png) no-repeat; filter:alpha(Opacity=90); -moz-opacity:0.90; opacity:0.90; }
+		.login .i { position:absolute; left:35px; width:241px; height:21px; border:0; font-size:15px; background:none; color:#333; }
+		.login .username { top:93px; }
+		.login .password { top:154px; }
+		.login .keepit { position:absolute; top:212px; left:33px; }
+		.login .keepit a { display:inline-block; height:16px; color:#666; padding-left:24px; background:url(/images/check.png) #fff no-repeat left top; }
+		.login .keepit a.on { background-position:left bottom; }
+		.login .keepwarning { padding-left:32px; color:red; display:none; }
+		.login .submit { top:257px; left:33px; width:102px; height:35px; border:0; cursor:pointer; }
+		.login .info { position:absolute; top:313px; left:33px; color:#f00; }
+	</style>
+</head>
+
+<body>
+<div class="header">
+	<ul>
+		<li class="logo"><a href="/admin"></a></li>
+	</ul>
+	<ul><li class="theme"><a id="t0" href="javascript:;" class="t0"></a><a id="t1" href="javascript:;" class="t1"></a><a id="t2" href="javascript:;" class="t2"></a></li></ul>
+</div>
+<div class="main">
+	<div class="start">
+		<form action="{:U('Index/checklogin')}" method="post">
 			<p class="main">
 				<label>Username: </label>
-				<input name="username" id="username" type="text"> 
+				<input name="username" id="username" type="text">
 				<label>Password: </label>
-				<input type="password" name="password" id="password" value="">	
+				<input type="password" name="password" id="password" value="">
 			</p>
 			<p class="space">
 				<input type="hidden" name="stype" id="stype" value="adminlogin">
 				<input type="submit" value="Login" class="login">
 			</p>
-			</form>
-		</div>
+		</form>
 	</div>
+</div>
+<div class="footer"><ul>
+	<li class="link">
+		<a href="/">Homepage</a>
+	</li>
+	<li>&copy; 2014 baus</li>
+</ul></div>
+</body>
+</html>
 
-</body></html>
+
+
+
