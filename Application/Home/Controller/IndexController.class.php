@@ -257,6 +257,11 @@ class IndexController extends Controller
             $this->assign('change', $change);
         }
 
+        $paylist = M('cash')->where([
+            'order_id'=>$order_id,
+             'pay_amount'=>['neq',0]
+        ])->select();
+
         $this->assign('order_goods_lists', $order_goods_lists);
         $this->assign('order_info', $order_info);
         $this->assign('sealstxt_info', $sealstxt_info);
@@ -271,6 +276,7 @@ class IndexController extends Controller
         $this->assign('shop_arrive', $shop_arrive);
         $this->assign('receiptno2', $receiptno2);
         $this->assign('balance_remaining', $balance);
+        $this->assign('paylist', $paylist);
         $this->display();
     }
 

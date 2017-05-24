@@ -188,30 +188,21 @@
                     <br />
                     Cashier: <input class="smallfield" style="width:100px;" id="cashier" name="cashier" type="text" value="{$receiptno.cashier}" />      Sales Person: <input class="smallfield" style="width:100px;" id="sales_person" name="sales_person" type="text" value="{$receiptno.sales_person}" />      Optometrist: <input class="smallfield" style="width:100px;" id="optometrist" name="optometrist" type="text" value="{$receiptno.optometrist}" />
                 </fieldset>
-                <fieldset><legend><h2>3. Payment</h2></legend>
+                <fieldset><legend><h2>3. Deposit</h2></legend>
                     <div style="height:150px;float:left;width:49.5%">
                         Payment method:<br /><br />
 
-                        <?php if($receiptno['payment_method'] == 'cash'): ?>
-                        <b>Quick Cash</b><br />
-                        <div class="orderinfo_label">Deposit</div><input class="mediumfield" id="payment_price" name="payment_price" type="text" value="{$receiptno.payment_price}" /><br />
-                        <div class="orderinfo_label">Balance</div><input class="mediumfield" id="nopayment_price" name="nopayment_price" type="text" value="" readonly="true" />
-                        <?php elseif($receiptno['payment_method'] == 'm-pesa'): ?>
-                        <b>M-Pesa</b><br />
-                        <div class="orderinfo_label">Deposit</div><input class="mediumfield" id="payment_price" name="payment_price" type="text" value="{$receiptno.payment_price}" /><br />
-                        <div class="orderinfo_label">Balance</div><input class="mediumfield" id="nopayment_price" name="nopayment_price" type="text" value="" readonly="true" />
-                        <?php elseif($receiptno['payment_method'] == 'cheque'): ?>
-                        <b>Cheque</b><br />
-                        <div class="orderinfo_label">Deposit</div><input class="mediumfield" id="payment_price" name="payment_price" type="text" value="{$receiptno.payment_price}" /><br />
-                        <div class="orderinfo_label">Balance</div><input class="mediumfield" id="nopayment_price" name="nopayment_price" type="text" value="" readonly="true" />
-                        <?php elseif($receiptno['payment_method'] == 'card'): ?>
-                        <b>Card</b><br />
-                        <div class="orderinfo_label">Deposit</div><input class="mediumfield" id="payment_price" name="payment_price" type="text" value="{$receiptno.payment_price}" /><br />
-                        <div class="orderinfo_label">Balance</div><input class="mediumfield" id="nopayment_price" name="nopayment_price" type="text" value="" readonly="true" />
-                        <?php elseif($receiptno['payment_method'] == 'insurance_0'): ?>
+                        <?php if($receiptno['payment_method'] == 'insurance_0'): ?>
                         <b>Insurance without Smart Card</b>, from <input class="mediumfield" id="insurancetext" name="insurancetext" type="text" value="{$receiptno.insurancetext}" />
                         <?php elseif($receiptno['payment_method'] == 'insurance_1'): ?>
                         <b>Insurance with Smart Card</b>, from <input class="mediumfield" id="insurancetext" name="insurancetext" type="text" value="{$receiptno.insurancetext}" />
+                        <?php else: ?>
+                        <?php  foreach($paylist as $pay){  ?>
+                        <b><?php  $pay['payment_method'] ?></b>
+                        <div class="orderinfo_label">Deposit</div>
+                        <input class="mediumfield" name="payment_price" type="text" value="{$pay.pay_amount}" /><input class="mediumfield" name="payment_price" type="text" value="{$pay.payment_remark}" /><br>
+                        <?php  } ?>
+
                         <?php endif; ?>
 
                         <br /><br />
