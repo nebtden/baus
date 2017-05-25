@@ -196,7 +196,9 @@ abstract class Controller {
      * @return void
      */
     protected function success($message='',$jumpUrl='',$ajax=false) {
-        $this->dispatchJump($message,1,$jumpUrl,$ajax);
+       // $url    =   U($url,$params);
+        redirect($jumpUrl);
+        //$this->dispatchJump($message,1,$jumpUrl,$ajax);
     }
 
     /**

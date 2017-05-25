@@ -5,3 +5,4 @@
 /Application/Runtime/Logs
 /Application/Common/Conf/config.php
 /Public/downs/
+/php_errors.log

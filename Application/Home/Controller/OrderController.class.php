@@ -79,7 +79,11 @@ class OrderController extends Controller
             } else if ($receiptno['payment_method'] == 'insurance_1') {
 
                 $update_data['order_step'] = 5;  // Proceed with smart card to step5
+            }else {
+
+                $update_data['order_step'] = 5;  // Proceed with smart card to step5
             }
+
 
         } elseif ($data['corporate_status_set'] == 'less approval') { // Less Approve option, so step5
 
@@ -90,9 +94,10 @@ class OrderController extends Controller
         //
         $update_data['is_insurance_checked'] = 1;
 
-        M('order_info')->where(['order_id' => $order_id])->save($update_data);
+        //M('order_info')->where(['order_id' => $order_id])->save($update_data);
 
         if (M('order_info')->where(['order_id' => $order_id])->save($update_data) !== FALSE) {
+            //$this->redirect('/Index/index',array('order_step' => 4));
             $this->success('save success', U('Index/index', array('order_step' => 4)));
         } else {
             $this->error('save fail', U('Order/insurance', array('order_id' => $order_id)));
@@ -189,7 +194,7 @@ class OrderController extends Controller
             $update_data['customer_confirm'] = serialize($data);
 
 
-            M('order_info')->where(['order_id' => $order_id])->save($update_data); //update customer_confirm
+            //M('order_info')->where(['order_id' => $order_id])->save($update_data); //update customer_confirm
 
         }
 
@@ -233,7 +238,7 @@ class OrderController extends Controller
 
         $update_data['customer_card'] = serialize($data);
 
-        M('order_info')->where(['order_id' => $order_id])->save($update_data);
+       // M('order_info')->where(['order_id' => $order_id])->save($update_data);
 
         if (M('order_info')->where(['order_id' => $order_id])->save($update_data) !== FALSE) {
             $this->success('save success', U('Index/Index', array('order_step' => 5)));

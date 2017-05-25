@@ -1296,7 +1296,7 @@ class IndexController extends Controller
 
     public function addCustomer()
     {
-        $customer_model = M('customer');
+        //$customer_model = M('customer');
         $this->display();
     }
 

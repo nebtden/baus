@@ -56,19 +56,39 @@
 
                 <div class="input_field">
                     <label for="address" style="width:150px;">address: </label>
-                    <input class="mediumfield" name="address" id="address" type="text" value="{$customer.c_name}"/>
+                    <input class="mediumfield" name="address" id="address" type="text" value="{$customer.c_name}" />
                 </div>
                 <div class="input_field">
                     <label for="amount" style="width:150px;">amount: </label>
-                    <input class="mediumfield" name="amount" id="amount" type="text" value="{$customer.c_amount}"/>
+                    <input class="mediumfield" name="amount" id="amount" type="text" value="{$customer.c_amount}" />
                 </div>
 
                 <div class="input_field">
                     <label for="c_type" style="width:150px;">type: </label>
                     <select name="type">
-                        <option value="1">Cash</option>
-                        <option value="2">Insurance</option>
+                        <option value="1"  <?php if($customer['c_type']==1){
+                        echo "selected"; } ?> >Cash</option>
+                        <option value="2" <?php if($customer['c_type']==2){
+                        echo "selected"; } ?>>Insurance</option>
                     </select>
+                </div>
+
+                <div class="input_field">
+                    <label for="c_gender" style="width:150px;">Gender: </label>
+                    <select name="c_gender" id="c_gender">
+                        <option value="0" <?php if($customer['c_gender']==0){
+                        echo "selected"; } ?>>-- Select Gender --</option>
+                        <option value="1" <?php if($customer['c_gender']==1){
+                        echo "selected"; } ?>>Male</option>
+                        <option value="2" <?php if($customer['c_gender']==2){
+                        echo "selected"; } ?>>Female</option>
+                    </select>
+
+                </div>
+
+                <div class="input_field">
+                    <label for="c_age" style="width:150px;">Age: </label>
+                    <input class="mediumfield" id="c_age" name="c_age" type="text" value="{$customer.c_age}" />
                 </div>
 
                 <div class="input_field no_margin_bottom" style="padding-left:150px;">
