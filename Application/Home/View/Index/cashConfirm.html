@@ -76,7 +76,9 @@
         <!-- 筛选框 e-->
         <table cellspacing="0" cellpadding="0" border="0" id="cash_table">
             <thead>
+            <tr ><a  onclick="myconfirm();"> cash confirm</a> </tr>
             <tr>
+                <th>Select</th>
                 <th>Cash NO.</th>
                 <th>Order NO.</th>
                 <th>Shop</th>
@@ -91,7 +93,8 @@
                 <th>Time</th>
                 <th>Print Receipt</th>
                 <th>Remark</th>
-                <th>Operate</th>
+
+                <!--<th>Operate</th>-->
             </tr>
             </thead>
 
@@ -99,6 +102,7 @@
 
             <foreach name="cash_lists" item="vo">
                 <tr>
+                    <td> <input type="checkbox" name="cash_id" value="{$vo.cash_id}"> </td>
                     <td>{$vo.cash_id}</td>
                     <td>{$vo.order_sn}</td>
                     <td><?php echo getShopNameByOrderId($vo['order_id']);?></td>
@@ -130,12 +134,13 @@
                         <?php echo  $vo['cash_remark'];?>
 
                     </td>
-                    <td>
+
+                   <!-- <td>
                         <?php if($vo['cancel_status']!=1): ?>
                         <a href="javascript:" class='btn' id="{$vo.cash_id}"><img src="__PUBLIC__/iconsee/gear_48.png"
                                                                                   alt="edit" width="16"/></a>
                         <?php endif; ?>
-                    </td>
+                    </td>-->
                 </tr>
             </foreach>
 
@@ -166,6 +171,22 @@
 <!-- <script src="__PUBLIC__/datatables/media/js/jquery.dataTables.min.js" type="text/javascript"></script> -->
 <script src="__PUBLIC__/js/laydate/laydate.js"></script>
 <script>
+    function  myconfirm() {
+        console.log(11111);
+        var data = [];
+        var $object = $('input:checkbox[name="cash_id"]:checked').each(function () {
+            data.push($(this).val());
+        });
+        $('#cash_id').val(data);
+        $("#dialog-modal").dialog("open");
+
+
+
+//        $.post('/index.php?m=Home&c=index&a=cashProcess',{"cat_id":data},function (json) {
+//            console.log(json);
+//        })
+    }
+
     $(function () {
 
         // $('#cash_table').DataTable({
@@ -195,6 +216,9 @@
             }
 
         });
+
+
+
         /*
 
          Datatables must allow a JQuery UI pop like so

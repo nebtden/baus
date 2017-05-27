@@ -126,6 +126,7 @@ class IndexController extends Controller
         {
             $condition['shop'] = session('member_shop');
         }
+        $condition['reverse_status'] = 0;
         return $condition;
     }
 
@@ -259,7 +260,7 @@ class IndexController extends Controller
 
         $paylist = M('cash')->where([
             'order_id'=>$order_id,
-             'pay_amount'=>['neq',0]
+            'pay_amount'=>['neq',0]
         ])->select();
 
         $this->assign('order_goods_lists', $order_goods_lists);
@@ -339,18 +340,21 @@ class IndexController extends Controller
             }
 
             $update_data['receiptno'] = serialize($data_receiptno);
+            if(I('post.payment_price') && I('post.payment_price')>0){
+                $data_cash['order_id'] = $order_info['order_id'];
+                $data_cash['order_sn'] = $order_info['order_sn'];
+                $data_cash['shop'] = $order_info['shop'];
+                $data_cash['pay_amount'] = I('post.payment_price');
+                $data_cash['payment_method'] = I('post.payment_method');
+                $data_cash['receipt_no'] = I('post.receipt_no');
+                $data_cash['reverse_status'] = 0;
+                $data_cash['member_id'] = session('member_id');
+                $data_cash['add_time'] = time();
 
-            $data_cash['order_id'] = $order_info['order_id'];
-            $data_cash['order_sn'] = $order_info['order_sn'];
-            $data_cash['shop'] = $order_info['shop'];
-            $data_cash['pay_amount'] = I('post.payment_price');
-            $data_cash['payment_method'] = I('post.payment_method');
-            $data_cash['receipt_no'] = I('post.receipt_no');
-            $data_cash['reverse_status'] = 0;
-            $data_cash['member_id'] = session('member_id');
-            $data_cash['add_time'] = time();
+                M('cash')->add($data_cash);
+            }
 
-            M('cash')->add($data_cash);
+
 
             M('order_info')->where(['order_id' => $order_id])->save($update_data);
 
@@ -1465,22 +1469,22 @@ class IndexController extends Controller
 
     public function cashProcess()
     {
-        $cash_id = I('post.cash_id');
+        $cash_ids = I('post.cash_id');
         $cash_remark = I('post.cash_remark');
         $reverse_status = I('post.reverse_status');
 
         $data_update['reverse_status'] = $reverse_status;
         $data_update['cash_remark'] = $cash_remark;
+        $cash_list = [];
+        $cash_list = explode(',',$cash_ids);
 
-        if (M('cash')->where(['cash_id' => $cash_id])->find()) {
-            if (M('cash')->where(['cash_id' => $cash_id])->save($data_update) !== FALSE) {
-                $this->success('save success', U('Index/cashConfirm'));
-            } else {
-                $this->error('save failed', U('Index/cashConfirm'));
-            }
+        $result = M('cash')->where(['cash_id' => ['in',$cash_list]])->save($data_update);
+        if ( $result  != FALSE) {
+            $this->success('save success', U('Index/cashConfirm'));
         } else {
             $this->error('save failed', U('Index/cashConfirm'));
         }
+
     }
 
 
