@@ -1371,10 +1371,7 @@ class IndexController extends Controller
         }
     }
 
-    public function cashConfirm()
-    {
-        $cash_model = M('cash');
-
+    private function getcashcondition(){
         if (I('get.reverse_status') < 3) {
             $condition['reverse_status'] = I('get.reverse_status');
             $condition['cancel_status'] = 0;
@@ -1411,6 +1408,41 @@ class IndexController extends Controller
             $condition['add_time'] = array(array('egt', $sdate), array('elt', $edate));
         }
         $condition['pay_amount'] = ['gt',0];
+    }
+
+
+    public function eft_mpesa(){
+        $cash_model = M('cash');
+
+        $condition = $this->getCondition();
+        $condition['payment_method'] = ['in',['m_pesa','eft']];
+
+        $count = $cash_model->where($condition)->count();
+
+        $Page = new \Think\Page($count, 14);
+        $Page->setConfig('header', '<li class="rows"><b>[%NOW_PAGE%</b>/<b>%TOTAL_PAGE%]</b> Total <b>%TOTAL_ROW%</b> records </li>');
+        $Page->setConfig('prev', 'prev page');
+        $Page->setConfig('next', 'next page');
+        $Page->setConfig('last', 'last page');
+        $Page->setConfig('first', 'first page');
+        $Page->setConfig('theme', '%FIRST% %UP_PAGE% %LINK_PAGE% %DOWN_PAGE%  %HEADER%');
+        $show = $Page->show();
+
+        $cash_lists = $cash_model->where($condition)->order('cash_id DESC')->limit($Page->firstRow . ',' . $Page->listRows)->select();
+        $this->assign('cash_lists', $cash_lists);
+        $shop_lists = M('shops')->select();
+        $this->assign('shop_lists', $shop_lists);
+        $this->assign('page', $show);
+        $this->display('cashConfirm');
+    }
+
+
+    public function cashConfirm()
+    {
+        $cash_model = M('cash');
+
+        $condition = $this->getCondition();
+        $condition['payment_method'] = ['notin',['m_pesa','eft']];
 
         $count = $cash_model->where($condition)->count();
 

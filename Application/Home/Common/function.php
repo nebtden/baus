@@ -103,7 +103,7 @@ function getOrderStepNameById($id,$order_id)
 			break;
 
         case '13':
-            return 'Finished';
+            return 'Completed';
             break;
 
 		default:

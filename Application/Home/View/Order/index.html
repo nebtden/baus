@@ -191,7 +191,9 @@
 					</tbody>
 				</table>
 				<br />
-				Cashier: <input class="smallfield" style="width:100px;" id="cashier" name="cashier" type="text" value="" />      Sales Person: <input class="smallfield" style="width:100px;" id="sales_person" name="sales_person" type="text" value="" />      Optometrist: <input class="smallfield" style="width:100px;" id="optometrist" name="optometrist" type="text" value="" />
+				Cashier: <input class="smallfield" style="width:100px;" id="cashier" name="cashier" type="text" value="" required />
+				Sales Person: <input class="smallfield" style="width:100px;" id="sales_person" name="sales_person" type="text" value="" required />
+				Optometrist: <input class="smallfield" style="width:100px;" id="optometrist" name="optometrist" type="text" value="" required />
 			</fieldset>
 			<!-- End of fieldset -->
 			<fieldset><legend><h2>4. Payment Via</h2></legend>
@@ -199,23 +201,7 @@
 					<div style="height:150px;float:left;width:49.5%">
 						cash/m-pesa/chequ/card/eft:<input type="radio" name="pay_choice" value="cash">
 						<div id="cash-option" id="class-option" >
-							cash:<input class="cash-radio" name="cash" type="number" value="0" />
-							cash remark:<input class="cash-radio" name="cash_remark" type="text" value="0"/>
-							&nbsp;&nbsp;&nbsp;<br>
-							M-Pesa：	<input class="cash-radio" name="m_pesa" type="number" value="0" />
-							M-Pesa remark：	<input class="cash-radio" name="m_pesa_remark" type="text" />
-							<br>
-							Cheque：<input class="cash-radio" name="cheque" type="number" value="0" />
-							Cheque remark：<input class="cash-radio" name="cheque_remark" type="text" />
-
-							<br>
-							Card：<input class="cash-radio" name="card" type="number" value="0" />
-							Card remark：<input class="cash-radio" name="card_remark" type="text"  />
-							&nbsp;&nbsp;&nbsp;<br>
-							EFT：<input class="cash-radio" name="eft" type="number"  value="0" />
-							EFT remark：<input class="cash-radio" name="eft_remark" type="text" />
-
-							<br>
+							<include file="Public:paymethod" />
 							<br /><br />
 							<!--<div class="orderinfo_label">Deposit</div><input class="mediumfield" id="payment_price" name="payment_price" type="text" value="" /><br />-->
 							<!--<div class="orderinfo_label">Remark</div><input class="mediumfield" name="initial_pay_remark" type="text" value="" />-->
