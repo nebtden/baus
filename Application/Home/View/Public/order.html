@@ -42,6 +42,10 @@
             <a href="{:U('Index/index',array('order_step'=>9))}" title="">Quality Process</a></span>
             <?php } ?>
 
+            <?php if($member_group_info['quality'] == 1){ ?>
+            <a href="{:U('Index/index',array('order_step'=>10))}" title=""> Waiting for shop arrive confirm</a></span>
+            <?php } ?>
+
             <?php if(($member_group_info['manager'] == 1) || ($member_group_info['balance'] == 1)){ ?>
             <a href="{:U('Index/index',array('order_step'=>11))}" title="">Balance & Close</a></span>
             <?php } ?>

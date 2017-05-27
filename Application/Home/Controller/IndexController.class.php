@@ -420,24 +420,6 @@ class IndexController extends Controller
 
 
 
-        if ($step_name == 'edit_shop_arrive') {
-            unset($update_data);
-            unset($data);
-
-            $data['shop_arrive_set'] = I('post.shop_arrive_set');
-            $data['add_time'] = time();
-
-            $update_data['order_step'] = 11;
-            $update_data['shop_arrive'] = serialize($data);
-
-            M('order_info')->where(['order_id' => $order_id])->save($update_data);
-
-            if (M('order_info')->where(['order_id' => $order_id])->save($update_data) !== FALSE) {
-                $this->success('save success', U('Index/orderShow', array('order_id' => $order_id)));
-            } else {
-                $this->error('save fail', U('Index/orderShow', array('order_id' => $order_id)));
-            }
-        }
 
         if ($step_name == 'editorderstatus') {
             unset($update_data);

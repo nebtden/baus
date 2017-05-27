@@ -25,6 +25,8 @@ ADD COLUMN `is_insurance_checked`  tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否
 ALTER TABLE `oms_customer`
 MODIFY COLUMN `c_mobile`  varchar(15) NOT NULL AFTER `c_name`;
 
+ALTER TABLE `oms_member_group`
+ADD COLUMN `shop_arrive`  tinyint(1) NOT NULL DEFAULT 0 COMMENT 'Waiting for shop arrive confirm 权限' AFTER `internal-print`
 
 
 --  保险公司不能有尾款 ，需要管理员操作

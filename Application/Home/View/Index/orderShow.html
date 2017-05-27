@@ -384,52 +384,7 @@
         })
         </script>
         <div class="clear"><!-- --></div>
-        <!-- step7 e-->
 
-
-        <!-- step10 s-->
-        <div id="show_step10">
-            <form method="post" action="{:U('Index/orderProcess')}" name="formd" id="form_step10"><!-- Form -->
-                <!-- Fieldset -->
-                <fieldset><legend><h2>10, Shop Arrive</h2></legend>
-
-                    <table cellspacing="0" cellpadding="0" border="0"><!-- Table -->
-
-                        <thead>
-                        <tr>
-                            <th>Products Arrived</th>
-                            <th>time</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-
-                        <tr >
-                            <td>
-                                <input name="shop_arrive_set" type="radio" value="Yes" <?php if($shop_arrive['shop_arrive_set'] == 'Yes') echo 'checked';?>/> Yes&nbsp;&nbsp;&nbsp;&nbsp;
-                                <input name="shop_arrive_set" type="radio" value="No" <?php if($shop_arrive['shop_arrive_set'] == 'No') echo 'checked';?>/> No</td>
-                            <td><?php if($shop_arrive['add_time'] != '') echo date('Y-m-d H:i:s',$shop_arrive['add_time'])?></td>
-
-                            <td><input  type="hidden" name="order_id" value="{$order_info.order_id}" /><input  type="hidden" name="step_name" value="edit_shop_arrive" /><input class="submit" type="submit" value="Submit" /></td>
-                        </tr>
-
-                        </tbody>
-                    </table>
-                </fieldset>
-                <!-- End of fieldset -->
-            </form>
-        </div>
-        <script type="text/javascript">
-            $(function(){
-                <?php if(($order_info['order_step'] != 10)||($member_group_info['quality'] != 1)){ ?>
-                    $('#form_step10').find('input').attr('readonly','true');
-                    $('#form_step10').find('.submit').css('display','none');
-                <?php } ?>
-            })
-        </script>
-        <!-- step10 e-->
-
-        <div class="clear"><!-- --></div>
         <!-- step11 s-->
         <div id="show_step11">
             <form method="post" action="{:U('Index/orderProcess')}" name="formd" id="form_step11"><!-- Form -->

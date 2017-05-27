@@ -189,6 +189,36 @@ class OrderController extends Controller
 
     }
 
+    public function shoparrive(){
+        $order_id = I('get.order_id');
+        $order_info = M('order_info')->where(['order_id' => $order_id])->find();
+        $receiptno = unserialize($order_info['receiptno']);
+        $customer_confirm = unserialize($order_info['customer_confirm']);
+
+        $this->assign('order_info', $order_info);
+        $this->assign('receiptno', $receiptno);
+        $this->assign('customer_confirm', $customer_confirm);
+
+        $this->display();
+    }
+
+    public function shoparrivesave(){
+        $order_id = I('post.order_id');
+        $data['shop_arrive_set'] = I('post.shop_arrive_set');
+        $data['add_time'] = time();
+
+        $update_data['order_step'] = 11;
+        $update_data['shop_arrive'] = serialize($data);
+
+
+        if (M('order_info')->where(['order_id' => $order_id])->save($update_data) !== FALSE) {
+            $this->success('save success', U('Index/Index', array('order_step' => 10)));
+        } else {
+            $this->error('save fail', U('Order/shoparrive', array('order_id' => $order_id)));
+        }
+
+    }
+
 
     public function confirmsave(){
         $order_id = I('post.order_id');
