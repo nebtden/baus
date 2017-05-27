@@ -121,6 +121,40 @@ class OrderController extends Controller
     }
 
 
+    public function workshop(){
+        $order_id = I('get.order_id');
+        $order_info = M('order_info')->where(['order_id' => $order_id])->find();
+        $receiptno = unserialize($order_info['receiptno']);
+        $customer_confirm = unserialize($order_info['customer_confirm']);
+
+        $this->assign('order_info', $order_info);
+        $this->assign('receiptno', $receiptno);
+        $this->assign('customer_confirm', $customer_confirm);
+
+        $this->display();
+    }
+
+    public function workshopsave(){
+        $order_id = I('post.order_id');
+
+        $data['warehouse_state'] = I('post.warehouse_state');
+        $data['stock_source'] = I('post.stock_source');
+        $data['add_time'] = time();
+
+        $update_data['order_step'] = 9;
+        $update_data['warehouse_state'] = serialize($data);
+
+        M('order_info')->where(['order_id' => $order_id])->save($update_data);
+
+        if (M('order_info')->where(['order_id' => $order_id])->save($update_data) !== FALSE) {
+            $this->success('save success', U('Index/Index', array('order_step' => 8)));
+        } else {
+            $this->error('save fail', U('Order/workshop', array('order_id' => $order_id)));
+        }
+
+    }
+
+
     public function confirmsave(){
         $order_id = I('post.order_id');
         $order_info = M('order_info')->where(['order_id' => $order_id])->find();
@@ -238,7 +272,7 @@ class OrderController extends Controller
 
         $update_data['customer_card'] = serialize($data);
 
-       // M('order_info')->where(['order_id' => $order_id])->save($update_data);
+        // M('order_info')->where(['order_id' => $order_id])->save($update_data);
 
         if (M('order_info')->where(['order_id' => $order_id])->save($update_data) !== FALSE) {
             $this->success('save success', U('Index/Index', array('order_step' => 5)));

@@ -120,6 +120,8 @@
 
 					<?php elseif($vo['order_step']==6): ?>
 					<a href="{:U('Order/confirm',array('order_id'=>$vo['order_id']))}"><img src="__PUBLIC__/iconsee/gear_48.png" alt="edit" width="16" /></a>
+					<?php elseif($vo['order_step']==8): ?>
+					<a href="{:U('Order/workshop',array('order_id'=>$vo['order_id']))}"><img src="__PUBLIC__/iconsee/gear_48.png" alt="edit" width="16" /></a>
 					<?php else:  ?>
 					<a href="{:U('Index/orderShow',array('order_id'=>$vo['order_id']))}"><img src="__PUBLIC__/iconsee/gear_48.png" alt="edit" width="16" /></a>
 					<?php endif;  ?>

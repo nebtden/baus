@@ -363,18 +363,6 @@ class IndexController extends Controller
 
 
 
-        /* ====== Step5 Customer Insurance Card Report Section END ====== */
-
-        /* ====== Step 5 (If corporate manager chooses less approval even with NO SMART CARD) ====== */
-        if ($step_name == 'edit_customer_confirm') {
-            unset($update_data);
-            unset($data);
-
-
-
-
-        }
-        /* ====== Step 5(If corporate manager chooses less approval even with NO SMART CARD) END ====== */
 
         /* ====== Step 6 Check if smart card was swiped. ONLY FOR INSURANCE WITH SMART CARD, LESS APPROVAL ====== */
         if ($step_name == 'edit_customer_card_less') {
@@ -430,25 +418,7 @@ class IndexController extends Controller
             }
         }
 
-        if ($step_name == 'editwarehouse') {
-            unset($update_data);
-            unset($data);
 
-            $data['warehouse_state'] = I('post.warehouse_state');
-            $data['stock_source'] = I('post.stock_source');
-            $data['add_time'] = time();
-
-            $update_data['order_step'] = 9;
-            $update_data['warehouse_state'] = serialize($data);
-
-            M('order_info')->where(['order_id' => $order_id])->save($update_data);
-
-            if (M('order_info')->where(['order_id' => $order_id])->save($update_data) !== FALSE) {
-                $this->success('save success', U('Index/orderShow', array('order_id' => $order_id)));
-            } else {
-                $this->error('save fail', U('Index/orderShow', array('order_id' => $order_id)));
-            }
-        }
 
         if ($step_name == 'editquality') {
             unset($update_data);
@@ -1477,9 +1447,7 @@ class IndexController extends Controller
         if (I('get.sdate') && I('get.edate')) {
             $condition['add_time'] = array(array('egt', $sdate), array('elt', $edate));
         }
-
-        $cash_lists = $cash_model->where($condition)->select();
-
+        $condition['pay_amount'] = ['gt',0];
 
         $count = $cash_model->where($condition)->count();
 
