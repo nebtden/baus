@@ -34,11 +34,11 @@
             <a href="{:U('Index/index',array('order_step'=>7))}" title="">Print Order</a></span>
             <?php } ?>
 
-            <?php if(($member_group_info['manager'] == 1) || ($member_group_info['warehouse'] == 1)){ ?>
+            <?php if(($member_group_info['manager'] == 1) ){ ?>
             <a href="{:U('Index/index',array('order_step'=>8))}" title="">WorkShop Process</a></span>
             <?php } ?>
 
-            <?php if($member_group_info['quality'] == 1 && $member_group_info['group_name']=='quality'){ ?>
+            <?php if($member_group_info['quality'] == 1){ ?>
             <a href="{:U('Index/index',array('order_step'=>9))}" title="">Quality Process</a></span>
             <?php } ?>
 

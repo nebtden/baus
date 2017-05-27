@@ -144,12 +144,47 @@ class OrderController extends Controller
         $update_data['order_step'] = 9;
         $update_data['warehouse_state'] = serialize($data);
 
-        M('order_info')->where(['order_id' => $order_id])->save($update_data);
-
         if (M('order_info')->where(['order_id' => $order_id])->save($update_data) !== FALSE) {
             $this->success('save success', U('Index/Index', array('order_step' => 8)));
         } else {
             $this->error('save fail', U('Order/workshop', array('order_id' => $order_id)));
+        }
+
+    }
+
+
+    public function quality(){
+        $order_id = I('get.order_id');
+        $order_info = M('order_info')->where(['order_id' => $order_id])->find();
+        $receiptno = unserialize($order_info['receiptno']);
+        $customer_confirm = unserialize($order_info['customer_confirm']);
+
+        $this->assign('order_info', $order_info);
+        $this->assign('receiptno', $receiptno);
+        $this->assign('customer_confirm', $customer_confirm);
+
+        $this->display();
+    }
+
+    public function qualitysave(){
+        $order_id = I('post.order_id');
+        $data['products_shipped'] = I('post.products_shipped');
+        $data['add_time'] = time();
+
+        $update_data['order_step'] = 10;
+        $update_data['products_shipped'] = serialize($data);
+
+
+        if (M('order_info')->where(['order_id' => $order_id])->save($update_data) !== FALSE) {
+            $this->success('save success', U('Index/Index', array('order_step' => $order_id)));
+        } else {
+            $this->error('save fail', U('Index/orderShow', array('order_id' => $order_id)));
+        }
+
+        if (M('order_info')->where(['order_id' => $order_id])->save($update_data) !== FALSE) {
+            $this->success('save success', U('Index/Index', array('order_step' => 9)));
+        } else {
+            $this->error('save fail', U('Order/quality', array('order_id' => $order_id)));
         }
 
     }

@@ -387,50 +387,6 @@
         <!-- step7 e-->
 
 
-
-        <!-- step9 s-->
-        <div id="show_step9">
-            <form method="post" action="{:U('Index/orderProcess')}" name="formd" id="form_step9"><!-- Form -->
-                <!-- Fieldset -->
-                <fieldset><legend><h2>9, Quality Control</h2></legend>
-
-                    <table cellspacing="0" cellpadding="0" border="0"><!-- Table -->
-
-                        <thead>
-                        <tr>
-                            <th>Products Shipped</th>
-                            <th>time</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-
-                        <tr >
-                            <td>
-                                <input name="products_shipped" type="radio" value="Yes" <?php if($products_shipped['products_shipped'] == 'Yes') echo 'checked';?>/> Yes&nbsp;&nbsp;&nbsp;&nbsp;
-                                <input name="products_shipped" type="radio" value="No" <?php if($products_shipped['products_shipped'] == 'No') echo 'checked';?>/> No</td>
-                            <td><?php if($products_shipped['add_time'] != '') echo date('Y-m-d H:i:s',$products_shipped['add_time'])?></td>
-
-                            <td><input  type="hidden" name="order_id" value="{$order_info.order_id}" /><input  type="hidden" name="step_name" value="editquality" /><input class="submit" type="submit" value="Submit" /></td>
-                        </tr>
-
-                        </tbody>
-                    </table>
-                </fieldset>
-                <!-- End of fieldset -->
-            </form>
-        </div>
-        <script type="text/javascript">
-            $(function(){
-                <?php if(($order_info['order_step'] != 9)||($member_group_info['quality'] != 1)){ ?>
-                    $('#form_step9').find('input').attr('readonly','true');
-                    $('#form_step9').find('.submit').css('display','none');
-                <?php } ?>
-            })
-        </script>
-        <!-- step9 e-->
-
-
         <!-- step10 s-->
         <div id="show_step10">
             <form method="post" action="{:U('Index/orderProcess')}" name="formd" id="form_step10"><!-- Form -->
