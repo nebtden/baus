@@ -31,6 +31,32 @@
 
     </div>
     <div class="start"> <!-- Content begins here -->
+
+        <fieldset>
+            <legend><h2>1、totol amount </h2></legend>
+            <div><?php $total = unserialize($order_info['receiptno']);
+					echo $total['total_order_amount'].'KSH';
+							 ?>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend><h2>2、Deposit</h2></legend>
+            <?php  foreach($paylist as $pay){  ?>
+            <b><?php  $pay['payment_method'] ?></b>
+            <div class="orderinfo_label">{$pay.payment_method}</div>
+            <input class="mediumfield" name="payment_price" type="text" value="{$pay.pay_amount}" disabled/>
+            <input class="mediumfield" name="payment_remark" type="text" value="{$pay.payment_remark}" /><br>
+            <?php  } ?>
+        </fieldset>
+
+        <fieldset>
+            <legend><h2>3、insurance</h2></legend>
+             <div>
+                 <?php echo $corporate['corporate_amount']; ?>
+
+             </div>
+        </fieldset>
+
         <fieldset>
             <legend><h2>Top Up Balances</h2></legend>
             <form action="{:U('Index/clearTopUp')}" method="POST">

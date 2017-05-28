@@ -1,17 +1,33 @@
-cash:<input class="cash-radio" name="cash" type="number" value="0" />
+cash:<input class="cash-radio cash" name="cash" type="number" value="0" />
 cash remark:<input class="cash-radio" name="cash_remark" type="text" value="0"/>
 &nbsp;&nbsp;&nbsp;<br>
-M-Pesa：	<input class="cash-radio" name="m_pesa" type="number" value="0" />
+M-Pesa：	<input class="cash-radio cash" name="m_pesa" type="number" value="0" />
 M-Pesa remark：	<input class="cash-radio" name="m_pesa_remark" type="text" />
 <br>
-Cheque：<input class="cash-radio" name="cheque" type="number" value="0" />
+Cheque：<input class="cash-radio cash" name="cheque" type="number" value="0" />
 Cheque remark：<input class="cash-radio" name="cheque_remark" type="text" />
 
 <br>
-Card：<input class="cash-radio" name="card" type="number" value="0" />
+Card：<input class="cash-radio cash" name="card" type="number" value="0" />
 Card remark：<input class="cash-radio" name="card_remark" type="text"  />
 &nbsp;&nbsp;&nbsp;<br>
-EFT：<input class="cash-radio" name="eft" type="number"  value="0" />
+EFT：<input class="cash-radio cash" name="eft" type="number"  value="0" />
 EFT remark：<input class="cash-radio" name="eft_remark" type="text" />
 
 <br>
+all: <input type="text" value="" id="payed_all" readonly>
+<br>
+<script>
+    $(function () {
+        $('.cash').change(function () {
+            var cash = $('input[name="cash"]').val();
+            var m_pesa = $('input[name="m_pesa"]').val();
+            var cheque = $('input[name="cheque"]').val();
+            var card = $('input[name="card"]').val();
+            var eft = $('input[name="eft"]').val();
+            $('#payed_all').val(cash*1+m_pesa*1+cheque*1+card*1+eft*1)
+        });
+
+    });
+
+</script>
