@@ -27,26 +27,44 @@
     </div>
     <div class="start"> <!-- Content begins here -->
 
-
+        <include file="Public:orderinfo" />
         <div id="show_step5_1">
             <form method="post" action="{:U('Order/confirmsave')}" name="formd" id="form_step5_1"><!-- Form -->
                 <!-- Fieldset -->
-                <fieldset><legend><h2>5, Customer Less Approve</h2></legend>
+                <fieldset>
+                    <legend>
+                        <h2>5, Customer Less Approve</h2>
+                    </legend>
                     <div id="step5_6" style="height:150px;float:left;width:49.5%">
                         <div class="orderinfo_label">Less Approve Action</div>
                         <?php if($customer_confirm['less_approve_action']): ?>
                         This step is complete
                         <?php else: ?>
-                        <select id="less_approve" name="less_approve_action">
-                            <option value="-1">-- Select Less Approve Action --</option>
-                            <option value="top_up">Top Up</option>
-                            <option value="change_goods">Change Goods</option>
-                            <option value="cancel">Cancel Order</option>
-                        </select>
-                        <br />
+                        <!--        <select id="less_approve" name="less_approve_action">
+                                    <option value="-1">&#45;&#45; Select Less Approve Action &#45;&#45;</option>
+                                    <option value="top_up">Top Up</option>
+                                    <option value="change_goods">Change Goods</option>
+                                    <option value="cancel">Cancel Order</option>
+                                </select>-->
+                        <div id="notcancel">
+                            top_up/change_goods:<input type="radio" value="other" name="less_approve_actions" checked>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            cancel:<input type="radio" value="cancel" name="less_approve_actions">
 
-                        <div class="less_approve_pay" >
-                            <include file="Public:paymethod" />
+                            <br>
+                            <div id="notcanceldiv">
+                                top_up: <input type="checkbox" name="less_approve_action[]" value="top_up">
+                                change_goods: <input type="checkbox" name="less_approve_action[]" value="change_goods">
+
+                            </div>
+                        </div>
+
+
+
+                        <br/>
+
+                        <div class="less_approve_pay">
+                            <include file="Public:paymethod"/>
                             <!--<div class="orderinfo_label">Deposit</div><input class="mediumfield" id="payment_price" name="payment_price" type="text" value="" /><br />-->
                             <!--<div class="orderinfo_label">Remark</div><input class="mediumfield" name="initial_pay_remark" type="text" value="" />-->
                         </div>
@@ -57,22 +75,27 @@
                     <div style="height:150px;float:right;width:50%">
                         <div class="less_approve_pay">
                             <!-- place balance remaining -->
-                            <div class="orderinfo_label">Balance</div> <input type="text" name="balance_remaining" <?php if($customer_confirm['balance_remaining']){ echo 'value="'.$customer_confirm['balance_remaining'].'" ';}else{ echo 'value=""'; }?> readonly/> <br />
+                            <div class="orderinfo_label">Balance</div>
+                            <input type="text"
+                                   name="balance_remaining" <?php if($customer_confirm['balance_remaining']){ echo 'value="'.$customer_confirm['balance_remaining'].'" ';}else{ echo 'value=""'; }?>
+                            readonly/> <br/>
                         </div>
                         <div id="approve_action">
-                            <input type="hidden" name="order_id" value="{$order_info.order_id}" />
-                            <input type="hidden" name="step_name" value="edit_customer_confirm" />
-                            <input class="submit" type="submit" value="Submit" />
+                            <input type="hidden" name="order_id" value="{$order_info.order_id}"/>
+                            <input type="hidden" name="step_name" value="edit_customer_confirm"/>
+                            <input class="submit" type="submit" value="Submit"/>
                         </div>
 
                         <?php if($customer_confirm['less_approve_action'] == 'top_up'):	?>
-                        The Customer did a Top Up for Kshs.{$customer_confirm['recevied_amount']}.<br />{$customer_confirm['balance_remaining']} Balance. Paid via {$customer_confirm['less_approve_pay_method']}
+                        The Customer did a Top Up for Kshs.{$customer_confirm['recevied_amount']}.<br/>{$customer_confirm['balance_remaining']}
+                        Balance. Paid via {$customer_confirm['less_approve_pay_method']}
                         <?php elseif($customer_confirm['less_approve_action'] == 'change_goods'): ?>
-                        The Customer  Changed Goods for Kshs.{$customer_confirm['recevied_amount']}. And remained with Kshs.{$customer_confirm['balance_remaining']}
-                        <br />{$customer_confirm['remark']}
+                        The Customer Changed Goods for Kshs.{$customer_confirm['recevied_amount']}. And remained with
+                        Kshs.{$customer_confirm['balance_remaining']}
+                        <br/>{$customer_confirm['remark']}
                         <?php elseif($customer_confirm['less_approve_action'] == 'cancel'): ?>
-                        The Customer Cancelled the Order. <br />
-                        <?php endif; ?><br />
+                        The Customer Cancelled the Order. <br/>
+                        <?php endif; ?><br/>
                         <?php if($customer_confirm['balance_remaining'] && $customer_confirm['less_approve_action'] == 'top_up'): ?>
                         <p style="color:black;font-weight:700">Awaiting Clearing of Balance</p>
                         <?php endif;  ?>
@@ -90,21 +113,33 @@
 </div>
 </div> <!-- END Container -->
 <script type="text/javascript">
-    $(document).ready(function(){
+    $(document).ready(function () {
 
 
+        $('input[type="radio"]').click(function() {
+            if($('input:radio[name="less_approve_actions"]:checked').val() == "other")
+            {
+                $('#notcanceldiv').show();
+                $('.less_approve_pay').show();
 
-        $('#less_approve').change(function(){
+            }else{
+                $('#notcanceldiv').hide();
+                $('.less_approve_pay').hide();
+            }
+        });
+
+
+        $('#less_approve').change(function () {
             //alert('Value change to ' + $(this).attr('value'));
-            if($(this).attr('value')=='top_up' || $(this).attr('value')=='change_goods'){
+            if ($(this).attr('value') == 'top_up' || $(this).attr('value') == 'change_goods') {
                 $('.less_approve_pay').show();
                 $('#approve_action').show();
-            }else{
+            } else {
                 $('.less_approve_pay').hide();
                 $('#approve_action').show();
             }
 
-            if($(this).attr('value')==-1){
+            if ($(this).attr('value') == -1) {
                 $('#approve_action').hide();
             }
         })

@@ -107,18 +107,7 @@ class OrderController extends Controller
 
     }
 
-    public function confirm(){
-        $order_id = I('get.order_id');
-        $order_info = M('order_info')->where(['order_id' => $order_id])->find();
-        $receiptno = unserialize($order_info['receiptno']);
-        $customer_confirm = unserialize($order_info['customer_confirm']);
 
-        $this->assign('order_info', $order_info);
-        $this->assign('receiptno', $receiptno);
-        $this->assign('customer_confirm', $customer_confirm);
-
-        $this->display();
-    }
 
 
     public function workshop(){
@@ -219,30 +208,69 @@ class OrderController extends Controller
 
     }
 
+    public function confirm(){
+        $order_id = I('get.order_id');
+        $order_info = M('order_info')->where(['order_id' => $order_id])->find();
+        $receiptno = unserialize($order_info['receiptno']);
+        $customer_confirm = unserialize($order_info['customer_confirm']);
+
+
+        $paylist = M('cash')->where([
+            'order_id'=>$order_id,
+            'pay_amount'=>['neq',0]
+        ])->select();
+        $balance = $order_info['balance'];
+        $corporate = unserialize($order_info['corporate']);
+
+        $this->assign('order_info', $order_info);
+        $this->assign('receiptno', $receiptno);
+        $this->assign('customer_confirm', $customer_confirm);
+
+        $this->assign('paylist', $paylist);
+        $this->assign('balance', $balance);
+        $this->assign('corporate', $corporate);
+
+        $this->display();
+    }
+
 
     public function confirmsave(){
         $order_id = I('post.order_id');
         $order_info = M('order_info')->where(['order_id' => $order_id])->find();
 
-        if (I('post.less_approve_action') == 'cancel') {
+        if (I('post.less_approve_actions')=='cancel' || I('post.less_approve_action') == 'cancel') {
             $update_data['order_step'] = -1;
 
         } else {
-
+            $actions = I('post.less_approve_action');
             //Change goods for now is just to have a balance of 0
-            if (I('post.less_approve_action') == 'top_up') {
-                $data['balance_remaining'] = I('post.balance_remaining');
-                $update_data['balance'] = I('post.balance_remaining');
+            if ($actions == 'discount'){
+                $data['balance_remaining'] = 0;
+                $update_data['balance'] = 0;
                 $update_data['topup'] = 1;
+            } elseif (is_array($actions)){
+                //只有一种支付方式
+                if(count($actions)==1){
+                    foreach ($actions as $value){
+                        if ($value == 'top_up') {
+                            $data['balance_remaining'] = I('post.balance_remaining');
+                            $update_data['balance'] = I('post.balance_remaining');
+                            $update_data['topup'] = 1;
 
-            } elseif (I('post.less_approve_action') == 'change_goods') {
-                $data['balance_remaining'] = 0;
-                $update_data['balance'] = 0;
-                $update_data['topup'] = 0;
-            } elseif (I('post.less_approve_action') == 'discount'){
-                $data['balance_remaining'] = 0;
-                $update_data['balance'] = 0;
-                $update_data['topup'] = 1;
+                        } elseif ($value == 'change_goods') {
+                            $data['balance_remaining'] = 0;
+                            $update_data['balance'] = 0;
+                            $update_data['topup'] = 0;
+                        }
+                    }
+                }else{
+                    //二种支付方式,都有
+                    $data['balance_remaining'] = I('post.balance_remaining');
+                    $update_data['balance'] = I('post.balance_remaining');
+                    $update_data['topup'] = 1;
+                }
+
+
             }
 
             //if smart card or not
@@ -270,6 +298,7 @@ class OrderController extends Controller
             //收取买家费用
             $payed_money = insertpaidmoney($order_info,'');
             $data['recevied_amount'] = $payed_money;
+
             //更新余额
             M('order_info')->where(['order_step'=>7,'order_id'=>$order_id])->save([
                 'balance' => 0
@@ -311,8 +340,19 @@ class OrderController extends Controller
         $order_info = M('order_info')->where(['order_id' => $order_id])->find();
         $receiptno = unserialize($order_info['receiptno']);
 
+        $paylist = M('cash')->where([
+            'order_id'=>$order_id,
+            'pay_amount'=>['neq',0]
+        ])->select();
+        $balance = $order_info['balance'];
+        $corporate = unserialize($order_info['corporate']);
+
+
         $this->assign('order_info', $order_info);
         $this->assign('receiptno', $receiptno);
+        $this->assign('paylist', $paylist);
+        $this->assign('balance', $balance);
+        $this->assign('corporate', $corporate);
 
         $this->display();
     }
