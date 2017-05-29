@@ -1,21 +1,48 @@
-cash:<input class="cash-radio cash" name="cash" type="number" value="0" />
-cash remark:<input class="cash-radio" name="cash_remark" type="text" value="0"/>
-&nbsp;&nbsp;&nbsp;<br>
-M-Pesa：	<input class="cash-radio cash" name="m_pesa" type="number" value="0" />
-M-Pesa remark：	<input class="cash-radio" name="m_pesa_remark" type="text" />
-<br>
-Cheque：<input class="cash-radio cash" name="cheque" type="number" value="0" />
-Cheque remark：<input class="cash-radio" name="cheque_remark" type="text" />
 
-<br>
-Card：<input class="cash-radio cash" name="card" type="number" value="0" />
-Card remark：<input class="cash-radio" name="card_remark" type="text"  />
-&nbsp;&nbsp;&nbsp;<br>
-EFT：<input class="cash-radio cash" name="eft" type="number"  value="0" />
-EFT remark：<input class="cash-radio" name="eft_remark" type="text" />
+<table class="table">
 
-<br>
-all: <input type="text" value="" id="payed_all" readonly>
+    <tbody>
+    <tr>
+
+        <td>Cash:</td><td><input class="cash-radio cash" name="cash" type="number" value="0" /></td>
+        <td>Cash Remark:</td><td><input class="cash-radio" name="cash_remark" type="text" value="0"/></td>
+
+    </tr>
+    <tr>
+        <td>
+            M-Pesa：</td><td>	<input class="cash-radio cash" name="m_pesa" type="number" value="0" /></td>
+        <td>M-Pesa Remark：</td><td>	<input class="cash-radio" name="m_pesa_remark" type="text" /></td>
+
+    </tr>
+    <tr>
+        <td>Cheque：</td><td><input class="cash-radio cash" name="cheque" type="number" value="0" /></td>
+        <td>Cheque remark：</td><td><input class="cash-radio" name="cheque_remark" type="text" /></td>
+
+    </tr>
+    <tr>
+        <td>Card：</td><td><input class="cash-radio cash" name="card" type="number" value="0" /></td>
+        <td>Card Remark：</td><td><input class="cash-radio" name="card_remark" type="text"  /></td>
+        &nbsp;&nbsp;&nbsp;
+    </tr>
+    <tr>
+        <td>EFT：</td><td><input class="cash-radio cash" name="eft" type="number"  value="0" /></td>
+        <td>EFT Remark：</td><td><input class="cash-radio" name="eft_remark" type="text" />
+
+    </tr>
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+Total: <input type="text" value="" id="payed_all" readonly>
 <br>
 <script>
     $(function () {

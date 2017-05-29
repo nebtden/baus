@@ -365,7 +365,7 @@ class GoodsController extends Controller {
                         <td>".getCategoryNameById($goods_info['goods_cat'])."</td>
                         <td>".getBrandNameById($goods_info['goods_brand'])."</td>
                         <td>".$goods_info['goods_model_no']."</td>
-                        <td>".$goods_info['goods_price']."</td>";
+                        <td class='goods_price'>".$goods_info['goods_price']."</td>";
 
             //if(getAttrNameById($goods_info['goods_attr'])==1 || getAttrNameById($goods_info['goods_attr'])==2){
 
@@ -374,7 +374,7 @@ class GoodsController extends Controller {
             //     $str.=" <td>".getAttrNameById($goods_info['goods_attr'])."</td>";
             // }
                 /* This may change to allow multiple goods */
-            $str.="     <td><input type='radio' name='goods_id' value='".$goods_info['goods_id']."'></td>
+            $str.="     <td><input type='radio' name='goods_id' data-attr=".$goods_info['goods_price']." value='".$goods_info['goods_id']."'></td>
                     </tr>";
         }
 

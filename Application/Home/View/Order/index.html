@@ -133,7 +133,7 @@
 					<tr class="alt">
 						<td colspan="3" align="right">
 							Special Marks:<input class="bigfield" style="width:500px;" id="special_marks" name="special_marks" type="text" value="" /></td>
-						<td colspan="2"><strong>Final Price : </strong><span id='final_price'></span></td>
+
 					</tr>
 					</tbody>
 				</table>
@@ -197,8 +197,14 @@
 			</fieldset>
 			<!-- End of fieldset -->
 			<fieldset><legend><h2>4. Payment Via</h2></legend>
+				<div>
+
+						<strong>Total : </strong>
+						<span id='final_price'></span>
+
+				</div>
 				<div style="min-height:120px;">
-					<div style="height:150px;float:left;width:49.5%">
+					<div style="height:250px;float:left;width:49.5%">
 						cash/m-pesa/chequ/card/eft:<input type="radio" name="pay_choice" value="cash">
 						<div id="cash-option" id="class-option" >
 							<include file="Public:paymethod" />
@@ -207,7 +213,7 @@
 							<!--<div class="orderinfo_label">Remark</div><input class="mediumfield" name="initial_pay_remark" type="text" value="" />-->
 						</div>
 					</div>
-					<div style="height:100px;float:right;width:50%">
+					<div style="height:250px;float:right;width:50%">
 						<input name="pay_choice" type="radio" value="insurance" /> Insurance <!-- <input class="mediumfield" style="display:none;" id="insurancetext" name="insurancetext" type="text" value="" /> --><br>
 						<br />
 						<div id="insurance-option" style="display:none;">
@@ -424,7 +430,23 @@
     });
 
     $(function() {
+		var goodsprice = 0;
+		var lengprice = 0;
+        $(document).on('click',"input:radio[name=goods_id]",function () {
 
+            goodsprice = $(this).data('attr');
+
+            goodsprice = goodsprice*1;
+            lengprice = $("#lensprice").val();
+            lengprice = lengprice*1;
+            $('#final_price').html(String(lengprice*1+goodsprice*1)+'KSH');
+        });
+
+		$("#lensprice").change(function () {
+            lengprice = $(this).val();
+
+			$('#final_price').html(String(lengprice*1+goodsprice*1)+'KSH');
+        });
     });
 
     $(function(){
