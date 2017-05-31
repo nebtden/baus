@@ -19,11 +19,11 @@
 
             <?php if(($member_group_info['manager'] == 1) || ($member_group_info['corporate'] == 1)){ ?>
 
-            <?php if($member_group_info['group_name']=='corporate_manager'){ ?>
+            <?php if($member_group_info['corporate']==1){ ?>
             <a href="{:U('Index/index',array('order_step'=>4))}" title="">Corporate Confirm</a></span>
             <?php } ?>
             <!-- Check on this? -->
-            <?php if($member_group_info['group_name']=='customer_care'){ ?>
+            <?php if($member_group_info['customer_care']==1){ ?>
             <a href="{:U('Index/index',array('order_step'=>5))}" title="">Customer Card Confirm</a></span>
             <a href="{:U('Index/index',array('order_step'=>6))}" title="">Customer Confirm</a></span>
             <?php } ?>
@@ -43,7 +43,7 @@
             <?php } ?>
 
             <?php if($member_group_info['quality'] == 1){ ?>
-            <a href="{:U('Index/index',array('order_step'=>10))}" title=""> Waiting for shop arrive confirm</a></span>
+            <a href="{:U('Index/index',array('order_step'=>10))}" title=""> Shop Arrive</a></span>
             <?php } ?>
 
             <?php if(($member_group_info['manager'] == 1) || ($member_group_info['balance'] == 1)){ ?>
@@ -52,8 +52,12 @@
 
 
             <?php if($member_group_info['group_name']=="admin"){ ?>
-            <a href="{:U('index/viewCancelledOrders')}" title="">Cancelled Orders</a></span>
+            <a href="{:U('Index/viewCancelledOrders')}" title="">Cancelled Orders</a></span>
             <?php } ?>
+
+
+
+
         </li>
 
     </ul>

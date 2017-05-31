@@ -11,7 +11,7 @@
     <b><?php  $pay['payment_method'] ?></b>
     <div class="orderinfo_label">{$pay.payment_method}</div>
     <input class="mediumfield" name="payment_price" type="text" value="{$pay.pay_amount}" disabled/>
-    <input class="mediumfield" name="payment_remark" type="text" value="{$pay.payment_remark}" /><br>
+    <input class="mediumfield" name="payment_remark" type="text" value="{$pay.payment_remark}"/><br>
     <?php  } ?>
 </fieldset>
 
@@ -19,6 +19,20 @@
     <legend><h2>3、insurance</h2></legend>
     <div>
         <?php echo $corporate['corporate_amount']; ?>
+
+    </div>
+</fieldset>
+<fieldset>
+    <legend><h2>4、Discount</h2></legend>
+    <div>
+        <?php echo $order_info['discount']; ?>
+
+    </div>
+</fieldset>
+<fieldset>
+    <legend><h2>5、Balance</h2></legend>
+    <div>
+        <?php echo $order_info['balance']; ?>
 
     </div>
 </fieldset>
