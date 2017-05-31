@@ -202,8 +202,9 @@
                         <?php else: ?>
                         <?php  foreach($paylist as $pay){  ?>
                         <b><?php  $pay['payment_method'] ?></b>
-                        <div class="orderinfo_label">Deposit</div>
-                        <input class="mediumfield" name="payment_price" type="text" value="{$pay.pay_amount}" /><input class="mediumfield" name="payment_price" type="text" value="{$pay.payment_remark}" /><br>
+                        <div class="orderinfo_label">{$pay.payment_method}</div>
+                        <input class="mediumfield" name="payment_price" type="text" value="{$pay.pay_amount}" />
+                        <input class="mediumfield" name="payment_price" type="text" value="{$pay.payment_remark}" /><br>
                         <?php  } ?>
 
                         <?php endif; ?>
@@ -397,12 +398,7 @@
                     Please select the payment method<br />
                     <input name="order_status_set" type="hidden" value="balance-cleared-closed" />
                     <div id="balance_pay">
-                        <input name="balance_pay_method" type="radio" value="cash" /> Quick Cash&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input name="balance_pay_method" type="radio" value="m-pesa" /> M-Pesa&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input name="balance_pay_method" type="radio" value="cheque" /> Cheque&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input name="balance_pay_method" type="radio" value="card" /> Card&nbsp;&nbsp;&nbsp;&nbsp;<br />
-                        <div class="orderinfo_label">Recevied Amount</div> <input type="text" name="balance_amount" value="" /><br />
-                        <div class="orderinfo_label"> Remark</div> <input type="text" name="balance_remark" value="" />
+                        <include file="Public:paymethod" />
                     </div>
 
                     <?php elseif($balance_remaining==0 && $order_info['order_step']==11): ?>

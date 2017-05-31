@@ -1157,13 +1157,40 @@ class IndexController extends Controller
     public function viewCancelledOrders()
     {
 
+
+
         if (session('member_role') == 2) {
-            $order_info = M('order_info')->where('order_step = -1 AND shop=' . session('member_shop') . '')->select();
+
+            $count = M('order_info')->where('order_step = -1 AND shop=' . session('member_shop') . '')->count();
+
+            $Page = new \Think\Page($count,25);
+            $Page->setConfig('header','<li class="rows"><b>[%NOW_PAGE%</b>/<b>%TOTAL_PAGE%]</b> Total <b>%TOTAL_ROW%</b> records </li>');
+            $Page->setConfig('prev','prev page');
+            $Page->setConfig('next','next page');
+            $Page->setConfig('last','last page');
+            $Page->setConfig('first','first page');
+            $Page->setConfig('theme','%FIRST% %UP_PAGE% %LINK_PAGE% %DOWN_PAGE%  %HEADER%');
+
+            $order_info = M('order_info')->where('order_step = -1 AND shop=' . session('member_shop') . '')->limit($Page->firstRow.','.$Page->listRows)->select();
+
         } else {
-            $order_info = M('order_info')->where('order_step = -1 AND cancel_remark IS NOT NULL')->select();
+            $count = M('order_info')->where('order_step = -1 AND cancel_remark IS NOT NULL')->count();
+            $Page = new \Think\Page($count,25);
+            $Page->setConfig('header','<li class="rows"><b>[%NOW_PAGE%</b>/<b>%TOTAL_PAGE%]</b> Total <b>%TOTAL_ROW%</b> records </li>');
+            $Page->setConfig('prev','prev page');
+            $Page->setConfig('next','next page');
+            $Page->setConfig('last','last page');
+            $Page->setConfig('first','first page');
+            $Page->setConfig('theme','%FIRST% %UP_PAGE% %LINK_PAGE% %DOWN_PAGE%  %HEADER%');
+
+            $order_info = M('order_info')->where('order_step = -1 AND cancel_remark IS NOT NULL')->limit($Page->firstRow.','.$Page->listRows)->select();
         }
 
+        $show = $Page->show();
+
+
         $this->assign('cancelled_orders', $order_info);
+        $this->assign('page', $show);
 
         $this->display();
     }
