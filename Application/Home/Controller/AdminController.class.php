@@ -232,14 +232,16 @@ class AdminController extends Controller
 
         $order_id = I('post.order_id');
         $updatedata = [];
-        $updatedata['balance'] = 0;
+//        $updatedata['balance'] = 0;
+        $updatedata['discount'] = I('post.discount');
 
-        $updatedata['is_insurance_checked'] = 0;
-        $result = M('order_info')->where(['order_id' => $order_id])->save($updatedata);
+        $result = M('order_info')
+            ->where(['order_id' => $order_id])
+            ->save($updatedata);
         if ($result) {
-            $this->success('return to insurance success! ', U('Admin/order'));
+            $this->success('return to discount success! ', U('Admin/order'));
         } else {
-            $this->error('return to insurance  fail!');
+            $this->error('return to discount  fail!');
         }
     }
 
