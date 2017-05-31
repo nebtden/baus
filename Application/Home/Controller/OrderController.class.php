@@ -67,6 +67,7 @@ class OrderController extends Controller
 
         $data['add_time'] = time();
 
+        //@todo simon.zhang
         $update_data['corporate'] = serialize($data);
 
         $receiptno = unserialize($order_info['receiptno']);
@@ -555,7 +556,7 @@ class OrderController extends Controller
             $order_info = M('order_info')->find($order_id);
 
             //收取买家费用
-            $payed_money = insertpaidmoney($order_info,$total_order_amount,$orders_count);
+            $payed_money = insertpaidmoney($order_info,$orders_count);
 
             //更新余额
             M('order_info')->where(['order_step'=>7,'order_id'=>$order_id])->save([

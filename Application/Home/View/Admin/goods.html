@@ -26,16 +26,23 @@
     <div class="query"> <!-- Main, right side content -->
     </div>
     <div class="start"> <!-- Content begins here -->
+
         <include file="Public:orderinfo" />
 
-        <form method="post" action="{:U('Admin/savebalance')}" name="formd"><!-- Form -->
+        <form method="post" action="{:U('Admin/savegoods')}" name="formd"><!-- Form -->
             <!-- Fieldset -->
             <fieldset>
-                <legend><h2>pay some,and leave amount to balance</h2></legend>
+                <legend><h2>Change goods</h2></legend>
+
 
                 <input type="hidden" name="order_id" value="{$order_info.order_id}">
 
-                <include file="Public:paymethod" />
+
+                <div class="input_field">
+                    <label for="amount" style="width:150px;">remark: </label>
+                    <input class="mediumfield" name="remark" id="goods" type="text" value="" placeholder="please insert the remark..."/>
+                </div>
+
 
                 <div class="input_field no_margin_bottom" style="padding-left:150px;">
                     <input class="submit" type="submit" value="Submit"/>
@@ -44,6 +51,9 @@
             </fieldset>
             <!-- End of fieldset -->
         </form>
+
+
+
 
         <div class="clear"><!-- --></div>
 

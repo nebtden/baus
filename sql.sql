@@ -29,6 +29,12 @@ ALTER TABLE `oms_member_group`
 ADD COLUMN `shop_arrive`  tinyint(1) NOT NULL DEFAULT 0 COMMENT 'Waiting for shop arrive confirm 权限' AFTER `internal-print`
 
 
+ALTER TABLE `oms_order_info`
+ADD COLUMN `is_changed_goods`  tinyint(1) NOT NULL DEFAULT 0 COMMENT '买家是否更改过商品' AFTER `is_insurance_topup`;
+
+
+
+
 --  保险公司不能有尾款 ，需要管理员操作
 --  保险公司不全款通过， 打折需要管理员操作
 --  保险公司进行更改  @龙魁

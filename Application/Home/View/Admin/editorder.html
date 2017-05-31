@@ -22,10 +22,12 @@
 <body>
 <include file="Public:header"/>
 <div class="main two"> <!-- Container -->
-    <include file="Public:finance"/>
+    <include file="Public:admin"/>
     <div class="query"> <!-- Main, right side content -->
     </div>
     <div class="start"> <!-- Content begins here -->
+
+        <include file="Public:orderinfo" />
 
         <form method="post" action="{:U('Finance/saveinsurance')}" name="formd"><!-- Form -->
             <!-- Fieldset -->

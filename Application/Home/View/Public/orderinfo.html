@@ -15,24 +15,31 @@
     <?php  } ?>
 </fieldset>
 
+<?php  if($corporate['corporate_amount']){ ?>
 <fieldset>
-    <legend><h2>3、insurance</h2></legend>
+    <legend><h2>insurance</h2></legend>
     <div>
-        <?php echo $corporate['corporate_amount']; ?>
+        <?php echo $corporate['corporate_amount'].'KSH'; ?>
 
     </div>
 </fieldset>
+<?php  } ?>
+
+<?php  if($order_info['discount']){ ?>
 <fieldset>
-    <legend><h2>4、Discount</h2></legend>
+    <legend><h2>Discount</h2></legend>
     <div>
-        <?php echo $order_info['discount']; ?>
+        <?php echo $order_info['discount'].'KSH';  ?>
 
     </div>
 </fieldset>
+<?php  } ?>
+
+
 <fieldset>
-    <legend><h2>5、Balance</h2></legend>
+    <legend><h2>Balance</h2></legend>
     <div>
-        <?php echo $order_info['balance']; ?>
+        <?php echo $order_info['balance'].'KSH'; ?>
 
     </div>
 </fieldset>

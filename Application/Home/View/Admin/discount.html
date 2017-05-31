@@ -22,12 +22,15 @@
 <body>
 <include file="Public:header"/>
 <div class="main two"> <!-- Container -->
-    <include file="Public:finance"/>
+    <include file="Public:admin"/>
     <div class="query"> <!-- Main, right side content -->
     </div>
     <div class="start"> <!-- Content begins here -->
 
-        <form method="post" action="{:U('Finance/saveinsurance')}" name="formd"><!-- Form -->
+        <include file="Public:orderinfo" />
+
+
+        <form method="post" action="{:U('Admin/savediscount')}" name="formd"><!-- Form -->
             <!-- Fieldset -->
             <fieldset>
                 <legend><h2>order discount</h2></legend>
@@ -40,16 +43,16 @@
 
 
                 <div class="input_field">
-                    <label for="amount" style="width:150px;">amount: </label>
+                    <label for="amount" style="width:150px;">Discount: </label>
                     <input class="mediumfield" name="amount" id="amount" type="text" value=""/>
                 </div>
-
 
 
                 <div class="input_field">
                     <label for="amount" style="width:150px;">remark: </label>
                     <input class="mediumfield" name="remark" id="remark" type="text" value="" placeholder="please insert the reason why give discount..."/>
                 </div>
+
 
                 <div class="input_field no_margin_bottom" style="padding-left:150px;">
                     <input class="submit" type="submit" value="Submit"/>
