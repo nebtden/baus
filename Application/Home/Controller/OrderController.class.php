@@ -166,12 +166,6 @@ class OrderController extends Controller
 
 
         if (M('order_info')->where(['order_id' => $order_id])->save($update_data) !== FALSE) {
-            $this->success('save success', U('Index/Index', array('order_step' => $order_id)));
-        } else {
-            $this->error('save fail', U('Index/orderShow', array('order_id' => $order_id)));
-        }
-
-        if (M('order_info')->where(['order_id' => $order_id])->save($update_data) !== FALSE) {
             $this->success('save success', U('Index/index', array('order_step' => 9)));
         } else {
             $this->error('save fail', U('Order/quality', array('order_id' => $order_id)));
