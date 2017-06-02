@@ -202,7 +202,7 @@
                         <?php else: ?>
                         <?php  foreach($paylist as $pay){  ?>
                         <b><?php  $pay['payment_method'] ?></b>
-                        <div class="orderinfo_label">{$pay.payment_method}</div>
+                        <div class="orderinfo_label" style="width: 5%;">{$pay.payment_method}</div>
                         <input class="mediumfield" name="payment_price" type="text" value="{$pay.pay_amount}" />
                         <input class="mediumfield" name="payment_price" type="text" value="{$pay.payment_remark}" /><br>
                         <?php  } ?>
