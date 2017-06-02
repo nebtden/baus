@@ -396,7 +396,7 @@
                     This order has a balance: <input name="final_bal" value="{$balance_remaining}" type="text" readonly /> <br />
                     <a href="{:U('Index/printBalance',array('order_id'=>$order_info['order_id'],'cash_id'=>$cash_id))}" style="color:#000; font-weight:700" target="_blank">Click Here To Print Current Balance Receipt</a><br /><br />
                     Please select the payment method<br />
-                    <!--<input name="order_status_set" type="hidden" value="balance-cleared-closed" />-->
+                    <input name="order_status_set" type="hidden" value="balance-cleared-closed" />
                     <include file="Public:orderinfo" />
                     <div>
 

@@ -429,38 +429,17 @@ class IndexController extends Controller
             unset($update_data);
             unset($data);
 
-            $data['receiptno2'] = I('post.receiptno2');
-            $data['add_time'] = time();
-
-            if (I('post.final_bal') - I('post.balance_amount') == 0) {
+            //收取买家费用
+            $payed_money = insertpaidmoney($order_info,'');
+            $update_data['balance'] = $order_info['balance']-$payed_money;
+            if($update_data['balance']<=0){
                 $update_data['order_step'] = 13;
                 $update_data['order_status_set'] = I('post.order_status_set');
                 $update_data['balance'] = 0;
-            } else {
-                //$update_data['order_step'] = 11;
+            }else{
                 $update_data['order_status_set'] = "balance";
-                $update_data['balance'] = I('post.final_bal') - I('post.balance_amount');
             }
 
-            $update_data['receiptno2'] = serialize($data);
-
-            $cash_count = M('cash')->field('count(cash_id) as cash_count')->select();
-            $cash_count = $cash_count[0]['cash_count'] + 1;
-
-            $data_cash['order_id'] = $order_info['order_id'];
-            $data_cash['order_sn'] = $order_info['order_sn'];
-            $data_cash['pay_amount'] = I('post.balance_pay_method') ? I('post.balance_amount') : 0;
-            $data_cash['payment_method'] = I('post.balance_pay_method') ? 'balance-' . I('post.balance_pay_method') : 'no-balance-close';
-            $data_cash['receipt_no'] = 'B' . $cash_count;
-            $data_cash['payment_remark'] = I('post.balance_remark');
-            $data_cash['reverse_status'] = 0;
-            $data_cash['cancel_status'] = 0;
-            $data_cash['member_id'] = session('member_id');
-            $data_cash['add_time'] = time();
-
-            M('cash')->add($data_cash);
-
-            M('order_info')->where(['order_id' => $order_id])->save($update_data);
 
             if (M('order_info')->where(['order_id' => $order_id])->save($update_data) !== FALSE) {
                 $this->success('save success', U('Index/orderShow', array('order_id' => $order_id)));
