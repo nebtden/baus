@@ -30,8 +30,8 @@ ADD COLUMN `shop_arrive`  tinyint(1) NOT NULL DEFAULT 0 COMMENT 'Waiting for sho
 
 
 ALTER TABLE `oms_order_info`
-ADD COLUMN `is_changed_goods`  tinyint(1) NOT NULL DEFAULT 0 COMMENT '买家是否更改过商品' AFTER `is_insurance_topup`;
-
+ADD COLUMN `is_changed_goods`  tinyint(1) NOT NULL DEFAULT 0 COMMENT '买家是否更改过商品' AFTER `is_insurance_topup`,
+ADD COLUMN `discount`  tinyint(1) NOT NULL DEFAULT 0 COMMENT '打折' AFTER `is_insurance_topup`;
 
 
 
