@@ -9,8 +9,8 @@
     <legend><h2>2、Deposit</h2></legend>
     <?php  foreach($paylist as $pay){  ?>
     <b><?php  $pay['payment_method'] ?></b>
-    <div class="orderinfo_label">{$pay.payment_method}</div>
-    <input class="mediumfield" name="payment_price" type="text" value="{$pay.pay_amount}" disabled/>
+    <div class="orderinfo_label" style="width: 10%;">{$pay.payment_method}</div>
+    <input class="mediumfield" name="payment_price" type="text" value="{$pay.pay_amount}" disabled style="width: 10%;"/>
     <input class="mediumfield" name="payment_remark" type="text" value="{$pay.payment_remark}"/><br>
     <?php  } ?>
 </fieldset>

@@ -91,6 +91,11 @@
                     <input class="mediumfield" id="c_age" name="c_age" type="text" value="{$customer.c_age}" />
                 </div>
 
+                <div class="input_field">
+                    <label for="c_age" style="width:150px;">Birthday: </label>
+                    <input class="laydate-icon" id="birthday" name="birthday" type="text" value="{$customer.birthday}" onclick="laydate()" />
+                </div>
+
                 <div class="input_field no_margin_bottom" style="padding-left:150px;">
                     <input class="submit" type="submit" value="Submit"/>
                 </div>
@@ -108,6 +113,8 @@
     <p> All rights reserved.</p>
 </div>
 </div> <!-- END Container -->
+<script src="__PUBLIC__/js/laydate/laydate.js"></script>
+
 <script type="text/javascript">
     $(function () {
 

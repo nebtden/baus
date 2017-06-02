@@ -1260,6 +1260,7 @@ class IndexController extends Controller
         $data['c_address'] = I('post.address');
         $data['c_type'] = I('post.type');
         $data['c_amount'] = I('post.amount');
+        $data['birthday'] = I('post.birthday');
         $customer_model = M('customer');
 
         if(I('post.customer_id')){

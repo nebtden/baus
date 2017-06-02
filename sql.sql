@@ -33,6 +33,8 @@ ALTER TABLE `oms_order_info`
 ADD COLUMN `is_changed_goods`  tinyint(1) NOT NULL DEFAULT 0 COMMENT '买家是否更改过商品' AFTER `is_insurance_topup`,
 ADD COLUMN `discount`  tinyint(1) NOT NULL DEFAULT 0 COMMENT '打折' AFTER `is_insurance_topup`;
 
+ALTER TABLE `oms_customer`
+ADD COLUMN `birthday`  date NOT NULL AFTER `c_type`;
 
 
 --  保险公司不能有尾款 ，需要管理员操作
