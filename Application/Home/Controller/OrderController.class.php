@@ -91,7 +91,16 @@ class OrderController extends Controller
 
         } elseif ($data['corporate_status_set'] == 'less approval') { // Less Approve option, so step5
 
-            $update_data['order_step'] = 5;
+            if ($receiptno['payment_method'] == 'insurance_0') { //check if smart card selected in new order
+                $update_data['order_step'] = 6; // Proceed with NO smart card to step7
+
+            } else if ($receiptno['payment_method'] == 'insurance_1') {
+
+                $update_data['order_step'] = 5;  // Proceed with smart card to step5
+            } else {
+
+                $update_data['order_step'] = 5;  // Proceed with smart card to step5
+            }
         } else {
             $update_data['order_step'] = -1; //Cancelled Order
         }
@@ -119,7 +128,11 @@ class OrderController extends Controller
         $receiptno = unserialize($order_info['receiptno']);
         $customer_confirm = unserialize($order_info['customer_confirm']);
 
-        $paylist = M('cash')->where(['order_id' => $order_id, 'pay_amount' => ['neq', 0]])->select();
+        $paylist = M('cash')
+            ->where(['order_id' => $order_id, 'pay_amount' => ['neq', 0]])
+            ->field('sum(pay_amount) as amount,type')
+            ->group('type')
+            ->select();
         $balance = $order_info['balance'];
         $corporate = unserialize($order_info['corporate']);
 
@@ -160,7 +173,11 @@ class OrderController extends Controller
         $order_info = M('order_info')->where(['order_id' => $order_id])->find();
         $receiptno = unserialize($order_info['receiptno']);
         $customer_confirm = unserialize($order_info['customer_confirm']);
-        $paylist = M('cash')->where(['order_id' => $order_id, 'pay_amount' => ['neq', 0]])->select();
+        $paylist = M('cash')
+            ->where(['order_id' => $order_id, 'pay_amount' => ['neq', 0]])
+            ->field('sum(pay_amount) as amount,type')
+            ->group('type')
+            ->select();
         $balance = $order_info['balance'];
         $corporate = unserialize($order_info['corporate']);
 
@@ -238,7 +255,11 @@ class OrderController extends Controller
         $insurance = intval($corporate['corporate_amount']);
         $payed_total = M('cash')->field('sum(pay_amount) as count')->where(['order_id' => $order_id, 'pay_amount' => ['neq', 0]])->find();
 
-        $paylist = M('cash')->where(['order_id' => $order_id, 'pay_amount' => ['neq', 0]])->select();
+        $paylist = M('cash')
+            ->where(['order_id' => $order_id, 'pay_amount' => ['neq', 0]])
+            ->field('sum(pay_amount) as amount,type')
+            ->group('type')
+            ->select();
         $balance = $order_info['balance'];
         $corporate = unserialize($order_info['corporate']);
 
@@ -269,13 +290,14 @@ class OrderController extends Controller
 
         try {
 
+            $model->startTrans();
             if (I('post.less_approve_actions') == 'cancel' || I('post.less_approve_action') == 'cancel') {
                 $update_data['order_step'] = -1;
             } else {
 
 
                 //收取买家费用
-                $payed_money = insertpaidmoney($order_info, '');
+                $payed_money = insertpaidmoney($order_info, '',2);
                 $total = $receiptno['total_order_amount'];
                 $payed_total = $payed_total['count'];
                 //检测金额足够
@@ -297,7 +319,9 @@ class OrderController extends Controller
             if ($result !== FALSE) {
                 $this->success('save success', U('Index/index', array('order_step' => 6)));
             }
+            $model->commit();
         } catch (\Exception $e) {
+            $model->rollback();
             $this->error($e->getMessage(), U('Order/confirm', array('order_id' => $order_id)));
         }
 
@@ -312,7 +336,11 @@ class OrderController extends Controller
         $customer_confirm = unserialize($order_info['customer_confirm']);
 
 
-        $paylist = M('cash')->where(['order_id' => $order_id, 'pay_amount' => ['neq', 0]])->select();
+        $paylist = M('cash')
+            ->where(['order_id' => $order_id, 'pay_amount' => ['neq', 0]])
+            ->field('sum(pay_amount) as amount,type')
+            ->group('type')
+            ->select();
         $balance = $order_info['balance'];
         $corporate = unserialize($order_info['corporate']);
 
@@ -333,7 +361,7 @@ class OrderController extends Controller
         $order_id = I('post.order_id');
         $order_info = M('order_info')->where(['order_id' => $order_id])->find();
         //收取买家费用
-        $payed_money = insertpaidmoney($order_info, '');
+        $payed_money = insertpaidmoney($order_info, '',3);
 
 
 
@@ -367,7 +395,11 @@ class OrderController extends Controller
         $order_info = M('order_info')->where(['order_id' => $order_id])->find();
         $receiptno = unserialize($order_info['receiptno']);
 
-        $paylist = M('cash')->where(['order_id' => $order_id, 'pay_amount' => ['neq', 0]])->select();
+        $paylist = M('cash')
+            ->where(['order_id' => $order_id, 'pay_amount' => ['neq', 0]])
+            ->field('sum(pay_amount) as amount,type')
+            ->group('type')
+            ->select();
         $balance = $order_info['balance'];
         $corporate = unserialize($order_info['corporate']);
 
@@ -586,7 +618,7 @@ class OrderController extends Controller
             $order_info = M('order_info')->find($order_id);
 
             //收取买家费用
-            $payed_money = insertpaidmoney($order_info, $orders_count);
+            $payed_money = insertpaidmoney($order_info, $orders_count,1);
 
             //更新余额
             M('order_info')->where(['order_step' => 7, 'order_id' => $order_id])->save(['balance' => $total_order_amount - $payed_money]);

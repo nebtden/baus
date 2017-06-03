@@ -4,12 +4,11 @@
 					echo $total['total_order_amount'].'KSH';
 							 ?><br>
         Insurance:<?php echo $corporate['corporate_amount'].'KSH'; ?><br>
-        Deposit:<br>
+        <?php  $typelist = [1=>'Deposit',2=>'Top up',3=>'Balance']; ?>
         <?php  foreach($paylist as $pay){  ?>
+        <?php echo $typelist[$pay['type']]; ?> :{$pay.amount}KSH</span><br>
 
-            &nbsp;&nbsp;&nbsp;&nbsp;<span class="" style="width: 10%;">{$pay.payment_method}:{$pay.pay_amount}KSH  {$pay.payment_remark}</span><br>
-
-        <?php  } ?>
+        <?php  } ?>$paylist
         Discount: <?php echo $order_info['discount'].'KSH';  ?><br>
         Balance:<?php echo $order_info['balance'].'KSH'; ?><br>
     </div>

@@ -430,7 +430,7 @@ class IndexController extends Controller
             unset($data);
 
             //收取买家费用
-            $payed_money = insertpaidmoney($order_info,'');
+            $payed_money = insertpaidmoney($order_info,'',3);
             $update_data['balance'] = $order_info['balance']-$payed_money;
             if($update_data['balance']<=0){
                 $update_data['order_step'] = 13;

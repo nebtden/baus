@@ -164,7 +164,11 @@ class AdminController extends Controller
 
         $order_id = I('get.order_id');
         $order_info = M('order_info')->where(['order_id' => $order_id])->find();
-        $paylist = M('cash')->where(['order_id' => $order_id, 'pay_amount' => ['neq', 0]])->select();
+        $paylist = M('cash')
+            ->where(['order_id' => $order_id, 'pay_amount' => ['neq', 0]])
+            ->field('sum(pay_amount) as amount,type')
+            ->group('type')
+            ->select();
         $balance = $order_info['balance'];
         $corporate = unserialize($order_info['corporate']);
 
@@ -182,7 +186,11 @@ class AdminController extends Controller
 
         $order_id = I('get.order_id');
         $order_info = M('order_info')->where(['order_id' => $order_id])->find();
-        $paylist = M('cash')->where(['order_id' => $order_id, 'pay_amount' => ['neq', 0]])->select();
+        $paylist = M('cash')
+            ->where(['order_id' => $order_id, 'pay_amount' => ['neq', 0]])
+            ->field('sum(pay_amount) as amount,type')
+            ->group('type')
+            ->select();
         $balance = $order_info['balance'];
         $corporate = unserialize($order_info['corporate']);
 
@@ -230,7 +238,11 @@ class AdminController extends Controller
         $order_id = I('get.order_id');
         $order_info = M('order_info')->where(['order_id' => $order_id])->find();
 
-        $paylist = M('cash')->where(['order_id' => $order_id, 'pay_amount' => ['neq', 0]])->select();
+        $paylist = M('cash')
+            ->where(['order_id' => $order_id, 'pay_amount' => ['neq', 0]])
+            ->field('sum(pay_amount) as amount,type')
+            ->group('type')
+            ->select();
         $balance = $order_info['balance'];
         $corporate = unserialize($order_info['corporate']);
 

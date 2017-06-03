@@ -190,7 +190,7 @@
                     Sales Person: <input class="smallfield" style="width:100px;" id="sales_person" name="sales_person" type="text" value="{$receiptno.sales_person}" />
                     Optometrist: <input class="smallfield" style="width:100px;" id="optometrist" name="optometrist" type="text" value="{$receiptno.optometrist}" />
                 </fieldset>
-                <fieldset><legend><h2>3. Deposit</h2></legend>
+                <!--<fieldset><legend><h2>3. Deposit</h2></legend>
                     <div style="height:150px;float:left;width:100%">
 
                         Payment method:<br /><br />
@@ -216,8 +216,8 @@
                         <?php if($receiptno['add_time'] != '') echo date('Y-m-d H:i:s',$receiptno['add_time'])?> <br />
                         <a href="{:U('Index/printOrder',array('order_id'=>$order_info['order_id']))}" style="color:#000; font-weight:700" target="_blank">Click Here To Print Customer Order</a>
                     </div>
-                </fieldset>
-                <!-- End of fieldset -->
+                </fieldset>-->
+
 
             </form>
         </div>
@@ -386,45 +386,6 @@
         </script>
         <div class="clear"><!-- --></div>
 
-        <!-- step11 s-->
-        <div id="show_step11">
-            <form method="post" action="{:U('Index/orderProcess')}" name="formd" id="form_step11"><!-- Form -->
-                <!-- Fieldset -->
-                <fieldset><legend><h2>11, Balance & Close Order</h2></legend>
-
-                    <?php if($balance_remaining>0 && $order_info['order_step']==11):?>
-                    This order has a balance: <input name="final_bal" value="{$balance_remaining}" type="text" readonly /> <br />
-                    <a href="{:U('Index/printBalance',array('order_id'=>$order_info['order_id'],'cash_id'=>$cash_id))}" style="color:#000; font-weight:700" target="_blank">Click Here To Print Current Balance Receipt</a><br /><br />
-                    Please select the payment method<br />
-                    <input name="order_status_set" type="hidden" value="balance-cleared-closed" />
-                    <include file="Public:orderinfo" />
-                    <div>
-
-                    </div>
-                    <div id="balance_pay">
-                        <include file="Public:paymethod" />
-                    </div>
-
-                    <?php elseif($balance_remaining==0 && $order_info['order_step']==11): ?>
-                    <a href="{:U('Index/printBalance',array('order_id'=>$order_info['order_id'],'cash_id'=>$cash_id))}" style="color:#000; font-weight:700" target="_blank">Click Here To Print Current Balance</a><br />
-                    <!--This Order has no balance and can be closed-->
-                    <!--<input name="order_status_set" type="radio" value="no-balance" />-->
-                    The Order has no balance and can be finish
-                    <input name="order_status_set" type="radio" value="no-balance" />
-                    <?php elseif($order_info['order_step']==12): ?>
-                    The Order has been closed <a href="{:U('Index/printBalance',array('order_id'=>$order_info['order_id'],'cash_id'=>$cash_id))}" style="color:#000; font-weight:700" target="_blank">Click Here To Print Current Balance</a>
-                    <?php elseif($order_info['order_step']==13): ?>
-                    The Order has been finished! <a href="{:U('Index/printBalance',array('order_id'=>$order_info['order_id'],'cash_id'=>$cash_id))}" style="color:#000; font-weight:700" target="_blank">Click Here To Print Current Balance</a>
-                    <?php endif; ?>
-                    <br />
-
-                    <div>Time: <?php if($receiptno2['add_time'] != '') echo date('Y-m-d H:i:s',$receiptno2['add_time'])?></div>
-                    <input  type="hidden" name="order_id" value="{$order_info.order_id}" /><input  type="hidden" name="step_name" value="editorderstatus" /><input class="submit" type="submit" value="Submit" />
-
-                </fieldset>
-                <!-- End of fieldset -->
-            </form>
-        </div>
 
         <script type="text/javascript">
             $(function(){
