@@ -252,7 +252,7 @@ function insertpaidmoney($order_info,$orders_count){
 function insertlog($order_id,$log_info){
     $time = time();
     $data = [];
-    $data['time'] = $time;
+    $data['add_time'] = $time;
     $data['order_id'] = $order_id;
     $data['operate'] = $log_info;
     $data['user_name'] = $_SESSION['member_name'];

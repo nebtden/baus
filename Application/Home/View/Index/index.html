@@ -126,6 +126,8 @@
 					<a href="{:U('Order/quality',array('order_id'=>$vo['order_id']))}"><img src="__PUBLIC__/iconsee/gear_48.png" alt="edit" width="16" /></a>
 					<?php elseif($vo['order_step']==10): ?>
 					<a href="{:U('Order/shoparrive',array('order_id'=>$vo['order_id']))}"><img src="__PUBLIC__/iconsee/gear_48.png" alt="edit" width="16" /></a>
+					<?php elseif($vo['order_step']==11): ?>
+					<a href="{:U('Order/balance',array('order_id'=>$vo['order_id']))}"><img src="__PUBLIC__/iconsee/gear_48.png" alt="edit" width="16" /></a>
 					<?php else:  ?>
 					<a href="{:U('Index/orderShow',array('order_id'=>$vo['order_id']))}"><img src="__PUBLIC__/iconsee/gear_48.png" alt="edit" width="16" /></a>
 					<?php endif;  ?>

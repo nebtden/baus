@@ -28,6 +28,7 @@
     <div class="start"> <!-- Content begins here -->
 
         <include file="Public:orderinfo" />
+        Top up:<span style="color: red"> <?php  echo $topup; ?>KSH</span>
         <div id="show_step5_1">
             <form method="post" action="{:U('Order/confirmsave')}" name="formd" id="form_step5_1"><!-- Form -->
                 <!-- Fieldset -->
@@ -40,12 +41,13 @@
                         <?php if($customer_confirm['less_approve_action']): ?>
                         This step is complete
                         <?php else: ?>
-                        <!--        <select id="less_approve" name="less_approve_action">
-                                    <option value="-1">&#45;&#45; Select Less Approve Action &#45;&#45;</option>
-                                    <option value="top_up">Top Up</option>
-                                    <option value="change_goods">Change Goods</option>
-                                    <option value="cancel">Cancel Order</option>
-                                </select>-->
+                        <div id="notcancel">
+                            top_up:<input type="radio" value="top_up" name="less_approve_actions" checked>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            cancel:<input type="radio" value="cancel" name="less_approve_actions">
+
+
+                        </div>
 
                         <br/>
 
@@ -59,13 +61,7 @@
                         <?php endif; ?>
                     </div>
                     <div style="height:150px;float:right;width:50%">
-                        <div class="less_approve_pay">
-                            <!-- place balance remaining -->
-                            <div class="orderinfo_label">Balance</div>
-                            <input type="text"
-                                   name="balance_remaining" <?php if($customer_confirm['balance_remaining']){ echo 'value="'.$customer_confirm['balance_remaining'].'" ';}else{ echo 'value=""'; }?>
-                            readonly/> <br/>
-                        </div>
+
                         <div id="approve_action">
                             <input type="hidden" name="order_id" value="{$order_info.order_id}"/>
                             <input type="hidden" name="step_name" value="edit_customer_confirm"/>
@@ -103,7 +99,7 @@
 
 
         $('input[type="radio"]').click(function() {
-            if($('input:radio[name="less_approve_actions"]:checked').val() == "other")
+            if($('input:radio[name="less_approve_actions"]:checked').val() == "top_up")
             {
                 $('#notcanceldiv').show();
                 $('.less_approve_pay').show();

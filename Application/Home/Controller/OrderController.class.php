@@ -24,6 +24,9 @@ class OrderController extends Controller
             $member_group_info = M('member_group')->where(['member_group_id' => $member_group_id])->find();
             $this->assign('member_group_info', $member_group_info);
         }
+        $order_id = I('get.order_id');
+        $loglist = M('admin_log')->where(['order_id' => $order_id])->select();
+        $this->assign('loglist', $loglist);
     }
 
     public function index()
@@ -229,6 +232,82 @@ class OrderController extends Controller
     {
         $order_id = I('get.order_id');
         $order_info = M('order_info')->where(['order_id' => $order_id])->find();
+        $corporate =unserialize($order_info['corporate']);
+        $receiptno = unserialize($order_info['receiptno']);
+        $customer_confirm = unserialize($order_info['customer_confirm']);
+        $insurance = intval($corporate['corporate_amount']);
+        $payed_total = M('cash')->field('sum(pay_amount) as count')->where(['order_id' => $order_id, 'pay_amount' => ['neq', 0]])->find();
+
+        $paylist = M('cash')->where(['order_id' => $order_id, 'pay_amount' => ['neq', 0]])->select();
+        $balance = $order_info['balance'];
+        $corporate = unserialize($order_info['corporate']);
+
+        $topup = $receiptno['total_order_amount'] - $payed_total['count'] - $order_info['discount'] - $order_info['balance'] - $insurance;
+
+
+        $this->assign('order_info', $order_info);
+        $this->assign('receiptno', $receiptno);
+        $this->assign('customer_confirm', $customer_confirm);
+
+        $this->assign('paylist', $paylist);
+        $this->assign('balance', $balance);
+        $this->assign('corporate', $corporate);
+        $this->assign('topup', $topup);
+
+        $this->display();
+    }
+
+    public function confirmsave()
+    {
+        $order_id = I('post.order_id');
+        $order_info = M('order_info')->where(['order_id' => $order_id])->find();
+        $receiptno = unserialize($order_info['receiptno']);
+        $payed_total = M('cash')->field('sum(pay_amount) as count' )->where(['order_id' => $order_id, 'pay_amount' => ['neq', 0]])->find();
+        $corporate = unserialize($order_info['corporate']);
+        $insurance = intval($corporate['corporate_amount']);
+
+
+        try {
+
+            if (I('post.less_approve_actions') == 'cancel' || I('post.less_approve_action') == 'cancel') {
+                $update_data['order_step'] = -1;
+            } else {
+
+
+                //收取买家费用
+                $payed_money = insertpaidmoney($order_info, '');
+                $total = $receiptno['total_order_amount'];
+                $payed_total = $payed_total['count'];
+                //检测金额足够
+                if ($total <= $payed_money + $payed_total + $order_info['discount'] + $insurance + $order_info['balance']) {
+
+                } else {
+                    throw  new \Exception('not enough money!');
+                }
+
+                $data['add_time'] = time();
+                $data['recevied_amount'] = $payed_money;
+
+                $update_data['customer_confirm'] = serialize($data);
+                $update_data['order_step'] = 7;
+
+            }
+            $result = M('order_info')->where(['order_id' => $order_id])->save($update_data);
+
+            if ($result !== FALSE) {
+                $this->success('save success', U('Index/index', array('order_step' => 6)));
+            }
+        } catch (\Exception $e) {
+            $this->error($e->getMessage(), U('Order/confirm', array('order_id' => $order_id)));
+        }
+
+
+    }
+
+    public function balance()
+    {
+        $order_id = I('get.order_id');
+        $order_info = M('order_info')->where(['order_id' => $order_id])->find();
         $receiptno = unserialize($order_info['receiptno']);
         $customer_confirm = unserialize($order_info['customer_confirm']);
 
@@ -249,53 +328,37 @@ class OrderController extends Controller
     }
 
 
-    public function confirmsave()
+    public function balancesave()
     {
         $order_id = I('post.order_id');
         $order_info = M('order_info')->where(['order_id' => $order_id])->find();
-        $receiptno = unserialize($order_info['receiptno']);
-        $payed_total = M('cash')->field('sum(pay_amount) as count' )->where(['order_id' => $order_id, 'pay_amount' => ['neq', 0]])->find();
-        $corporate = unserialize($order_info['corporate']);
-        $insurance = intval($corporate['corporate_amount']);
+        //收取买家费用
+        $payed_money = insertpaidmoney($order_info, '');
 
 
 
-            try {
+        //检测金额足够
+        if ($payed_money < $order_info['balance']) {
 
-                if (I('post.less_approve_actions') == 'cancel' || I('post.less_approve_action') == 'cancel') {
-                    $update_data['order_step'] = -1;
-                } else {
+            $this->error('not enough money', U('Order/confirm', array('order_id' => $order_id)));
+        }
 
+        $update_data['balance'] = 0;
+        $update_data['order_step'] = 13;
 
-                    //收取买家费用
-                    $payed_money = insertpaidmoney($order_info, '');
-                    $total = $receiptno['total_order_amount'];
-                    $payed_total = $payed_total['count'];
-                    //检测金额足够
-                    if ($total <= $payed_money + $payed_total + $order_info['discount'] + $insurance + $order_info['balance']) {
-
-                    } else {
-                        throw  new \Exception('not enough money!');
-                    }
-
-                    $data['add_time'] = time();
-                    $data['recevied_amount'] = $payed_money;
-
-                    $update_data['customer_confirm'] = serialize($data);
-                    $update_data['order_step'] = 7;
-
-                    $result = M('order_info')->where(['order_id' => $order_id])->save($update_data);
-
-                if ($result !== FALSE) {
-                    $this->success('save success', U('Index/index', array('order_step' => 6)));
-                }
-                }
-            } catch (\Exception $e) {
-                $this->error($e->getMessage(), U('Order/confirm', array('order_id' => $order_id)));
-            }
+        $result = M('order_info')->where(['order_id' => $order_id])->save($update_data);
+        if (!$result) {
+            $this->error('not enough money', U('Order/balance', array('order_id' => $order_id)));
+        }
+        $this->success('save success', U('Index/index', array('order_step' => 11)));
 
 
     }
+
+
+
+
+
 
 
     public function cardconfirm()
@@ -318,6 +381,7 @@ class OrderController extends Controller
         $this->display();
     }
 
+
     public function cardconfirmsave()
     {
         $order_id = I('post.order_id');
@@ -333,7 +397,7 @@ class OrderController extends Controller
             $update_data['order_step'] = 7;
             $update_data['balance'] = 0;
         } else {
-            $update_data['order_step'] = 6; //Fail Safe solution
+            $update_data['order_step'] = -1; //Fail Safe solution
         }
         /* Might be no need for this step ----------------------------------------------------*/
 

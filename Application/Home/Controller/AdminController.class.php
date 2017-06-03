@@ -256,7 +256,6 @@ class AdminController extends Controller
         if ($result) {
             insertlog($order_id,'gived  discount,the amount is '.I('post.discount').'KSH');
 
-
             $this->success('return to discount success! ', U('Admin/order'));
         } else {
             $this->error('return to discount  fail!');

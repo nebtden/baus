@@ -22,31 +22,20 @@
 <body>
 <include file="Public:header"/>
 <div class="main two"> <!-- Container -->
-    <include file="Public:admin"/>
+    <include file="Public:order"/>
     <div class="query"> <!-- Main, right side content -->
     </div>
     <div class="start"> <!-- Content begins here -->
-
         <include file="Public:orderinfo" />
         <include file="Public:log" />
-
-        <form method="post" action="{:U('Admin/discountsave')}" name="formd"><!-- Form -->
+        <!-- step4 s-->
+        <form method="post" action="{:U('Order/balancesave')}" name="formd"><!-- Form -->
             <!-- Fieldset -->
             <fieldset>
-                <legend><h2>order discount</h2></legend>
 
-                <div class="input_field">
+                <legend><h2> Balance</h2></legend>
 
-
-                </div>
-                <input type="hidden" name="order_id" value="{$order_info.order_id}">
-
-
-                <div class="input_field">
-                    <label for="amount" style="width:150px;">Discount: </label>
-                    <input class="mediumfield" name="discount" id="discount" type="text" value=""/>
-                </div>
-
+                 <include file="Public:paymethod" />
                 <div class="input_field no_margin_bottom" style="padding-left:150px;">
                     <input class="submit" type="submit" value="Submit"/>
                 </div>
@@ -54,8 +43,6 @@
             </fieldset>
             <!-- End of fieldset -->
         </form>
-
-        <div class="clear"><!-- --></div>
 
     </div> <!-- END Content -->
 
