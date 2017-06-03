@@ -394,7 +394,7 @@ class OrderController extends Controller
 
 
         if($data['customer_card_confirm']==1){
-            $update_data['order_step'] = 7;
+            $update_data['order_step'] = 6;
         }elseif ($data['customer_card_confirm']==2){
             $data['customer_card_confirm']=-1;
         }
