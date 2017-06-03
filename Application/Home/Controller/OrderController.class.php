@@ -390,16 +390,23 @@ class OrderController extends Controller
         $data['customer_card_confirm'] = I('post.customer_card_confirm');
         $data['add_time'] = time();
 
-        $corporate = unserialize($order_info['corporate']);
+        //$corporate = unserialize($order_info['corporate']);
 
-        /* Might be no need for this step ----------------------------------------------------*/
-        if ($corporate['corporate_status_set'] == 'proceed') {
+
+        if($data['customer_card_confirm']==1){
             $update_data['order_step'] = 7;
-            $update_data['balance'] = 0;
-        } else {
-            $update_data['order_step'] = -1; //Fail Safe solution
+        }elseif ($data['customer_card_confirm']==2){
+            $data['customer_card_confirm']=-1;
         }
-        /* Might be no need for this step ----------------------------------------------------*/
+
+//        /* Might be no need for this step ----------------------------------------------------*/
+//        if ($corporate['corporate_status_set'] == 'proceed') {
+//            $update_data['order_step'] = 7;
+//            $update_data['balance'] = 0;
+//        } else {
+//            $update_data['order_step'] = -1; //Fail Safe solution
+//        }
+//        /* Might be no need for this step ----------------------------------------------------*/
 
         $update_data['customer_card'] = serialize($data);
 

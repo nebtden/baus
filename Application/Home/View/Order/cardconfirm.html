@@ -39,7 +39,6 @@
                             <td>
                                 <input name="customer_card_confirm" type="radio" required  value="1" <?php if($customer_card['customer_card_confirm'] == 1) echo 'checked';?>/> Customer Swiped their Insurance Smart Card <input name="customer_card_confirm" type="radio" required  value="2" <?php if($customer_card['customer_card_confirm'] == 2) echo 'checked';?>/> Customer DID NOT Swiped their Insurance Smart Card <br>
                             </td>
-
                             <td>Time: <?php if($customer_card['add_time'] != '') echo date('Y-m-d H:i:s',$customer_card['add_time'])?></td>
                             <td>
                                 <input  type="hidden" name="order_id" value="{$order_info.order_id}" />
