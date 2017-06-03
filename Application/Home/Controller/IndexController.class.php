@@ -1462,6 +1462,7 @@ class IndexController extends Controller
 
         $condition = $this->getCondition();
         $condition['payment_method'] = ['notin',['m_pesa','eft']];
+        $condition['pay_amount'] = ['gt',0];
 
         $count = $cash_model->where($condition)->count();
 
