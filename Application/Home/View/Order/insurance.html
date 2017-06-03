@@ -50,11 +50,11 @@
 
                         <tr>
                             <td>
-                                <input name="corporate_status_set" type="radio" value="proceed" <?php if($corporate['corporate_status_set'] == 'proceed') echo 'checked';?>/> Proceed <br>
-                                <input name="corporate_status_set" type="radio" value="less approval" <?php if($corporate['corporate_status_set'] == 'less approval') echo 'checked';?>/> Less approval
+                                <input name="corporate_status_set" type="radio" value="proceed" <?php if($corporate['corporate_status_set'] == 'proceed') echo 'checked';?> required /> Proceed <br>
+                                <input name="corporate_status_set" type="radio" value="less approval" required <?php if($corporate['corporate_status_set'] == 'less approval') echo 'checked';?>/> Less approval
                                 <b style="color:red" id="less_message">* Please Enter Amount For This Option *</b>
                                 <input class="mediumfield" style="width:100px;" id="corporate_amount" name="corporate_amount" type="text" value="{$corporate['corporate_amount']}" /><br>
-                                <input name="corporate_status_set" type="radio" value="decline" <?php if($corporate['corporate_status_set'] == 'decline') echo 'checked';?>/> Declined
+                                <input name="corporate_status_set" type="radio" value="decline" required <?php if($corporate['corporate_status_set'] == 'decline') echo 'checked';?>/> Declined
                             </td>
 
                             <!-- <td id='topupleo'>
