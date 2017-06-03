@@ -200,20 +200,17 @@ class AdminController extends Controller
 
 
         $order_id = I('post.order_id');
-        $order_info = M('order_info')->where(['order_id' => $order_id])->find();
+
+
+        $balance = I('post.balance');
+
+        if($balance>3000){
+            $this->error('balance > 3000!');
+        }
+
         $updatedata = [];
-        $updatedata['order_step'] = 7;
 
-        $orders_count = M('order_info')->field('count(order_id) as order_count')->select();
-        $orders_count = $orders_count[0]['order_count'] + 1;
-
-        //收取买家费用
-        $payed_money = insertpaidmoney($order_info, $orders_count);
-
-
-        //更新余额
-        M('order_info')->where(['order_id' => $order_id])->save(['balance' => $order_info['balance'] - -$payed_money]);
-
+        $updatedata['balance'] = $balance;
 
         $result = M('order_info')->where(['order_id' => $order_id])->save($updatedata);
         if ($result) {

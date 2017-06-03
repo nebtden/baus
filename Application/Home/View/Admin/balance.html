@@ -29,14 +29,14 @@
         <include file="Public:orderinfo" />
         <include file="Public:log" />
 
-        <form method="post" action="{:U('Admin/savebalance')}" name="formd"><!-- Form -->
+        <form method="post" action="{:U('Admin/balancesave')}" name="formd"><!-- Form -->
             <!-- Fieldset -->
             <fieldset>
-                <legend><h2>pay some,and leave amount to balance</h2></legend>
+                <legend><h2> Balance</h2></legend>
 
                 <input type="hidden" name="order_id" value="{$order_info.order_id}">
 
-                <include file="Public:paymethod" />
+                <input type="text" name="balance" value="{$balance}">
 
                 <div class="input_field no_margin_bottom" style="padding-left:150px;">
                     <input class="submit" type="submit" value="Submit"/>
