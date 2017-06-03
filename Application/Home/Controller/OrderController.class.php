@@ -117,7 +117,18 @@ class OrderController extends Controller
         $receiptno = unserialize($order_info['receiptno']);
         $customer_confirm = unserialize($order_info['customer_confirm']);
 
+        $paylist = M('cash')->where([
+            'order_id'=>$order_id,
+            'pay_amount'=>['neq',0]
+        ])->select();
+        $balance = $order_info['balance'];
+        $corporate = unserialize($order_info['corporate']);
+
+
         $this->assign('order_info', $order_info);
+        $this->assign('paylist', $paylist);
+        $this->assign('balance', $balance);
+        $this->assign('corporate', $corporate);
         $this->assign('receiptno', $receiptno);
         $this->assign('customer_confirm', $customer_confirm);
 
@@ -148,6 +159,19 @@ class OrderController extends Controller
         $order_info = M('order_info')->where(['order_id' => $order_id])->find();
         $receiptno = unserialize($order_info['receiptno']);
         $customer_confirm = unserialize($order_info['customer_confirm']);
+        $paylist = M('cash')->where([
+            'order_id'=>$order_id,
+            'pay_amount'=>['neq',0]
+        ])->select();
+        $balance = $order_info['balance'];
+        $corporate = unserialize($order_info['corporate']);
+
+
+        $this->assign('order_info', $order_info);
+        $this->assign('paylist', $paylist);
+        $this->assign('balance', $balance);
+        $this->assign('corporate', $corporate);
+
 
         $this->assign('order_info', $order_info);
         $this->assign('receiptno', $receiptno);
@@ -375,7 +399,7 @@ class OrderController extends Controller
         // M('order_info')->where(['order_id' => $order_id])->save($update_data);
 
         if (M('order_info')->where(['order_id' => $order_id])->save($update_data) !== FALSE) {
-            $this->success('save success', U('Index/Index', array('order_step' => 5)));
+            $this->success('save success', U('Index/index', array('order_step' => 5)));
         } else {
             $this->error('save fail', U('Order/cardconfirm', array('order_id' => $order_id)));
         }
