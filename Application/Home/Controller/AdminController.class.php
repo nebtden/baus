@@ -23,6 +23,10 @@ class AdminController extends Controller
             $member_group_info = M('member_group')->where(['member_group_id' => $member_group_id])->find();
             $this->assign('member_group_info', $member_group_info);
         }
+
+        $order_id = I('get.order_id');
+        $loglist = M('admin_log')->where(['order_id' => $order_id])->select();
+        $this->assign('loglist', $loglist);
     }
 
     public function getCondition()
@@ -112,6 +116,7 @@ class AdminController extends Controller
         $updatedata['is_insurance_checked'] = 0;
         $result = M('order_info')->where(['order_id' => $order_id])->save($updatedata);
         if ($result) {
+            insertlog($order_id,'return order step back ');
             $this->success('return to insurance success! ', U('Admin/order'));
         } else {
             $this->error('return to insurance  fail!');
@@ -133,11 +138,20 @@ class AdminController extends Controller
 
         $data['less_approve_pay_method'] = 'combine';
 
+        $receiptno = unserialize($order_info['receiptno']);
+        $old_amount = $receiptno['total_order_amount'];
+        $receiptno['total_order_amount'] = I('post.amount');
+
         $update_data = [];
         $update_data['customer_confirm'] = serialize($data);
         $update_data['is_changed_goods'] = 1;
+        $update_data['receiptno'] =serialize($receiptno);
         $result = M('order_info')->where(['order_id' => $order_id])->save($update_data);
         if ($result) {
+
+            //增加日志
+            insertlog($order_id,'changed goods,the new amount is '.I('post.amount').'KSH,the older amount is '.$old_amount.'KSH');
+
             $this->success('return to insurance success! ', U('Admin/order'));
         } else {
             $this->error('return to insurance  fail!');
@@ -203,6 +217,10 @@ class AdminController extends Controller
 
         $result = M('order_info')->where(['order_id' => $order_id])->save($updatedata);
         if ($result) {
+
+            //增加日志
+            insertlog($order_id,'move some money to balance');
+
             $this->success('return to insurance success! ', U('Admin/order'));
         } else {
             $this->error('return to insurance  fail!');
@@ -239,6 +257,9 @@ class AdminController extends Controller
             ->where(['order_id' => $order_id])
             ->save($updatedata);
         if ($result) {
+            insertlog($order_id,'gived  discount,the amount is '.I('post.discount').'KSH');
+
+
             $this->success('return to discount success! ', U('Admin/order'));
         } else {
             $this->error('return to discount  fail!');

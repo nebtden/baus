@@ -248,4 +248,16 @@ function insertpaidmoney($order_info,$orders_count){
     return $payed_money;
 }
 
+
+function insertlog($order_id,$log_info){
+    $time = time();
+    $data = [];
+    $data['time'] = $time;
+    $data['order_id'] = $order_id;
+    $data['operate'] = $log_info;
+    $data['user_name'] = $_SESSION['member_name'];
+    M('admin_log')->add($data);
+
+}
+
 ?>

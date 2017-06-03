@@ -1,0 +1,16 @@
+<fieldset>
+	<legend><h2>Admin Operate Log </h2></legend>
+	<div>
+		<?php  foreach($loglist as $key=>$log){  ?>
+			<p>
+				<?php  echo $key+1;  ?>:
+				<?php  echo date('Y-m-d H:i:s',$log['add_time']); ?>
+				&nbsp;&nbsp;
+				<?php  echo $log['user_name']; ?>&nbsp;&nbsp;
+				<?php   echo $log['operate'] ?>
+			</p>
+
+
+		<?php  } ?>
+	</div>
+</fieldset>
