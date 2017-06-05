@@ -291,6 +291,7 @@ class OrderController extends Controller
         try {
             $model = M('cash');
             $model->startTrans();
+
             if (I('post.less_approve_actions') == 'cancel' || I('post.less_approve_action') == 'cancel') {
                 $update_data['order_step'] = -1;
             } else {
@@ -321,6 +322,11 @@ class OrderController extends Controller
             }
 
         } catch (\Exception $e) {
+
+//            M('cash')->where([
+//                'order_id'=>$order_id,
+//                'type'=>2,
+//            ])->delete();
             $model->rollback();
             $this->error($e->getMessage(), U('Order/confirm', array('order_id' => $order_id)));
         }
@@ -369,8 +375,8 @@ class OrderController extends Controller
 
             //检测金额足够
             if ($payed_money < $order_info['balance']) {
+                throw new \Exception('not enghou money');
 
-                $this->error('not enough money', U('Order/confirm', array('order_id' => $order_id)));
             }
 
             $update_data['balance'] = 0;
@@ -378,12 +384,18 @@ class OrderController extends Controller
 
             $result = M('order_info')->where(['order_id' => $order_id])->save($update_data);
             if (!$result) {
-                $this->error('not enough money', U('Order/balance', array('order_id' => $order_id)));
+                throw new \Exception('delete error!');
             }
             $model->commit();
             $this->success('save success', U('Index/index', array('order_step' => 11)));
 
         }catch (\Exception $e){
+
+//            M('cash')->where([
+//                'order_id'=>$order_id,
+//                'type'=>3,
+//            ])->delete();
+
             $model->rollback();
             $this->error('not enough money', U('Order/balance', array('order_id' => $order_id)));
         }
