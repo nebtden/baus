@@ -48,6 +48,14 @@ CREATE TABLE `oms_admin_log` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
+ALTER TABLE `oms_order_info`
+ENGINE=InnoDB;
+
+ALTER TABLE `oms_cash`
+ENGINE=InnoDB;
+
+ALTER TABLE `oms_order_goods`
+ENGINE=InnoDB;
 
 
 --  保险公司不能有尾款 ，需要管理员操作
