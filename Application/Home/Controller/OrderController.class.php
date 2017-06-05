@@ -289,7 +289,7 @@ class OrderController extends Controller
 
 
         try {
-
+            $model = M('order_info');
             $model->startTrans();
             if (I('post.less_approve_actions') == 'cancel' || I('post.less_approve_action') == 'cancel') {
                 $update_data['order_step'] = -1;
