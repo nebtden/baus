@@ -35,7 +35,8 @@
 
                 <legend><h2> Balance</h2></legend>
 
-                 <include file="Public:paymethod" />
+                <include file="Public:paymethod" />
+                <input  type="hidden" name="order_id" value="{$order_info.order_id}" />
                 <div class="input_field no_margin_bottom" style="padding-left:150px;">
                     <input class="submit" type="submit" value="Submit"/>
                 </div>

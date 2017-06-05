@@ -289,12 +289,11 @@ class OrderController extends Controller
 
 
         try {
-            $model = M('order_info');
+            $model = M('cash');
             $model->startTrans();
             if (I('post.less_approve_actions') == 'cancel' || I('post.less_approve_action') == 'cancel') {
                 $update_data['order_step'] = -1;
             } else {
-
 
                 //收取买家费用
                 $payed_money = insertpaidmoney($order_info, '',2);
@@ -317,9 +316,10 @@ class OrderController extends Controller
             $result = M('order_info')->where(['order_id' => $order_id])->save($update_data);
 
             if ($result !== FALSE) {
+                $model->commit();
                 $this->success('save success', U('Index/index', array('order_step' => 6)));
             }
-            $model->commit();
+
         } catch (\Exception $e) {
             $model->rollback();
             $this->error($e->getMessage(), U('Order/confirm', array('order_id' => $order_id)));
@@ -360,26 +360,33 @@ class OrderController extends Controller
     {
         $order_id = I('post.order_id');
         $order_info = M('order_info')->where(['order_id' => $order_id])->find();
-        //收取买家费用
-        $payed_money = insertpaidmoney($order_info, '',3);
+        try {
+            $model = M('cash');
+            $model->startTrans();
 
+            //收取买家费用
+            $payed_money = insertpaidmoney($order_info, '', 3);
 
+            //检测金额足够
+            if ($payed_money < $order_info['balance']) {
 
-        //检测金额足够
-        if ($payed_money < $order_info['balance']) {
+                $this->error('not enough money', U('Order/confirm', array('order_id' => $order_id)));
+            }
 
-            $this->error('not enough money', U('Order/confirm', array('order_id' => $order_id)));
-        }
+            $update_data['balance'] = 0;
+            $update_data['order_step'] = 13;
 
-        $update_data['balance'] = 0;
-        $update_data['order_step'] = 13;
+            $result = M('order_info')->where(['order_id' => $order_id])->save($update_data);
+            if (!$result) {
+                $this->error('not enough money', U('Order/balance', array('order_id' => $order_id)));
+            }
+            $model->commit();
+            $this->success('save success', U('Index/index', array('order_step' => 11)));
 
-        $result = M('order_info')->where(['order_id' => $order_id])->save($update_data);
-        if (!$result) {
+        }catch (\Exception $e){
+            $model->rollback();
             $this->error('not enough money', U('Order/balance', array('order_id' => $order_id)));
         }
-        $this->success('save success', U('Index/index', array('order_step' => 11)));
-
 
     }
 
