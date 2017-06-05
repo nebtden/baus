@@ -32,12 +32,12 @@ ADD COLUMN `shop_arrive`  tinyint(1) NOT NULL DEFAULT 0 COMMENT 'Waiting for sho
 ALTER TABLE `oms_order_info`
 ADD COLUMN `is_changed_goods`  tinyint(1) NOT NULL DEFAULT 0 COMMENT '买家是否更改过商品' AFTER `is_insurance_topup`,
 ADD COLUMN `discount`  int(11) NOT NULL DEFAULT 0 COMMENT '打折' AFTER `is_insurance_topup`;
-
+DEFAULT 0
 ALTER TABLE `oms_customer`
 ADD COLUMN `birthday`  date NOT NULL AFTER `c_type`;
 
 ALTER TABLE `oms_cash`
-ADD COLUMN `type`  tinyint(1) NOT NULL AFTER `shop`
+ADD COLUMN `type`  tinyint(1) NOT NULL DEFAULT 1 AFTER `shop`
 
 CREATE TABLE `oms_admin_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -47,7 +47,6 @@ CREATE TABLE `oms_admin_log` (
   `add_time` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
-
 
 
 
