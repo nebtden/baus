@@ -46,8 +46,14 @@
 					<div style="/*border:1px solid blue;*/height:100px;float:left;width:49.5%">
 						<input type="hidden" name="c_id" id="c_id">
 						<div class="orderinfo_label">Customer Mobile</div> <input class="mediumfield" id="c_mobile" name="c_mobile" type="text" /><br />
-						<div class="orderinfo_label">Customer Name</div> <input class="mediumfield" id="c_name" name="c_name" type="text"/><span id="cunstomer_info" style="color:red"> </span><br />
-						<div class="orderinfo_label">Email</div> <input class="mediumfield" id="c_email" name="c_email" type="text"/>
+						<div class="orderinfo_label">Customer Name</div>
+						<input class="mediumfield" id="c_name" name="c_name" type="text"/><span id="cunstomer_info" style="color:red"> </span><br />
+						<div class="orderinfo_label">Email</div>
+						<input class="mediumfield" id="c_email" name="c_email" type="text"/><br />
+						<div class="orderinfo_label">
+							 Birthday:
+						</div>
+						<input class="laydate-icon" id="birthday" name="birthday" type="text" value="" onclick="laydate()" /><br />
 					</div>
 					<div style="/*border:1px solid green;*/height:100px;float:right;width:50%">
 
@@ -60,6 +66,7 @@
 						</select><br />
 						<div class="orderinfo_label">Age</div>
 						<input class="mediumfield" id="c_age" name="c_age" type="text"/>
+
 					</div>
 				</div>
 			</fieldset>
@@ -371,6 +378,7 @@
                         $('#mobile').val(data.c_mobile);
                         $('#consignee').val(data.c_name);
                         $('#c_gender').val(data.c_gender);
+                        $('#birthday').val(data.birthday);
                     }else{
                         $('#c_id').val(0);
                         $('#cunstomer_info').html(data.info);
@@ -384,6 +392,7 @@
                         $('#mobile').val(c_mobile);
                         $('#consignee').val('');
                         $('#c_gender').val(0);
+                        $('#birthday').val(0);
                     }
                 }
             })

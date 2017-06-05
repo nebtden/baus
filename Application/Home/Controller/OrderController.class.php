@@ -476,6 +476,7 @@ class OrderController extends Controller
         $customer['c_address'] = $address;
         $customer['c_gender'] = $c_gender;
         $customer['c_age'] = $c_age;
+        $customer['birthday'] = I('post.birthday');
 
         if ($c_id > 0) {
             $data['user_id'] = $c_id;
