@@ -1290,7 +1290,7 @@ class IndexController extends Controller
 
         $customer = $customer_model->where(['c_id'=>$member_id])->find();
         $this->assign('customer',$customer);
-        $this->display('addCustomer');
+        $this->display('addcustomer');
     }
 
 
