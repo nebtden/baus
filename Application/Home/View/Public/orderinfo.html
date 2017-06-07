@@ -13,6 +13,18 @@
         Balance:<?php echo $order_info['balance'].'KSH'; ?><br>
     </div>
 </fieldset>
+<fieldset>
+    <legend><h2>order type</h2></legend>
+    <div>
+        <?php if(strstr($receiptno['payment_method'],'insurance')){
+            echo 'Insurance';
+        }else{
+            echo 'Cash';
+        }   ?>
+    </div>
+
+</fieldset>
+<br>
 
 
 

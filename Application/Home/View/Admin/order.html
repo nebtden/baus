@@ -128,7 +128,12 @@
 							 ?></td>
                     <td>
                         <?php  if(in_array($vo['order_step'],[7,6,5,-1])):  ?>
-                        <?php  if(strstr($vo['receiptno'],'insurance_')): ?>
+                        <!--<?php  if(strstr($vo['receiptno'],'insurance_')): ?>
+
+
+
+                        <?php endif;  ?>-->
+                        <?php  if($vo['order_step']==6): ?>
                         <a href="{:U('Admin/discount',array('order_id'=>$vo['order_id']))}" class="btn"  >
                             <img src="__PUBLIC__/iconsee/discount.png" alt="edit" width="16"/>
                         </a>
