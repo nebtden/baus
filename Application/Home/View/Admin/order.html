@@ -100,6 +100,7 @@
 
                 <th>Consignee</th>
                 <th>Total Price</th>
+                <th>Status</th>
                 <th>Corporate Status</th>
                 <th>insurance amount</th>
 
@@ -120,6 +121,7 @@
                     <td><?php $total = unserialize($vo['receiptno']);
 									echo $total['total_order_amount'];
 							 ?></td>
+                    <td style=" color:#F00;"> <?php echo getOrderStepNameById($vo['order_step'],$vo['order_id']); ?></td>
                     <td><?php $corporate = unserialize($vo['corporate']);
 									echo $corporate['corporate_status_set'];
 							 ?></td>
