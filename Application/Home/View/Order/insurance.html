@@ -28,18 +28,8 @@
     <div class="start"> <!-- Content begins here -->
 
         <!-- step4 s-->
-        <div>
-            <fieldset>
-                <legend><h2>total amount</h2></legend>
-                <div><?php $total = unserialize($order_info['receiptno']);
-					echo $total['total_order_amount'].'KSH';
-							 ?>
-                </div>
-
-
-            </fieldset>
-
-        </div>
+        <include file="Public:orderinfo" />
+        <include file="Public:log" />
         <div id="show_step4">
             <form method="post" action="{:U('Order/editcorporate')}" name="formd" id="form_step4"><!-- Form -->
                 <!-- Fieldset -->
