@@ -7,8 +7,8 @@
 		<li>
 			<?php if(($member_group_info['manager'] == 1) || ($member_group_info['seller'] == 1)){ ?>
 
-			<a href="{:U('Index/viewprintTopUp')}" title=""> Top Up Payments</a>
-			<?php } ?>
+<!--			<a href="{:U('Index/viewprintTopUp')}" title=""> Top Up Payments</a>
+			<?php } ?>-->
 
 			<?php if(($member_group_info['manager'] == 1) || ($member_group_info['cash_confirm'] == 1)){ ?>
 			<a href="{:U('index/cashConfirm',array('reverse_status'=>0))}" title="" class=""
