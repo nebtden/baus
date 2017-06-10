@@ -219,6 +219,66 @@ class IndexController extends Controller
 
     }
 
+    public function orderShowOnly(){
+        $order_id = I('get.order_id');
+        $order_info = M('order_info')->where(['order_id' => $order_id])->find();
+
+        $order_goods_lists = M('order_goods')->where(['order_id' => $order_id])->select();
+
+        $sealstxt_info = unserialize($order_info['sealstxt']);
+        $distance_info = unserialize($order_info['distance']);
+
+        $receiptno = unserialize($order_info['receiptno']);
+
+        $customer_card = unserialize($order_info['customer_card']);
+        $customer_confirm = unserialize($order_info['customer_confirm']);
+        $print_set = unserialize($order_info['print_set']);
+        $warehouse_state = unserialize($order_info['warehouse_state']);
+        $corporate = unserialize($order_info['corporate']);
+        $products_shipped = unserialize($order_info['products_shipped']);
+        $shop_arrive = unserialize($order_info['shop_arrive']);
+        $receiptno2 = unserialize($order_info['receiptno2']);
+        $balance = 0;
+
+        if ($order_info['order_step'] == 11) { // If last step, calculate any remaining balance
+
+            if ($receiptno['payment_method'] == 'insurance_1' || $receiptno['payment_method'] == "insurance_0") {
+                if ($customer_confirm['less_approve_action']) {
+                    $balance = $customer_confirm['balance_remaining'];
+                }
+            } else {
+                $balance = $order_info['balance'];
+            }
+        }
+
+        if ($balance < 0) {
+            $change = abs($balance);
+            $this->assign('change', $change);
+        }
+
+        $paylist = M('cash')->where([
+            'order_id'=>$order_id,
+            'pay_amount'=>['neq',0]
+        ])->select();
+
+        $this->assign('order_goods_lists', $order_goods_lists);
+        $this->assign('order_info', $order_info);
+        $this->assign('sealstxt_info', $sealstxt_info);
+        $this->assign('distance_info', $distance_info);
+        $this->assign('receiptno', $receiptno);
+        $this->assign('customer_card', $customer_card);
+        $this->assign('customer_confirm', $customer_confirm);
+        $this->assign('print_set', $print_set);
+        $this->assign('warehouse_state', $warehouse_state);
+        $this->assign('corporate', $corporate);
+        $this->assign('products_shipped', $products_shipped);
+        $this->assign('shop_arrive', $shop_arrive);
+        $this->assign('receiptno2', $receiptno2);
+        $this->assign('balance_remaining', $balance);
+        $this->assign('paylist', $paylist);
+        $this->display();
+    }
+
     public function orderShow()
     {
 
