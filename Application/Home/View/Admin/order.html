@@ -112,7 +112,7 @@
 
             <foreach name="order_info_lists" item="vo">
                 <tr>
-                    <td>{$vo.order_sn}</td>
+                    <td><a target="_blank" href="{:U('Index/orderShowOnly',array('order_id'=>$vo['order_id']))}"> {$vo.order_sn}</a></td>
                     <td>{$vo.mobile}</td>
                     <td><?php echo getShopNameById($vo['shop']);?></td>
 

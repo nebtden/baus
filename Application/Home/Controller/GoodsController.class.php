@@ -42,6 +42,7 @@ class GoodsController extends Controller {
         $goods_price = I('post.goods_price');
         $goods_storage = I('post.goods_storage');
         $goods_brand = I('post.goods_brand');
+        $goods_name = I('post.goods_name');
 
         if($parent_id == -1)
         {
@@ -73,6 +74,7 @@ class GoodsController extends Controller {
         $data['goods_price'] = $goods_price;
         $data['goods_storage'] = $goods_storage;
         $data['goods_brand'] = $goods_brand;
+        $data['goods_name'] = $goods_name;
         $data['goods_status'] = 1;
 
         // echo "<pre>";

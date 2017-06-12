@@ -102,7 +102,7 @@
 			<tbody>
 			<?php foreach($order_info_lists as $vo): ?>
 			<tr >
-				<td>{$vo.order_sn}</td>
+				<td><a target="_blank" href="{:U('Index/orderShowOnly',array('order_id'=>$vo['order_id']))}"> {$vo.order_sn}</a></td>
 				<td><?php echo getShopNameById($vo['shop']);?></td>
 				<td><?php echo date('j F Y, H:i:s',$vo['add_time'])?></td>
 				<td>{$vo.consignee}, {$vo.mobile}</td>
