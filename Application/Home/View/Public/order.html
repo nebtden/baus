@@ -49,7 +49,7 @@
             <?php if(($member_group_info['manager'] == 1) || ($member_group_info['balance'] == 1)){ ?>
             <a href="{:U('Index/index',array('order_step'=>11))}" title="">Balance & Close</a></span>
             <?php } ?>
-
+            <a href="{:U('Index/index',array('order_step'=>13))}" title="">Completed Order</a></span>
 
             <?php if($member_group_info['group_name']=="admin"){ ?>
             <a href="{:U('Index/viewCancelledOrders')}" title="">Cancelled Orders</a></span>

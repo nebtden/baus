@@ -129,10 +129,10 @@ class OrderController extends Controller
         $customer_confirm = unserialize($order_info['customer_confirm']);
 
         $paylist = M('cash')
-            ->where(['order_id' => $order_id, 'pay_amount' => ['neq', 0]])
-            ->field('sum(pay_amount) as amount,type')
-            ->group('type')
-            ->select();
+        ->where(['order_id' => $order_id, 'pay_amount' => ['neq', 0]])
+        ->field('sum(pay_amount) as amount,type')
+        ->group('type')
+        ->select();
         $balance = $order_info['balance'];
         $corporate = unserialize($order_info['corporate']);
 
