@@ -75,12 +75,12 @@
     </tr>
     <tr>
       <td>&nbsp; Ksh. {$total_price}</td>
-      <?php if($receiptno['payment_price']!=0): ?>
+      <?php if($payamount): ?>
                     
-      <td>Kshs.{$receiptno['payment_price']}</td>   
+      <td>Kshs.{$payamount}</td>
       <td>Kshs.{$initial_balance}</td>
 
-      <?php elseif($receiptno['payment_price']==0): ?>
+      <?php else: ?>
       <td>Awaiting Insurance</td>
       <td>N/A</td>
       <?php endif; ?>

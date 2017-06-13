@@ -388,41 +388,11 @@
                         <td id="show_print_btn"><a
                                 href="{:U('Index/printInternalOrder',array('order_id'=>$order_info['order_id']))}"
                                 style="color:#000; font-weight:700" target="_blank">Click Here To Print Order</a></td>
-                        <td>Complete Print <br/>
 
-                            <input name="print_confirm" type="radio"
-                                   value="1" <?php if($print_set['print_confirm'] == 1) echo 'checked';?>/>
-
-                            YES <br/>
-
-                            <input name="print_confirm" type="radio"
-                                   value="2" <?php if($print_set['print_confirm'] == 2) echo 'checked';?>/>
-                            Waiting for Personal Frame <br/>
-
-                            <input name="print_confirm" type="radio"
-                                   value="3" <?php if($print_set['print_confirm'] == 3) echo 'checked';?>/>
-                            Waiting for Personal Lens <br/>
-
-                            <input name="print_confirm" type="radio"
-                                   value="4" <?php if($print_set['print_confirm'] == 4) echo 'checked';?>/>
-                            On Hold<br/>
-
-
-                        </td>
                         <td>
                             Time: <?php if($print_set['add_time'] != '') echo date('Y-m-d H:i:s',$print_set['add_time'])?></td>
 
-                        <?php if(!$print_set['print_confirm']):?>
-                        <td>
 
-                        </td>
-                        <?php elseif($print_set['print_confirm'] && $print_set['print_confirm']!=1): ?>
-                        <td>
-                            <a style="color:#000; font-weight:700"
-                               href="{:U('Index/moveToNext',array('order_id'=>$order_info['order_id']))}">Move to Next
-                                Step</a>
-                        </td>
-                        <?php endif; ?>
                         <?php if($print_set['step7_remark']):?>
                         <td>
                             {$print_set['step7_remark']}
@@ -460,26 +430,12 @@
                     <tbody>
                     <tr>
                         <td>
-                            <input name="warehouse_state" type="radio"
-                                   value="Domestic Order Accept" <?php if($warehouse_state['warehouse_state'] == 'Domestic Order Accept') echo 'checked';?>
-                            /> Domestic Order Accept<br>
-                            <input name="warehouse_state" type="radio"
-                                   value="Oversea Order Accept" <?php if($warehouse_state['warehouse_state'] == 'Oversea Order Accept') echo 'checked';?>
-                            /> Oversea Order Accept<br>
-                            <input name="warehouse_state" type="radio"
-                                   value="two days Accept" <?php if($warehouse_state['warehouse_state'] == 'two days Accept') echo 'checked';?>
-                            /> two days Accept<br>
-                            <input name="warehouse_state" type="radio"
-                                   value="a week Accept" <?php if($warehouse_state['warehouse_state'] == 'a week Accept') echo 'checked';?>
-                            /> a week Accept<br/>
+                            <?php echo $warehouse_state['warehouse_state'];  ?>
+
                         </td>
                         <td>
-                            <input name="stock_source" type="radio"
-                                   value="Central Wharehouse" <?php if($warehouse_state['stock_source'] == 'Central Wharehouse') echo 'checked';?>
-                            /> Central Wharehouse<br>
-                            <input name="stock_source" type="radio"
-                                   value="Shop" <?php if($warehouse_state['stock_source'] == 'Shop') echo 'checked';?>/>
-                            Shop
+                            <?php echo $warehouse_state['warehouse_state']; ?>
+
                         </td>
                         <td><?php if($warehouse_state['add_time'] != '') echo date('Y-m-d H:i:s',$warehouse_state['add_time'])?></td>
                     </tr>
@@ -516,12 +472,8 @@
 
                     <tr>
                         <td>
-                            <input name="products_shipped" type="radio"
-                                   value="Yes" <?php if($products_shipped['products_shipped'] == 'Yes') echo 'checked';?>
-                            /> Yes&nbsp;&nbsp;&nbsp;&nbsp;
-                            <input name="products_shipped" type="radio"
-                                   value="No" <?php if($products_shipped['products_shipped'] == 'No') echo 'checked';?>
-                            /> No
+                            <?php  echo $products_shipped['products_shipped']; ?>
+
                         </td>
                         <td><?php if($products_shipped['add_time'] != '') echo date('Y-m-d H:i:s',$products_shipped['add_time'])?></td>
 
@@ -584,37 +536,15 @@
 
             <!-- Fieldset -->
             <fieldset>
-                <legend><h2>11, Balance & Close Order</h2></legend>
+                <legend><h2>11, Balance </h2></legend>
 
-                <?php if($balance_remaining>0 && $order_info['order_step']==11):?>
-                This order has a balance: <input name="final_bal" value="{$balance_remaining}" type="text" readonly/>
-                <br/>
-                <a href="{:U('Index/printBalance',array('order_id'=>$order_info['order_id'],'cash_id'=>$cash_id))}"
-                   style="color:#000; font-weight:700" target="_blank">Click Here To Print Current Balance
-                    Receipt</a><br/><br/>
-                Please select the payment method<br/>
-                <input name="order_status_set" type="hidden" value="balance-cleared-closed"/>
-                <div id="balance_pay">
-                    <input name="balance_pay_method" type="radio" value="cash"/> Quick Cash&nbsp;&nbsp;&nbsp;&nbsp;
-                    <input name="balance_pay_method" type="radio" value="m-pesa"/> M-Pesa&nbsp;&nbsp;&nbsp;&nbsp;
-                    <input name="balance_pay_method" type="radio" value="cheque"/> Cheque&nbsp;&nbsp;&nbsp;&nbsp;
-                    <input name="balance_pay_method" type="radio" value="card"/> Card&nbsp;&nbsp;&nbsp;&nbsp;<br/>
-                    <div class="orderinfo_label">Recevied Amount</div>
-                    <input type="text" name="balance_amount" value=""/><br/>
-                    <div class="orderinfo_label"> Remark</div>
-                    <input type="text" name="balance_remark" value=""/>
-                </div>
-
-                <?php elseif($balance_remaining==0 && $order_info['order_step']==11): ?>
-                <a href="{:U('Index/printBalance',array('order_id'=>$order_info['order_id'],'cash_id'=>$cash_id))}"
-                   style="color:#000; font-weight:700" target="_blank">Click Here To Print Current Balance</a><br/>
-                This Order has no balance and can be closed
-                <input name="order_status_set" type="radio" value="no-balance"/>
-                <?php elseif($order_info['order_step']==12): ?>
-                The Order has been closed <a
-                    href="{:U('Index/printBalance',array('order_id'=>$order_info['order_id'],'cash_id'=>$cash_id))}"
-                    style="color:#000; font-weight:700" target="_blank">Click Here To Print Current Balance</a>
-                <?php endif; ?>
+                <?php  foreach($paylist as $pay){  ?>
+                <?php  if($pay['type']==3){?>
+                <?php echo $typelist[$pay['type']].':';
+                 echo $pay['amount'].'KSH';
+                ?>
+                <?php  } ?>
+                <?php  } ?>
                 <br/>
 
                 <div>

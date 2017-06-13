@@ -698,8 +698,15 @@ class IndexController extends Controller
             $total_goods += $goods_info['goods_number'] * $goods_info['goods_price'];
         }
 
+        $paylist = M('cash')
+            ->where(['order_id' => $order_id, 'pay_amount' => ['neq', 0]])
+            ->field('sum(pay_amount) as amount')
+            ->find();
+        $payamount = $paylist['amount'];
+
+
         $total_price = $lensprice + $total_goods - $discountseals;
-        $initial_balance = $total_price - $receiptno['payment_price'];
+        $initial_balance = $total_price - $payamount;
 
         $this->assign('order_goods_lists', $order_goods_lists);
         $this->assign('order_info', $order_info);
@@ -712,6 +719,7 @@ class IndexController extends Controller
         $this->assign('lensprice', $lensprice);
         $this->assign('total_price', $total_price);
         $this->assign('initial_balance', $initial_balance);
+        $this->assign('payamount', $payamount);
         $this->display();
 
         M('order_info')->where(['order_id' => $order_id])->save(['printdate' => time()]);
