@@ -37,8 +37,8 @@
         <table cellspacing="0" cellpadding="0" border="0"><!-- Table -->
             <form name="formname" method="get" action="" id="search_form">
                 <input value="Home" name="m" type="hidden" />
-                <input value="Index" name="c" type="hidden" />
-                <input value="index" name="a" id="a" type="hidden" />
+                <input value="Admin" name="c" type="hidden" />
+                <input value="order" name="a" id="a" type="hidden" />
                 <tr>
                     <td width="10%"><input name="sdate" value="<?php echo $_GET['sdate'];?>" class="laydate-icon" onclick="laydate()"></td>
                     <td width="10%"><input name="edate" value="<?php echo $_GET['edate'];?>" class="laydate-icon" onclick="laydate()"></td>
@@ -174,7 +174,7 @@
 <script>
 
     function search() {
-        $('#a').val('index');
+
         $("#search_form").attr('target','_self');
         $("#search_form").submit();
     }

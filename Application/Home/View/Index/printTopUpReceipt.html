@@ -70,43 +70,30 @@
     </foreach>
     <tr>
       <td><strong>Total Amount</strong></td>
-      <td><strong>Deposit</strong></td>
+        <?php  if($receiptno['payment_method']=="insurance_0" || $receiptno['payment_method']=="insurance_1" ){  ?>
+        <td><strong>Insurance Approved</strong></td>
+        <?php  } ?>
+      <td><strong>Total paid</strong></td>
       <td><strong>Balance</strong></td>
-      <td><strong>Discount</strong></td>
+      <td><strong>Current Payment</strong></td>
+
     </tr>
     <tr>
       <td>&nbsp; Ksh. {$total_price}</td>
-      <?php if($receiptno['payment_price']!=0): ?>
+        <?php  if($receiptno['payment_method']=="insurance_0" || $receiptno['payment_method']=="insurance_1" ){  ?>
+        <td><strong>Kshs.{$receiptno['corporate_amount']}</strong></td>
+        <?php  } ?>
                     
-      <td>Kshs.{$receiptno['payment_price']}</td>   
+      <td>Kshs.{$payed_price}</td>
       <td>Kshs.{$initial_balance}</td>
 
-      <?php elseif($receiptno['payment_price']==0): ?>
-      <td>Insurance</td>
-      <td>N/A</td>
-      <?php endif; ?>
-      <td>{$discountseals}</td>
-    </tr>
-    <!-- <tr>
-      <td  align="center" valign="middle"><p align="center"><strong>LENS</strong></p></td>
-      <td colspan="3" align="left" valign="middle"><p ><strong>Lens Type</strong>:<?php echo $sealstxt_info['lensname']?></p></td>
-      <td  valign="middle"><p align="center"><?php echo $lensprice;?>&nbsp;</p></td>
-    </tr>
-    <tr>
-      <td align="center"  valign="middle"><p><strong>Total</strong></p></td>
-      <td valign="middle">&nbsp; Ksh. {$total_price}</td>
-      <td colspan="3" valign="middle">
-        
 
-      </td>
-      <td colspan="2" valign="middle"></td>
-    </tr> -->
-  <!-- Balance Section for remaining balances -->
-    <table>
-      <tr>
-        <td><strong>Paid Balance: {$cash_info['pay_amount']}</strong> &nbsp&nbsp<strong>Current Top Up Balance Remaining: {$initial_balance}</strong></td>
-      </tr>
-    </table>
+      <td>Kshs.{$cash_info['pay_amount']}</td>
+
+
+    </tr>
+
+
 
 </body>
 </html>

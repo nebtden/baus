@@ -951,6 +951,8 @@ class IndexController extends Controller
 
         $sealstxt_info = unserialize($order_info['sealstxt']);
         $receiptno = unserialize($order_info['receiptno']);
+        $corporate = unserialize($order_info['corporate']);
+
 
         $shop_info = M('shops')->where(['shop_id' => $order_info['shop']])->find();
 
@@ -990,11 +992,18 @@ class IndexController extends Controller
         //Check if insurance to calculate insurance cover
         // if($receiptno['payment_method'] == 'insurance_1' || $receiptno['payment_method'] == "insurance_0")
         // {
+        $paylist = M('cash')
+            ->where(['order_id' => $order_id, 'pay_amount' => ['neq', 0]])
+            ->field('sum(pay_amount) as amount')
+            ->find();
+        $payed_price = $paylist['amount'];
+
+
         $insurance_detail = unserialize($order_info['corporate']);
 
         $insurance_detail2 = unserialize($order_info['customer_confirm']);
 
-        $total_price = $lensprice + $total_goods - $discountseals;
+        $total_price = $receiptno['total_order_amount'];
         $initial_balance = $order_info['balance'];
 
         // /echo $initial_balance; die;
@@ -1014,6 +1023,7 @@ class IndexController extends Controller
         $this->assign('discountseals', $discountseals);
         $this->assign('lensprice', $lensprice);
         $this->assign('total_price', $total_price);
+        $this->assign('payed_price', $payed_price);
         $this->assign('initial_balance', $initial_balance);
         $this->display();
     }
