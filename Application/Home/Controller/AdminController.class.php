@@ -145,6 +145,7 @@ class AdminController extends Controller
         $update_data = [];
         $update_data['customer_confirm'] = serialize($data);
         $update_data['is_changed_goods'] = 1;
+        $update_data['balance'] = $receiptno['total_order_amount']-$old_amount+$order_info['balance'];
         $update_data['receiptno'] =serialize($receiptno);
         $result = M('order_info')->where(['order_id' => $order_id])->save($update_data);
         if ($result) {
@@ -258,9 +259,11 @@ class AdminController extends Controller
     {
 
         $order_id = I('post.order_id');
+        $order_info = M('order_info')->where(['order_id' => $order_id])->find();
         $updatedata = [];
 //        $updatedata['balance'] = 0;
         $updatedata['discount'] = I('post.discount');
+        $updatedata['balance'] =  $order_info['balance'] -I('post.discount');
 
         $result = M('order_info')
             ->where(['order_id' => $order_id])
