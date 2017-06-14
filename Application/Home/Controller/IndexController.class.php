@@ -993,7 +993,12 @@ class IndexController extends Controller
     public function viewprintTopUp()
     {
 
-        $order_info = M('order_info')->where('customer_confirm IS NOT NULL AND topup=1')->select();
+
+
+
+        $order_info = M('order_info')
+            ->where('customer_confirm IS NOT NULL AND topup=1')
+            ->select();
 
         $this->assign('order_info_lists', $order_info);
 
