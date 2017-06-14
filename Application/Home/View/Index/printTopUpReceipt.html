@@ -103,9 +103,7 @@
         </foreach>
         <tr>
             <td><strong>Total Amount</strong></td>
-            <?php  if($receiptno['payment_method']=="insurance_0" || $receiptno['payment_method']=="insurance_1" ){  ?>
-            <td><strong>Insurance Approved</strong></td>
-            <?php  } ?>
+
             <td><strong>Total paid</strong></td>
             <td><strong>Balance</strong></td>
             <td><strong>Current Payment</strong></td>
@@ -113,9 +111,7 @@
         </tr>
         <tr>
             <td>&nbsp; Ksh. {$total_price}</td>
-            <?php  if($receiptno['payment_method']=="insurance_0" || $receiptno['payment_method']=="insurance_1" ){  ?>
-            <td><strong>Kshs.{$corporate['corporate_amount']}</strong></td>
-            <?php  } ?>
+
 
             <td>Kshs.{$payed_price}</td>
             <td>Kshs.{$initial_balance}</td>
