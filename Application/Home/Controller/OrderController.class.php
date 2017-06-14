@@ -296,19 +296,19 @@ class OrderController extends Controller
                 $update_data['order_step'] = -1;
             } else {
 
-//                //收取买家费用
-//                $payed_money = insertpaidmoney($order_info, '',2);
-//                $total = $receiptno['total_order_amount'];
-//                $payed_total = $payed_total['count'];
-//                //检测金额足够
-//                if ($total <= $payed_money + $payed_total + $order_info['discount'] + $insurance + $order_info['balance']) {
-//
-//                } else {
-//                    throw  new \Exception('not enough money!');
-//                }
+                //收取买家费用
+                $payed_money = insertpaidmoney($order_info, '',2);
+                $total = $receiptno['total_order_amount'];
+                $payed_total = $payed_total['count'];
+                //检测金额足够
+                if ($total <= $payed_money + $payed_total + $order_info['discount'] + $insurance + $order_info['balance']) {
+
+                } else {
+                    throw  new \Exception('not enough money!');
+                }
 
                 $data['add_time'] = time();
-//                $data['recevied_amount'] = $payed_money;
+                $data['recevied_amount'] = $payed_money;
 
                 $update_data['customer_confirm'] = serialize($data);
                 $update_data['order_step'] = 7;
