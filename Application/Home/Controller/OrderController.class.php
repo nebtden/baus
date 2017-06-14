@@ -362,6 +362,67 @@ class OrderController extends Controller
     }
 
 
+    public function topup(){
+        $order_id = I('get.order_id');
+        $order_info = M('order_info')->where(['order_id' => $order_id])->find();
+        $receiptno = unserialize($order_info['receiptno']);
+        $customer_confirm = unserialize($order_info['customer_confirm']);
+
+
+        $paylist = M('cash')
+            ->where(['order_id' => $order_id, 'pay_amount' => ['neq', 0]])
+            ->field('sum(pay_amount) as amount,type')
+            ->group('type')
+            ->select();
+        $balance = $order_info['balance'];
+        $corporate = unserialize($order_info['corporate']);
+
+        $this->assign('order_info', $order_info);
+        $this->assign('receiptno', $receiptno);
+        $this->assign('customer_confirm', $customer_confirm);
+
+        $this->assign('paylist', $paylist);
+        $this->assign('balance', $balance);
+        $this->assign('corporate', $corporate);
+
+        $this->display();
+    }
+
+    public function topupsave()
+    {
+        $order_id = I('post.order_id');
+        $order_info = M('order_info')->where(['order_id' => $order_id])->find();
+        try {
+            $model = M('cash');
+            $model->startTrans();
+
+            //收取买家费用
+            $payed_money = insertpaidmoney($order_info, '', 3);
+
+            $update_data['balance'] = $order_info['balance']-$payed_money;
+
+
+            $result = M('order_info')->where(['order_id' => $order_id])->save($update_data);
+            if (!$result) {
+                throw new \Exception('delete error!');
+            }
+            $model->commit();
+            $this->success('save success', U('Index/topuplist'));
+
+        }catch (\Exception $e){
+
+//            M('cash')->where([
+//                'order_id'=>$order_id,
+//                'type'=>3,
+//            ])->delete();
+
+            $model->rollback();
+            $this->error('not enough money', U('Order/topup', array('order_id' => $order_id)));
+        }
+
+    }
+
+
     public function balancesave()
     {
         $order_id = I('post.order_id');

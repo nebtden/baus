@@ -1,0 +1,88 @@
+<meta http-equiv="Content-Type"
+      content="text/html; charset=utf-8"/><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+    <title>insurance </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <style type="text/css" media="all">
+        @import url(__PUBLIC__/css/style.css);
+        @import url(__ROOT__/css/admin.css);
+
+        img {
+            behavior: url('__PUBLIC__/js/iepngfix.htc') !important;
+        }
+    </style>
+    <script src="__PUBLIC__/js/jquery.js" type="text/javascript"></script>
+    <script src="__PUBLIC__/js/jquery_ui.js" type="text/javascript"></script>
+    <script src="__PUBLIC__/js/wysiwyg.js" type="text/javascript"></script>
+    <script src="__PUBLIC__/js/functions.js" type="text/javascript"></script>
+
+</head>
+<body>
+<include file="Public:header"/>
+<div class="main two"> <!-- Container -->
+    <include file="Public:order"/>
+    <div class="query"> <!-- Main, right side content -->
+    </div>
+    <div class="start"> <!-- Content begins here -->
+
+        <!-- step4 s-->
+        <include file="Public:orderinfo"/>
+        <include file="Public:log"/>
+        <div id="show_step4">
+            <form method="post" action="{:U('Order/topupsave')}" name="formd" id="form_step4"><!-- Form -->
+                <!-- Fieldset -->
+                <fieldset>
+                    <legend><h2>4, Top up</h2></legend>
+
+                    <table cellspacing="0" cellpadding="0" border="0"><!-- Table -->
+                        <tbody>
+
+                        <tr>
+                            <td>
+                                <div class="less_approve_pay">
+                                    <include file="Public:paymethod"/>
+
+                                </div>
+                            </td>
+                            <td><input type="hidden" name="order_id" value="{$order_info.order_id}"/><input
+                                    type="hidden" name="step_name" value="editcorporate"/><input class="submit"
+                                                                                                 type="submit"
+                                                                                                 value="Submit"/></td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </fieldset>
+                <!-- End of fieldset -->
+            </form>
+        </div>
+        <script type="text/javascript">
+            $(function () {
+                $('input:radio[name="corporate_status_set"]').change(function () {
+                    var p_method = $('input:radio[name="corporate_status_set"]:checked').val();
+                    if (p_method == "less approval") {
+                        $("#corporate_amount").css('display', '');
+                    } else {
+                        $("#corporate_amount").css('display', 'none');
+                    }
+                })
+
+            })
+        </script>
+
+    </div> <!-- END Content -->
+
+</div>
+<div id="footer">
+    <p> All rights reserved.</p>
+</div>
+</div> <!-- END Container -->
+<script type="text/javascript">
+    $(function () {
+
+    })
+</script>
+</body>
+</html>

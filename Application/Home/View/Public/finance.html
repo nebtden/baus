@@ -6,8 +6,7 @@
 		</ol>
 		<li>
 			<?php if(($member_group_info['manager'] == 1) ){ ?>
-
-			<a href="{:U('Index/viewprintTopUp')}" title=""> Top Up Payments</a>
+			<a href="{:U('index/topuplist')}" title=""> Top Up</a>
 			<?php } ?>
 
 			<?php if(($member_group_info['manager'] == 1) || ($member_group_info['cash_confirm'] == 1)){ ?>

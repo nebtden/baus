@@ -60,7 +60,8 @@ ENGINE=InnoDB;
 
 
 
-
+ALTER TABLE `oms_order_info`
+ADD COLUMN `allow_balance`  float(11,0) NOT NULL DEFAULT 0 AFTER `corporate`;
 
 
 

@@ -218,7 +218,7 @@ class AdminController extends Controller
 
         $updatedata = [];
 
-        $updatedata['balance'] = $balance;
+        $updatedata['allow_balance'] = $balance;
 
         $result = M('order_info')->where(['order_id' => $order_id])->save($updatedata);
         if ($result) {

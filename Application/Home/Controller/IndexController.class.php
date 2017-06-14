@@ -159,6 +159,34 @@ class IndexController extends Controller
         $this->display();
     }
 
+    public function topuplist(){
+
+        $order_info_model = M('order_info');
+
+
+        $condition = $this->getCondition();
+        $condition['balance'] = ['gt',0];
+
+        $count = $order_info_model->where($condition)->count();
+
+        $Page = new \Think\Page($count, 14);
+        $Page->setConfig('header', '<li class="rows"><b>[%NOW_PAGE%</b>/<b>%TOTAL_PAGE%]</b> Total <b>%TOTAL_ROW%</b> records </li>');
+        $Page->setConfig('prev', 'prev page');
+        $Page->setConfig('next', 'next page');
+        $Page->setConfig('last', 'last page');
+        $Page->setConfig('first', 'first page');
+        $Page->setConfig('theme', '%FIRST% %UP_PAGE% %LINK_PAGE% %DOWN_PAGE%  %HEADER%');
+        $show = $Page->show();
+
+        $order_info_lists = $order_info_model->where($condition)->order('order_id DESC')->limit($Page->firstRow . ',' . $Page->listRows)->select();
+        $this->assign('order_info_lists', $order_info_lists);
+        $shop_lists = M('shops')->select();
+        $this->assign('shop_lists', $shop_lists);
+        $this->assign('page', $show);
+        session('group', 'customer');
+        $this->display();
+    }
+
 
     public function export()
     {
