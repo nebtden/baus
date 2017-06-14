@@ -5,10 +5,26 @@
 							 ?><br>
         Insurance:<?php echo $corporate['corporate_amount'].'KSH'; ?><br>
         <?php  $typelist = [1=>'Deposit',2=>'Top up',3=>'Balance']; ?>
-        <?php  foreach($paylist as $pay){  ?>
-        <?php echo $typelist[$pay['type']]; ?> :{$pay.amount}KSH</span><br>
 
+        <?php  foreach($paylist as $pay){  ?>
+            <?php echo $typelist[$pay['type']]; ?> :{$pay.amount}KSH</span><br>
+            <?php unset($typelist[$pay['type']]); ?>
         <?php  } ?>
+
+
+        <?php  foreach($typelist as $type){ ?>
+          <?php echo $type; ?> :0KSH</span><br>
+        <?php } ?>
+
+        <!--Deposit:   <?php  if(isset($paylist['1'])){
+                echo $paylist[1]['amount'];
+        }else{echo 0;}?> KSH<br>
+        Top up:   <?php  if(isset($paylist['2'])){
+                echo $paylist[2]['amount'];
+        }else{echo 0;}?> KSH<br>
+        Balance:   <?php  if(isset($paylist['3'])){
+                echo $paylist[3]['amount'];
+        }else{echo 0;}?> KSH<br>-->
         Discount: <?php echo $order_info['discount'].'KSH';  ?><br>
         Balance:<?php echo $order_info['balance'].'KSH'; ?><br>
     </div>
