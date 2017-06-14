@@ -46,7 +46,7 @@
 <br />                                        
 <table border="0" cellspacing="0" cellpadding="0" width="100%" class="tabelclass2">
 <tr>
-<td style="font-size:15px;"><strong>Payment method</strong>: Cash<?php if($receiptno['payment_method']=="cash"){echo '☑';}else{echo '□';}?>   M-Pesa<?php if($receiptno['payment_method']=="m-pesa"){echo '☑';}else{echo '□';}?>    Cheque<?php if($receiptno['payment_method']=="cheque"){echo '☑';}else{echo '□';}?>  Card<?php if($receiptno['payment_method']=="card"){echo '☑';}else{echo '□';}?>   Insurance<?php if($receiptno['payment_method']=="insurance_1" || $receiptno['payment_method']=="insurance_0"){echo '☑';}else{echo '□';}?><span style="border-bottom:1px solid #000; padding-left:5px; padding-right:5px; min-width:50px;"><?php if($receiptno['payment_method']=="insurance_1" || $receiptno['payment_method']=="insurance_0"){echo $receiptno['insurancetext'];}else{echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';}?></span></td></tr></table> 
+<td style="font-size:15px;"><strong>Payment method</strong>: Cash<?php if($receiptno['payment_method']=="cash" || $receiptno['payment_method']=="combine"){echo '☑';}else{echo '□';}?>     Insurance<?php if($receiptno['payment_method']=="insurance_1" || $receiptno['payment_method']=="insurance_0"){echo '☑';}else{echo '□';}?><span style="border-bottom:1px solid #000; padding-left:5px; padding-right:5px; min-width:50px;"><?php if($receiptno['payment_method']=="insurance_1" || $receiptno['payment_method']=="insurance_0"){echo $receiptno['insurancetext'];}else{echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';}?></span></td></tr></table> 
 <table border="0" cellspacing="0" cellpadding="0" class="tabelclass">
     <tr>
       <td style="width:30%"><strong>Name: </strong><?php echo $order_info['consignee'];?></td>
@@ -73,50 +73,50 @@
     </tr>
     </foreach>
     <tr>
-      <td>Total Amount</td>
-      <td>Deposit</td>
-      <td>Balance</td>
-      <td>Discount</td>
+        <td><strong>Total Amount</strong></td>
+        <?php  if($receiptno['payment_method']=="insurance_0" || $receiptno['payment_method']=="insurance_1" ){  ?>
+        <td><strong>Insurance Approved</strong></td>
+        <?php  } ?>
+        <td><strong>Total paid</strong></td>
+        <td><strong>Balance</strong></td>
+        <td><strong>Current Payment</strong></td>
+
     </tr>
     <tr>
-      <td>&nbsp; Ksh. {$total_price}</td>
-      <?php if($receiptno['payment_price']!=0): ?>
-                    
-      <td>Kshs.{$receiptno['payment_price']}</td>   
-      <td>Kshs.{$initial_balance}</td>
+        <td>&nbsp; Ksh. {$total_price}</td>
+        <?php  if($receiptno['payment_method']=="insurance_0" || $receiptno['payment_method']=="insurance_1" ){  ?>
+        <td><strong>Kshs.{$corporate['corporate_amount']}</strong></td>
+        <?php  } ?>
 
-      <?php elseif($receiptno['payment_price']==0): ?>
-      <td>Insurance</td>
-      <td>N/A</td>
-      <?php endif; ?>
-      <td>{$discountseals}</td>
+        <td>Kshs.{$payed_price}</td>
+        <td>Kshs.{$initial_balance}</td>
+
+
+        <td>Kshs.{$cash_info['pay_amount']}</td>
+
     </tr>
+</table>
     
   <!-- Balance Section for remaining balances -->
   <!-- For Cash Balances -->
-  <?php if($receiptno['payment_price']!=0): ?>
-    <table>
-      <tr>
-          <?php if($cash_receipt[0]=='B'):?>
-              <td><strong>Paid Balance: {$cash_info['pay_amount']}</strong></td>
-              <td><strong>Balance Remaining: {$initial_balance}</strong></td>
-          <?php else: ?>
-              <td><strong>Paid Balance: {$cash_info['pay_amount']}</strong></td>
-              <td><strong>Balance Remaining: {$initial_balance}</strong></td>
-          <?php endif; ?>
-      </tr>
-    </table>
+
     <!-- Insurance Balances if any -->
-  <?php elseif($receiptno['payment_price']==0): ?>
     <table>
-      <tr>
-        <?php if($cash_receipt[0]=='B'): ?>
-        <td><strong>Paid Balance: {$cash_info['pay_amount']}</strong></td>
-        <td><strong>Current Balance Remaining: {$initial_balance}</strong></td>
-      <?php endif; ?>
-      </tr>
+        <tr>
+            <td>
+                <strong>
+                    Total Amount:Ksh {$total_price};  
+                    <?php  if($receiptno['payment_method']=="insurance_0" || $receiptno['payment_method']=="insurance_1" ){  ?>
+                    Insurance Approved: KSh {$corporate['corporate_amount']}
+                    <?php  } ?>
+                      Total paid:Ksh {$payed_price};
+                    Balance:Ksh {$initial_balance}
+                    Current Payment:ksh {$cash_info['pay_amount']}
+                </strong>
+
+            </td>
+        </tr>
     </table>
-  <?php endif; ?>
 
 </body>
 </html>
