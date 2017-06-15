@@ -587,9 +587,7 @@ class IndexController extends Controller
         $order_id = I('get.order_id');
         $order_info = M('order_info')->where(['order_id' => $order_id])->find();
 
-        $latest_cash_id = M('cash')->field('min(cash_id)')->where(['order_id' => $order_id])->select();
-
-        $cash_info = M('cash')->where(['cash_id' => $latest_cash_id[0]['min(cash_id)'], ['order_id' => $order_id]])->select();
+        $cash_info =  getLastCashInfo($order_id);
 
         $order_goods_lists = M('order_goods')->where(['order_id' => $order_id])->select();
 
@@ -656,7 +654,7 @@ class IndexController extends Controller
         $this->assign('sealstxt_info', $sealstxt_info);
         $this->assign('receiptno', $receiptno);
         $this->assign('distance_info', $distance_info);
-        $this->assign('cash_info', $cash_info[0]);
+        $this->assign('cash_info', $cash_info);
         $this->assign('shop_info', $shop_info);
         $this->assign('user_info', $user_info);
         $this->assign('discountseals', $discountseals);
@@ -679,9 +677,7 @@ class IndexController extends Controller
         $order_id = I('get.order_id');
         $order_info = M('order_info')->where(['order_id' => $order_id])->find();
 
-        $latest_cash_id = M('cash')->field('min(cash_id)')->where(['order_id' => $order_id])->select();
-
-        $cash_info = M('cash')->where(['cash_id' => $latest_cash_id[0]['min(cash_id)'], ['order_id' => $order_id]])->select();
+        $cash_info =  getLastCashInfo($order_id);
 
         $order_goods_lists = M('order_goods')->where(['order_id' => $order_id])->select();
 
@@ -753,7 +749,7 @@ class IndexController extends Controller
         $this->assign('order_info', $order_info);
         $this->assign('sealstxt_info', $sealstxt_info);
         $this->assign('receiptno', $receiptno);
-        $this->assign('cash_info', $cash_info[0]);
+        $this->assign('cash_info', $cash_info);
         $this->assign('shop_info', $shop_info);
         $this->assign('user_info', $user_info);
         $this->assign('discountseals', $discountseals);
@@ -861,11 +857,9 @@ class IndexController extends Controller
 
         $order_id = I('get.order_id');
 
-        $latest_cash_id = M('cash')->field('max(cash_id)')->where(['order_id' => $order_id])->select();
-
         $order_info = M('order_info')->where(['order_id' => $order_id])->find();
 
-        $cash_info = M('cash')->where(['cash_id' => $latest_cash_id[0]['max(cash_id)'], ['order_id' => $order_id]])->select();
+        $cash_info =  getLastCashInfo($order_id);
 
         //print_r($cash_info[0]['receipt_no']);die;
 
@@ -936,7 +930,7 @@ class IndexController extends Controller
 
 
         $this->assign('cash_receipt', $cash_info[0]['receipt_no'][0]);
-        $this->assign('cash_info', $cash_info[0]);
+        $this->assign('cash_info', $cash_info);
         $this->assign('order_goods_lists', $order_goods_lists);
         $this->assign('order_info', $order_info);
         $this->assign('sealstxt_info', $sealstxt_info);
@@ -961,11 +955,10 @@ class IndexController extends Controller
     {
         $order_id = I('get.order_id');
 
-        $latest_cash_id = M('cash')->field('max(cash_id)')->where(['order_id' => $order_id])->select();
+        $cash_info =  getLastCashInfo($order_id);
 
         $order_info = M('order_info')->where(['order_id' => $order_id])->find();
 
-        $cash_info = M('cash')->where(['cash_id' => $latest_cash_id[0]['max(cash_id)'], ['order_id' => $order_id]])->select();
 
         //print_r($cash_info[0]['receipt_no']);die;
 
@@ -1034,7 +1027,7 @@ class IndexController extends Controller
         $this->assign('insurance_detail2', $insurance_detail2);
 
         $this->assign('cash_receipt', $cash_info[0]['receipt_no'][0]);
-        $this->assign('cash_info', $cash_info[0]);
+        $this->assign('cash_info', $cash_info);
         $this->assign('order_goods_lists', $order_goods_lists);
         $this->assign('order_info', $order_info);
         $this->assign('sealstxt_info', $sealstxt_info);
@@ -1053,9 +1046,6 @@ class IndexController extends Controller
 
     public function viewprintTopUp()
     {
-
-
-
 
         $order_info = M('order_info')
             ->where('customer_confirm IS NOT NULL AND topup=1')

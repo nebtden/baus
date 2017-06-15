@@ -157,6 +157,7 @@ function getAttrNameById($attr_lists)
 
 function insertpaidmoney($order_info,$orders_count,$type){
     $payed_money = 0;
+    $time = time();
     if(I('post.cash')){
         $data_cash['order_id'] = $order_info['order_id'];
         $data_cash['order_sn'] = $order_info['order_sn'];
@@ -168,7 +169,7 @@ function insertpaidmoney($order_info,$orders_count,$type){
         $data_cash['reverse_status'] = 0;
         $data_cash['member_id'] = session('member_id');
         $data_cash['cancel_status'] = 0;
-        $data_cash['add_time'] = time();
+        $data_cash['add_time'] = $time;
         $data_cash['type'] = $type;
 
         M('cash')->add($data_cash);
@@ -187,7 +188,7 @@ function insertpaidmoney($order_info,$orders_count,$type){
         $data_cash['reverse_status'] = 0;
         $data_cash['member_id'] = session('member_id');
         $data_cash['cancel_status'] = 0;
-        $data_cash['add_time'] = time();
+        $data_cash['add_time'] = $time;
         $data_cash['type'] = $type;
 
 
@@ -207,7 +208,7 @@ function insertpaidmoney($order_info,$orders_count,$type){
         $data_cash['reverse_status'] = 0;
         $data_cash['member_id'] = session('member_id');
         $data_cash['cancel_status'] = 0;
-        $data_cash['add_time'] = time();
+        $data_cash['add_time'] = $time;
         $data_cash['type'] = $type;
 
         M('cash')->add($data_cash);
@@ -226,7 +227,7 @@ function insertpaidmoney($order_info,$orders_count,$type){
         $data_cash['reverse_status'] = 0;
         $data_cash['member_id'] = session('member_id');
         $data_cash['cancel_status'] = 0;
-        $data_cash['add_time'] = time();
+        $data_cash['add_time'] = $time;
         $data_cash['type'] = $type;
 
         M('cash')->add($data_cash);
@@ -245,7 +246,7 @@ function insertpaidmoney($order_info,$orders_count,$type){
         $data_cash['reverse_status'] = 0;
         $data_cash['member_id'] = session('member_id');
         $data_cash['cancel_status'] = 0;
-        $data_cash['add_time'] = time();
+        $data_cash['add_time'] = $time;
         $data_cash['type'] = $type;
 
         M('cash')->add($data_cash);
@@ -267,4 +268,19 @@ function insertlog($order_id,$log_info){
 
 }
 
+
+function getLastCashInfo($order_id){
+    $latest_cash_id = M('cash')
+        ->field('max(cash_id) as cash_id,add_time')
+        ->where(['order_id' => $order_id])
+        ->find();
+
+    $cash_info =
+            M('cash')
+            ->field('sum(pay_amount) as pay_amount')
+            ->where(['add_time' => $latest_cash_id['add_time'],
+                ['order_id' => $order_id]])
+            ->find();
+    return $cash_info;
+}
 ?>
