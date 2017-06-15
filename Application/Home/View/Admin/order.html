@@ -148,11 +148,15 @@
                         <?php endif;  ?>
                         <?php endif;  ?>
 
+                        <?php if($vo['order_step']>4 ): ?>
+                        <?php    $receiptno = unserialize($vo['receiptno']);  ?>
+                        <?php  if($receiptno['payment_method']=='insurance_0' or $receiptno['payment_method']=='insurance_1' ){ ?>
 
                         <a href="{:U('Admin/returnBack',array('order_id'=>$vo['order_id']))}" class="btn"  >
                             <img src="__PUBLIC__/iconsee/back.png" alt="return to insurance" width="16"/>
                         </a>
-
+                        <?php } ?>
+                        <?php endif;  ?>
                     </td>
 
                 </tr>

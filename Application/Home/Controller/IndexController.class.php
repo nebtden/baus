@@ -642,8 +642,14 @@ class IndexController extends Controller
             $total_goods += $goods_info['goods_number'] * $goods_info['goods_price'];
         }
 
-        $total_price = $lensprice + $total_goods - $discountseals;
-        $initial_balance = $total_price - $receiptno['payment_price'];
+        $initial_balance = $order_info['balance'];
+        $total_price = $receiptno['total_order_amount'];
+
+        $paylist = M('cash')
+            ->where(['order_id' => $order_id, 'pay_amount' => ['neq', 0]])
+            ->field('sum(pay_amount) as amount')
+            ->find();
+        $payed_price = $paylist['amount'];
 
         $this->assign('order_goods_lists', $order_goods_lists);
         $this->assign('order_info', $order_info);
@@ -656,6 +662,7 @@ class IndexController extends Controller
         $this->assign('discountseals', $discountseals);
         $this->assign('lensprice', $lensprice);
         $this->assign('total_price', $total_price);
+        $this->assign('payed_price', $payed_price);
         $this->assign('initial_balance', $initial_balance);
         $this->display();
 
@@ -732,9 +739,15 @@ class IndexController extends Controller
             ->find();
         $payamount = $paylist['amount'];
 
+        $mypaylist = M('cash')
+            ->where(['order_id' => $order_id, 'pay_amount' => ['neq', 0]])
+            ->field('sum(pay_amount) as amount,type')
+            ->group('type')
+            ->find();
 
-        $total_price = $lensprice + $total_goods - $discountseals;
-        $initial_balance = $total_price - $payamount;
+
+        $initial_balance = $order_info['balance'];
+        $total_price = $receiptno['total_order_amount'];
 
         $this->assign('order_goods_lists', $order_goods_lists);
         $this->assign('order_info', $order_info);
@@ -748,6 +761,7 @@ class IndexController extends Controller
         $this->assign('total_price', $total_price);
         $this->assign('initial_balance', $initial_balance);
         $this->assign('payamount', $payamount);
+        $this->assign('paylist', $mypaylist);
         $this->display();
 
         M('order_info')->where(['order_id' => $order_id])->save(['printdate' => time()]);

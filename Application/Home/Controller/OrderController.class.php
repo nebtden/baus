@@ -70,12 +70,13 @@ class OrderController extends Controller
 
         $data['add_time'] = time();
 
-        //@todo simon.zhang
-        $update_data['corporate'] = serialize($data);
+
 
         $receiptno = unserialize($order_info['receiptno']);
 
         if ($data['corporate_status_set'] == 'proceed') {
+
+            $data['corporate_amount'] = $receiptno['total_order_amount'];
             if ($receiptno['payment_method'] == 'insurance_0') { //check if smart card selected in new order
 
                 $update_data['order_step'] = 7; // Proceed with NO smart card to step7
@@ -104,7 +105,8 @@ class OrderController extends Controller
         } else {
             $update_data['order_step'] = -1; //Cancelled Order
         }
-        //
+        //@todo simon.zhang
+        $update_data['corporate'] = serialize($data);
         $update_data['is_insurance_checked'] = 1;
 
         //M('order_info')->where(['order_id' => $order_id])->save($update_data);
