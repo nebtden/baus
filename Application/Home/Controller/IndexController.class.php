@@ -62,7 +62,7 @@ class IndexController extends Controller
                     break;
                 case '11':
                     $condition['order_step'] = 11;
-
+                    break;
                 case '13':
                     $condition['order_step'] = ['in', '12,13'];
                     break;
