@@ -5,18 +5,20 @@
 							 ?><br>
         Insurance:<?php echo $corporate['corporate_amount'].'KSH'; ?><br>
 
+        Discount: <?php echo $order_info['discount'].'KSH';  ?><br>
+        Admin set balance:<?php echo $order_info['allow_balance'].'KSH'; ?><br>
 
-
+        Payed Money:<br>
         <?php  $typelist = [1=>'Deposit',2=>'Top up',3=>'Paid Balance']; ?>
 
         <?php  foreach($paylist as $pay){  ?>
-            <?php echo $typelist[$pay['type']]; ?> :{$pay.amount}KSH</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<?php echo $typelist[$pay['type']]; ?> :{$pay.amount}KSH</span><br>
             <?php unset($typelist[$pay['type']]); ?>
         <?php  } ?>
 
 
         <?php  foreach($typelist as $type){ ?>
-          <?php echo $type; ?> :0KSH</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<?php echo $type; ?> :0KSH</span><br>
         <?php } ?>
 
         <!--Deposit:   <?php  if(isset($paylist['1'])){
@@ -28,8 +30,9 @@
         Balance:   <?php  if(isset($paylist['3'])){
                 echo $paylist[3]['amount'];
         }else{echo 0;}?> KSH<br>-->
-        Discount: <?php echo $order_info['discount'].'KSH';  ?><br>
-        Admin set balance:<?php echo $order_info['allow_balance'].'KSH'; ?><br>
+
+
+
         balance:<?php echo $order_info['balance'].'KSH'; ?><br>
     </div>
 </fieldset>
