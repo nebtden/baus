@@ -587,6 +587,7 @@ class IndexController extends Controller
         $order_id = I('get.order_id');
         $order_info = M('order_info')->where(['order_id' => $order_id])->find();
 
+        $corporate = $order_info['corporate'];
         $cash_info =  getLastCashInfo($order_id);
 
         $order_goods_lists = M('order_goods')->where(['order_id' => $order_id])->select();
@@ -659,6 +660,7 @@ class IndexController extends Controller
         $this->assign('receiptno', $receiptno);
         $this->assign('distance_info', $distance_info);
         $this->assign('cash_info', $cash_info);
+        $this->assign('corporate', $corporate);
         $this->assign('shop_info', $shop_info);
         $this->assign('user_info', $user_info);
         $this->assign('discountseals', $discountseals);
