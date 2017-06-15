@@ -55,6 +55,12 @@ Total: <input type="text" value="" id="payed_all" readonly>
             $('#payed_all').val(cash*1+m_pesa*1+cheque*1+card*1+eft*1)
         });
 
+        $('input[name="m_pesa"]').change(function () {
+            if($(this).val()>0){
+                $('input[name="m_pesa_remark"]').required();
+            }
+
+        });
     });
 
 </script>

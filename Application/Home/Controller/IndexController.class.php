@@ -741,9 +741,9 @@ class IndexController extends Controller
 
         $mypaylist = M('cash')
             ->where(['order_id' => $order_id, 'pay_amount' => ['neq', 0]])
-            ->field('sum(pay_amount) as amount,type')
-            ->group('type')
-            ->find();
+            ->field('sum(pay_amount) as amount,payment_method,payment_remark')
+            ->group('payment_method')
+            ->select();
 
 
         $initial_balance = $order_info['balance'];

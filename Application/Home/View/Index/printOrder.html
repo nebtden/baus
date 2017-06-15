@@ -101,6 +101,25 @@
       <td colspan="2" valign="middle"></td>
     </tr> -->
   </table>
+  <table class="" >
+      <tr>
+          <td>
+              <strong>
+                  <?php  foreach($paylist as $pay){?>
+                  <?php echo $pay['payment_method'].':'.$pay['amount']; ?>
+                  &nbsp;
+                  &nbsp;
+                  &nbsp;
+                  <?php echo $pay['payment_remark']; ?>
+                  <br>
+                  <?php  } ?>
+
+              </strong>
+
+          </td>
+      </tr>
+  </table>
+
 <!-- <table border="0" cellspacing="0" cellpadding="0" width="100%" class="tabelclass2">
 <tr>
 <td width="15%"><strong>Special Marks:</strong></td><td  width="85%" style="border-bottom:1px solid #000;"><?php echo $sealstxt_info['special_marks'];?>&nbsp;</td>
