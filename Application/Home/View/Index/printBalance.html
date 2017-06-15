@@ -86,9 +86,7 @@
 
         <td>Kshs.{$payed_price}</td>
         <td>Kshs.{$initial_balance}</td>
-
-
-        <td>Kshs.{$cash_info['pay_amount']}</td>
+        <td>Kshs.{$cash_info['pay_amount']?:0}</td>
 
     </tr>
 </table>
