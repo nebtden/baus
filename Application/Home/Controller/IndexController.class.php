@@ -647,7 +647,11 @@ class IndexController extends Controller
             ->where(['order_id' => $order_id, 'pay_amount' => ['neq', 0]])
             ->field('sum(pay_amount) as amount')
             ->find();
-        $payed_price = $paylist['amount'];
+        if($paylist){
+            $payed_price = $paylist['amount'];
+        }else{
+            $payed_price = 0;
+        }
 
         $this->assign('order_goods_lists', $order_goods_lists);
         $this->assign('order_info', $order_info);
@@ -733,7 +737,11 @@ class IndexController extends Controller
             ->where(['order_id' => $order_id, 'pay_amount' => ['neq', 0]])
             ->field('sum(pay_amount) as amount')
             ->find();
-        $payamount = $paylist['amount'];
+        if($paylist){
+            $payamount = $paylist['amount'];
+        }else{
+            $payamount = 0;
+        }
 
         $mypaylist = M('cash')
             ->where(['order_id' => $order_id, 'pay_amount' => ['neq', 0]])
@@ -926,7 +934,12 @@ class IndexController extends Controller
             ->where(['order_id' => $order_id, 'pay_amount' => ['neq', 0]])
             ->field('sum(pay_amount) as amount')
             ->find();
-        $payed_price = $paylist['amount'];
+        if($paylist){
+            $payed_price = $paylist['amount'];
+        }else{
+            $payed_price = 0;
+        }
+
 
 
         $this->assign('cash_receipt', $cash_info[0]['receipt_no'][0]);
@@ -1011,7 +1024,11 @@ class IndexController extends Controller
             ->where(['order_id' => $order_id, 'pay_amount' => ['neq', 0]])
             ->field('sum(pay_amount) as amount')
             ->find();
-        $payed_price = $paylist['amount'];
+        if($paylist){
+            $payed_price = $paylist['amount'];
+        }else{
+            $payed_price = 0;
+        }
 
 
         $insurance_detail = unserialize($order_info['corporate']);
