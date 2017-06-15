@@ -81,8 +81,8 @@
 
 
     <?php else: ?>
-    <td>Kshs.{$payamount}</td>
-    <td>Kshs.{$initial_balance}</td>
+    <td>Kshs.{$payamount?:0}</td>
+    <td>Kshs.{$initial_balance?:0}</td>
     <?php endif; ?>
     <td>{$discountseals}</td>
   </tr>
