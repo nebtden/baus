@@ -57,7 +57,7 @@ Total: <input type="text" value="" id="payed_all" readonly>
 
         $('input[name="m_pesa"]').change(function () {
             if($(this).val()>0){
-                $('input[name="m_pesa_remark"]').required();
+                $('input[name="m_pesa_remark"]').prop('required',true);
             }
 
         });
