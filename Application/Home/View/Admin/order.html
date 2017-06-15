@@ -148,7 +148,7 @@
                         <?php endif;  ?>
                         <?php endif;  ?>
 
-                        <?php if($vo['order_step']>4 ): ?>
+                        <?php if($vo['order_step']>4 && $vo['order_step']!=12 && $vo['order_step']!=13 ): ?>
                         <?php    $receiptno = unserialize($vo['receiptno']);  ?>
                         <?php  if($receiptno['payment_method']=='insurance_0' or $receiptno['payment_method']=='insurance_1' ){ ?>
 
