@@ -737,7 +737,7 @@ class IndexController extends Controller
             ->where(['order_id' => $order_id, 'pay_amount' => ['neq', 0]])
             ->field('sum(pay_amount) as amount')
             ->find();
-        if($paylist){
+        if($paylist['amount']){
             $payamount = $paylist['amount'];
         }else{
             $payamount = 0;
@@ -934,7 +934,7 @@ class IndexController extends Controller
             ->where(['order_id' => $order_id, 'pay_amount' => ['neq', 0]])
             ->field('sum(pay_amount) as amount')
             ->find();
-        if($paylist){
+        if($paylist['amount']){
             $payed_price = $paylist['amount'];
         }else{
             $payed_price = 0;
@@ -1024,7 +1024,7 @@ class IndexController extends Controller
             ->where(['order_id' => $order_id, 'pay_amount' => ['neq', 0]])
             ->field('sum(pay_amount) as amount')
             ->find();
-        if($paylist){
+        if($paylist['amount']){
             $payed_price = $paylist['amount'];
         }else{
             $payed_price = 0;
