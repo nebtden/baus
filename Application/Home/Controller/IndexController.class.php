@@ -587,7 +587,7 @@ class IndexController extends Controller
         $order_id = I('get.order_id');
         $order_info = M('order_info')->where(['order_id' => $order_id])->find();
 
-        $corporate = $order_info['corporate'];
+        $corporate = unserialize($order_info['corporate']);
         $cash_info =  getLastCashInfo($order_id);
 
         $order_goods_lists = M('order_goods')->where(['order_id' => $order_id])->select();
@@ -1607,6 +1607,8 @@ class IndexController extends Controller
         $condition = $this->getCondition();
         $condition['payment_method'] = ['notin',['m_pesa','eft']];
         $condition['pay_amount'] = ['gt',0];
+
+        unset($condition['order_step'] );
 
         $count = $cash_model->where($condition)->count();
 

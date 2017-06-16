@@ -158,6 +158,12 @@ function getAttrNameById($attr_lists)
 function insertpaidmoney($order_info,$orders_count,$type){
     $payed_money = 0;
     $time = time();
+    $member_id = session('member_id');
+    $member_info = M('member')->where(['member_id' => $member_id])->find();
+
+    // if(($member_info['member_role'] == 2))
+    // {
+    $shop = $member_info['member_shop'];
     if(I('post.cash')){
         $data_cash['order_id'] = $order_info['order_id'];
         $data_cash['order_sn'] = $order_info['order_sn'];
@@ -171,6 +177,7 @@ function insertpaidmoney($order_info,$orders_count,$type){
         $data_cash['cancel_status'] = 0;
         $data_cash['add_time'] = $time;
         $data_cash['type'] = $type;
+        $data_cash['shop'] = $shop;
 
         M('cash')->add($data_cash);
         $payed_money = $payed_money+I('post.cash');
@@ -190,7 +197,7 @@ function insertpaidmoney($order_info,$orders_count,$type){
         $data_cash['cancel_status'] = 0;
         $data_cash['add_time'] = $time;
         $data_cash['type'] = $type;
-
+        $data_cash['shop'] = $shop;
 
         M('cash')->add($data_cash);
         $payed_money = $payed_money+I('post.m_pesa');
@@ -210,6 +217,7 @@ function insertpaidmoney($order_info,$orders_count,$type){
         $data_cash['cancel_status'] = 0;
         $data_cash['add_time'] = $time;
         $data_cash['type'] = $type;
+        $data_cash['shop'] = $shop;
 
         M('cash')->add($data_cash);
         $payed_money = $payed_money+I('post.cheque');
@@ -229,6 +237,7 @@ function insertpaidmoney($order_info,$orders_count,$type){
         $data_cash['cancel_status'] = 0;
         $data_cash['add_time'] = $time;
         $data_cash['type'] = $type;
+        $data_cash['shop'] = $shop;
 
         M('cash')->add($data_cash);
         $payed_money = $payed_money+I('post.eft');
@@ -248,6 +257,7 @@ function insertpaidmoney($order_info,$orders_count,$type){
         $data_cash['cancel_status'] = 0;
         $data_cash['add_time'] = $time;
         $data_cash['type'] = $type;
+        $data_cash['shop'] = $shop;
 
         M('cash')->add($data_cash);
         $payed_money = $payed_money+I('post.eft');
