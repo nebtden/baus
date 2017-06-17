@@ -15,9 +15,6 @@ class TestController extends Controller
 {
 
 
-
-
-
     public function test(){
         $order_info_model = M('order_info');
         $condition = [];
@@ -25,10 +22,9 @@ class TestController extends Controller
         $condition['order_step'] = ['notin', [-1,12,13]];
 
 
-
         $count = $order_info_model->where($condition)->count();
         for($i=0;$i<$count;$i=$i+1000){
-            $list = $order_info_model->where($condition)->field('receiptno,corporate,order_id')->limit($i,1000)->select();
+            $list = $order_info_model->where($condition)->field('receiptno,corporate,order_id,balance,discount')->limit($i,1000)->select();
 
             foreach ($list as $order_info){
                 $receiptno = unserialize($order_info['receiptno']);
@@ -63,10 +59,25 @@ class TestController extends Controller
                     $insurance = 0;
                 }
 
+                $paylist = M('cash')
+                    ->where(['order_id' => $order_info['order_id'], 'pay_amount' => ['neq', 0]])
+                    ->field('sum(pay_amount) as amount')
+
+                    ->find();
+                $payed_amount = $paylist['amount'];
+
                 $update = [];
                 $update['total_amount'] = $receiptno['total_order_amount'];
-                $update['insurance'] = $insurance;
-                $update['type'] = $type;
+                $update['old_insurance'] = $corporate['corporate_amount']?:0;
+                $update['real_insurance'] = $insurance;
+                $update['old_balance'] = $order_info['balance'];
+                $corporate['corporate_amount'] = $insurance;
+                $update['corporate'] = $corporate;
+                $update['balance'] =
+                    $receiptno['total_order_amount']
+                    - $insurance
+                    - $payed_amount
+                    - $order_info['discount'];
 
                 $order_info_model
                     ->where(['order_id'=>$order_info['order_id']])
