@@ -265,7 +265,7 @@ class OrderController extends Controller
         $balance = $order_info['balance'];
         $corporate = unserialize($order_info['corporate']);
 
-        $topup = $receiptno['total_order_amount'] - $payed_total['count'] - $order_info['discount'] - $order_info['balance'] - $insurance;
+        $topup = $receiptno['total_order_amount'] - $payed_total['count'] - $order_info['discount'] - $order_info['allow_balance'] - $insurance;
 
 
         $this->assign('order_info', $order_info);
