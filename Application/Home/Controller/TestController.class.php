@@ -19,12 +19,11 @@ class TestController extends Controller
         $order_info_model = M('order_info');
         $condition = [];
         $condition['total_amount'] = 0;
-        $condition['order_step'] = ['notin', [-1,12,13]];
-
+        $condition['order_step'] = ['in',];
 
         $count = $order_info_model->where($condition)->count();
         for($i=0;$i<$count;$i=$i+1000){
-            $list = $order_info_model->where($condition)->field('receiptno,corporate,order_id,balance,discount')->limit($i,1000)->select();
+            $list = $order_info_model->where($condition)->field('receiptno,corporate,order_id,balance,discount,order_sn,add_time,allow_balance,order_step')->limit($i,1000)->select();
 
             foreach ($list as $order_info){
                 $receiptno = unserialize($order_info['receiptno']);
@@ -43,20 +42,21 @@ class TestController extends Controller
 
                     if($corporate['corporate_status_set']=='proceed'){
 
-                        $insurance = $receiptno['total_order_amount'];
+                        $real_insurance = $receiptno['total_order_amount'];
                     }elseif($corporate['corporate_status_set']=='less approval'){
-                        if($corporate['add_time']<1511366400){
-                            $insurance = $receiptno['total_order_amount'] - $corporate['corporate_amount'];
+
+                        if($corporate['add_time']<1497196800){
+                            $real_insurance = $receiptno['total_order_amount'] - $corporate['corporate_amount'];
                         }else{
-                            $insurance =   $corporate['corporate_amount'];
+                            $real_insurance =   $corporate['corporate_amount'];
                         }
 
                     }else{
-                        $insurance = 0;
+                        $real_insurance = 0;
                     }
 
                 }else{
-                    $insurance = 0;
+                    $real_insurance = 0;
                 }
 
                 $paylist = M('cash')
@@ -64,24 +64,26 @@ class TestController extends Controller
                     ->field('sum(pay_amount) as amount')
 
                     ->find();
-                $payed_amount = $paylist['amount'];
+                $payed_amount = $paylist['amount']?:0;
 
                 $update = [];
-                $update['total_amount'] = $receiptno['total_order_amount'];
-                $update['old_insurance'] = $corporate['corporate_amount']?:0;
-                $update['real_insurance'] = $insurance;
-                $update['old_balance'] = $order_info['balance'];
-                $corporate['corporate_amount'] = $insurance;
-                $update['corporate'] = $corporate;
-                $update['balance'] =
-                    $receiptno['total_order_amount']
-                    - $insurance
-                    - $payed_amount
-                    - $order_info['discount'];
 
-                $order_info_model
-                    ->where(['order_id'=>$order_info['order_id']])
-                    ->save($update);
+                $update['order_id'] = $order_info['order_id'];
+                $update['order_sn'] = $order_info['order_sn'];
+                $update['total_amount'] = $receiptno['total_order_amount']?:0;
+                $update['insurance'] = $corporate['corporate_amount']?:0;
+                $update['admin_set_balance'] = $order_info['allow_balance'];
+                $update['balance'] = $order_info['balance'];
+                $update['paid_money'] = $payed_amount;
+                $update['type'] = $type;
+                $update['discount'] = $order_info['discount'];;
+                $update['insurance_type'] = $corporate['corporate_status_set']?:'';
+                $update['order_step'] = $order_info['order_step'];
+                $update['add_time'] = $order_info['add_time'];
+
+
+
+                M('order_new')->add($update);
 
                 //
             }

@@ -240,7 +240,7 @@ function insertpaidmoney($order_info,$orders_count,$type){
         $data_cash['shop'] = $shop;
 
         M('cash')->add($data_cash);
-        $payed_money = $payed_money+I('post.eft');
+        $payed_money = $payed_money+I('post.card');
     }
 
     //收取买家费用

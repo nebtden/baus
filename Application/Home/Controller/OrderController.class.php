@@ -663,6 +663,13 @@ class OrderController extends Controller
 
         $data_receiptno['total_order_amount'] = $total_order_amount;
 
+//        if(I('post.pay_choice')=='insurance'){
+//            $data['order_step'] = 4;// Insurance Order
+//            $data['balance'] = 0;
+//        }else{
+//            $data['order_step'] = 7;// Cash Order
+//            $data['balance'] = $total_order_amount - $data_receiptno['payment_price'];
+//        }
         if ($data_receiptno['payment_method'] == 'insurance_1' || $data_receiptno['payment_method'] == "insurance_0") {
             $data['order_step'] = 4;// Insurance Order
             $data['balance'] = 0;

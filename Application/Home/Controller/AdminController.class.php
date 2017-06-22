@@ -209,7 +209,7 @@ class AdminController extends Controller
 
 
         $order_id = I('post.order_id');
-
+        $order_info = M('order_info')->where(['order_id' => $order_id])->find();
 
         $balance = I('post.balance');
 
@@ -220,6 +220,7 @@ class AdminController extends Controller
         $updatedata = [];
 
         $updatedata['allow_balance'] = $balance;
+
 
         $result = M('order_info')->where(['order_id' => $order_id])->save($updatedata);
         if ($result) {
