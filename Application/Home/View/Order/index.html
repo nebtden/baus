@@ -212,7 +212,7 @@
 				</div>
 				<div style="min-height:120px;">
 					<div style="height:250px;float:left;width:49.5%">
-						cash/m-pesa/chequ/card/eft:<input type="radio" name="pay_choice" value="cash">
+						cash/m-pesa/chequ/card/eft:<input type="radio" name="pay_choice" value="cash" required>
 						<div id="cash-option" id="class-option" >
 							<include file="Public:paymethod" />
 							<br /><br />
@@ -221,7 +221,7 @@
 						</div>
 					</div>
 					<div style="height:250px;float:right;width:50%">
-						<input name="pay_choice" type="radio" value="insurance" /> Insurance <!-- <input class="mediumfield" style="display:none;" id="insurancetext" name="insurancetext" type="text" value="" /> --><br>
+						<input name="pay_choice" type="radio" value="insurance" required /> Insurance <!-- <input class="mediumfield" style="display:none;" id="insurancetext" name="insurancetext" type="text" value="" /> --><br>
 						<br />
 						<div id="insurance-option" style="display:none;">
 							Customer has a  Smart Card <input name="payment_method" type="radio" value="insurance_1"  required />&nbsp;&nbsp;&nbsp;&nbsp;
@@ -276,6 +276,7 @@
                // $('#payment_price').prop('required', false);
 
 
+                $('.cash').val(0);
                 $('.cash-radio input').removeAttr('checked');
                 //$('.cash-radio input').buttonset('refresh');
 
