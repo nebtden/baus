@@ -107,6 +107,7 @@ class OrderController extends Controller
         }
         //@todo simon.zhang
         $update_data['corporate'] = serialize($data);
+        $update_data['balance'] = $data['corporate_amount'];
         $update_data['is_insurance_checked'] = 1;
 
         //M('order_info')->where(['order_id' => $order_id])->save($update_data);
