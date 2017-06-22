@@ -305,6 +305,8 @@ class OrderController extends Controller
                 $payed_money = insertpaidmoney($order_info, '',2);
                 $total = $receiptno['total_order_amount'];
                 $payed_total = $payed_total['count'];
+
+
                 //检测金额足够
                 if ($total <= $payed_money + $payed_total + $order_info['discount'] + $insurance + $order_info['balance']) {
 
@@ -317,6 +319,7 @@ class OrderController extends Controller
 
                 $update_data['customer_confirm'] = serialize($data);
                 $update_data['order_step'] = 7;
+                $update_data['balance'] = $order_info['balance']-$payed_money;
 
             }
             $result = M('order_info')->where(['order_id' => $order_id])->save($update_data);
