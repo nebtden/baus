@@ -64,6 +64,8 @@ class OrderController extends Controller
         $order_id = I('post.order_id');
         $order_info = M('order_info')->where(['order_id' => $order_id])->find();
 
+        $receiptno = unserialize($order_info['receiptno']);
+        $totol_amount = $receiptno['total_order_amount'];
 
         $data['corporate_status_set'] = I('post.corporate_status_set');
         $data['corporate_amount'] = I('post.corporate_amount');
@@ -107,7 +109,7 @@ class OrderController extends Controller
         }
         //@todo simon.zhang
         $update_data['corporate'] = serialize($data);
-        $update_data['balance'] = $data['corporate_amount'];
+        $update_data['balance'] = $totol_amount-$data['corporate_amount'];
         $update_data['is_insurance_checked'] = 1;
 
         //M('order_info')->where(['order_id' => $order_id])->save($update_data);
