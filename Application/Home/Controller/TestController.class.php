@@ -31,6 +31,7 @@ class TestController extends Controller
                 switch ($receiptno['payment_method']){
                     case  'insurance_0':
                     case  'insurance_1':
+                    case  'insurance':
                         $type = 2;
                         break;
                     default:

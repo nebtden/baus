@@ -397,11 +397,13 @@
                     <tbody>
 
                     <tr>
+                        <?php  if($order_info['order_step']==7){ ?>
                         <td id="show_print_btn"><a
                                 href="{:U('Index/printInternalOrder',array('order_id'=>$order_info['order_id']))}"
                                 style="color:#000; font-weight:700" target="_blank">Click Here To Print Order</a></td>
 
                         <td>
+                            <?php  } ?>
                             Time: <?php if($print_set['add_time'] != '') echo date('Y-m-d H:i:s',$print_set['add_time'])?></td>
 
 

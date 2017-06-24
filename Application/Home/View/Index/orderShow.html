@@ -329,7 +329,7 @@
 
                     <table cellspacing="0" cellpadding="0" border="0"><!-- Table -->
                         <tbody>
-
+                        <?php  if($order_info['order_step']==7){ ?>
                         <tr >
                             <td id="show_print_btn"><a href="{:U('Index/printInternalOrder',array('order_id'=>$order_info['order_id']))}" style="color:#000; font-weight:700" target="_blank">Click Here To Print Order</a></td>
                             <td>Complete Print <br />
@@ -368,7 +368,7 @@
                             </td>
                             <?php endif;?>
                         </tr>
-
+                        <?php  } ?>
                         </tbody></table>
 
                 </fieldset>

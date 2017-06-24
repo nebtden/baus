@@ -1596,6 +1596,7 @@ class IndexController extends Controller
         $shop_lists = M('shops')->select();
         $this->assign('shop_lists', $shop_lists);
         $this->assign('page', $show);
+        $this->assign('a', 'eft_mpesa');
         $this->display('cashConfirm');
     }
 
@@ -1630,6 +1631,7 @@ class IndexController extends Controller
         $shop_lists = M('shops')->select();
         $this->assign('shop_lists', $shop_lists);
         $this->assign('page', $show);
+        $this->assign('a', 'cashConfirm');
         $this->display();
     }
 
