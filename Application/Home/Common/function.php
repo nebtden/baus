@@ -281,14 +281,20 @@ function insertlog($order_id,$log_info){
 
 function getLastCashInfo($order_id){
     $latest_cash_id = M('cash')
-        ->field('max(cash_id) as cash_id,add_time')
+        ->field('max(cash_id) as cash_id')
         ->where(['order_id' => $order_id])
+        ->find();
+
+    $cash_info =M('cash')
+        ->field('add_time')
+        ->where(['cash_id' => $latest_cash_id['cash_id'],
+            ['order_id' => $order_id]])
         ->find();
 
     $cash_info =
             M('cash')
             ->field('sum(pay_amount) as pay_amount')
-            ->where(['add_time' => $latest_cash_id['add_time'],
+            ->where(['add_time' => $cash_info['add_time'],
                 ['order_id' => $order_id]])
             ->find();
     return $cash_info;
