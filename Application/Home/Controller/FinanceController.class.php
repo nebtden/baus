@@ -96,6 +96,8 @@ class FinanceController extends Controller
             $result2 = M('order_info')->where(['order_id'=>$order_id])->save([
                 'is_insurance_topup'=>1
             ]);
+            //增加日志
+            insertlog($order_id,' insurance have get the money');
 
             $model->commit();
         }catch(\Exception $e) {

@@ -573,6 +573,8 @@ class IndexController extends Controller
         M('order_info')->where(['order_id' => $order_id])->save($update_data);
 
         if (M('order_info')->where(['order_id' => $order_id])->save($update_data) !== FALSE) {
+            //增加日志
+            insertlog($order_id,'move next sucesss');
             $this->success('Update success', U('Index/orderShow', array('order_id' => $order_id)));
         } else {
             $this->error('Update fail', U('Index/orderShow', array('order_id' => $order_id)));
@@ -674,6 +676,8 @@ class IndexController extends Controller
             'printdate' => time(),
             'order_step'=>8
         ]);
+
+        insertlog($order_id,'print Internal order sucess ');
     }
 
     /* ====== prints customer order plus their prescription END ====== */
@@ -771,6 +775,7 @@ class IndexController extends Controller
         $this->display();
 
         M('order_info')->where(['order_id' => $order_id])->save(['printdate' => time()]);
+        insertlog($order_id,'print order sucess! ');
     }
 
     /* ====== print cash confirm receipt ====== */
@@ -1154,6 +1159,7 @@ class IndexController extends Controller
         M('order_info')->where(['order_id' => $order_id])->save($update_data); //update customer_confirm
 
         if (M('order_info')->where(['order_id' => $order_id])->save($update_data) !== FALSE) {
+            insertlog($order_id,'clear up sucess! ');
             $this->success('save success', U('Index/viewprintTopUp'));
         } else {
             $this->error('save fail', U('Index/viewprintTopUp'));

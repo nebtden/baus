@@ -115,7 +115,7 @@ class OrderController extends Controller
         //M('order_info')->where(['order_id' => $order_id])->save($update_data);
 
         if (M('order_info')->where(['order_id' => $order_id])->save($update_data) !== FALSE) {
-            //$this->redirect('/Index/index',array('order_step' => 4));
+            insertlog($order_id,'Insurance Approval sucess! ');
             $this->success('save success', U('Index/index', array('order_step' => 4)));
         } else {
             $this->error('save fail', U('Order/insurance', array('order_id' => $order_id)));
@@ -164,6 +164,7 @@ class OrderController extends Controller
         $update_data['warehouse_state'] = serialize($data);
 
         if (M('order_info')->where(['order_id' => $order_id])->save($update_data) !== FALSE) {
+            insertlog($order_id,'warehouse & workshop process sucess! ');
             $this->success('save success', U('Index/index', array('order_step' => 8)));
         } else {
             $this->error('save fail', U('Order/workshop', array('order_id' => $order_id)));
@@ -211,6 +212,7 @@ class OrderController extends Controller
 
 
         if (M('order_info')->where(['order_id' => $order_id])->save($update_data) !== FALSE) {
+            insertlog($order_id,'quality process sucess! ');
             $this->success('save success', U('Index/index', array('order_step' => 9)));
         } else {
             $this->error('save fail', U('Order/quality', array('order_id' => $order_id)));
