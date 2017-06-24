@@ -35,13 +35,12 @@
         <table cellspacing="0" cellpadding="0" border="0"><!-- Table -->
             <form name="formname" method="get" action="" id="search_form">
                 <tr>
-                    <td width="10%"><input class="mediumfield" name="key_words" type="text" value=""/></td>
-                    <?php if($_GET['order_step'] == 5){ ?>
-                    <td width="20%"><input name="is_print" type="checkbox" value="1"
-                                           id="is_print" <?php if($_GET['is_print'] == 1){ echo 'checked';} ?>/> show no
-                        printed only
-                    </td>
-                    <input type="hidden" name="order_step" value="<?php echo $_GET['order_step']; ?>"> <?php } ?>
+                    <input value="Home" name="m" type="hidden" />
+                    <input value="Index" name="c" type="hidden" />
+                    <input value="index" name="a" id="a" type="hidden" />
+                    <td width="10%">
+                        <input class="mediumfield" name="key_words" type="text" value=""/></td>
+
                     <td width="70%"><input class="submit" type="submit" value="Submit"/></td>
                 </tr>
             </form>

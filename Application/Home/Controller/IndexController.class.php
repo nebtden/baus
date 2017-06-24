@@ -127,6 +127,7 @@ class IndexController extends Controller
             $condition['shop'] = session('member_shop');
         }
         $condition['reverse_status'] = 0;
+        $this->assign('order_step', I('get.order_step'));
         return $condition;
     }
 

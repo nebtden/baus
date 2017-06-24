@@ -30,6 +30,7 @@
 				<input value="Home" name="m" type="hidden" />
 				<input value="Index" name="c" type="hidden" />
 				<input value="index" name="a" id="a" type="hidden" />
+				<input value="{$order_step}" name="order_step" id="order_step" type="hidden" />
 				<tr>
 					<td width="10%"><input name="sdate" value="<?php echo $_GET['sdate'];?>" class="laydate-icon" onclick="laydate()"></td>
 					<td width="10%"><input name="edate" value="<?php echo $_GET['edate'];?>" class="laydate-icon" onclick="laydate()"></td>
@@ -61,9 +62,11 @@
 					<td >
 						<input class="submit" type="text" value="Search" onclick="search()" /></td>
 					</td>
+					<?php if($_GET['order_step']){ ?>
 					<td>
 						<input class="submit" type="text" onclick="exportExcel()" value="Export" />
 					</td>
+					<?php  } ?>
 
 				</tr>
 			</form>
