@@ -27,6 +27,13 @@ class AdminController extends Controller
         $order_id = I('get.order_id');
         $loglist = M('admin_log')->where(['order_id' => $order_id])->select();
         $this->assign('loglist', $loglist);
+        if($order_id){
+            $order_info = M('order_info')->where(['order_id' => $order_id])->find();
+            $receiptno = unserialize($order_info['receiptno']);
+            $this->assign('receiptno', $receiptno);
+        }
+
+        $this->assign('loglist', $loglist);
     }
 
     public function getCondition()

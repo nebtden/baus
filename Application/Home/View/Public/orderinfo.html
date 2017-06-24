@@ -39,7 +39,7 @@
 <fieldset>
     <legend><h2>order type</h2></legend>
     <div>
-        <?php if(strstr($receiptno['payment_method'],'insurance')){
+        <?php if($receiptno['payment_method'] && strstr($receiptno['payment_method'],'insurance')){
             echo 'Insurance';
         }else{
             echo 'Cash';
