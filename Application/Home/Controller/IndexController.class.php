@@ -196,11 +196,17 @@ class IndexController extends Controller
 
         $condition = $this->getCondition();
         $order_info_lists = $order_info_model->where($condition)
-            ->field('order_sn,order_id,mobile,consignee,shop,add_time,receiptno,order_step')->order('order_id DESC')->select();
+            ->field('order_sn,order_id,mobile,consignee,shop,add_time,receiptno,order_step')->order('order_id DESC')->limit(1000)->select();
+
         $file = 'Order' . date('YmdHis', time());
         $downloads = dirname(dirname(dirname(dirname(__FILE__)))). DIRECTORY_SEPARATOR.'public' . DIRECTORY_SEPARATOR . 'downs' .DIRECTORY_SEPARATOR. $file . '.csv';
         $fp = fopen($downloads, 'a');
-        $title = ['Order No', 'mobile', 'consignee', 'Shop','Time','Total Price','Status','goods_brand','goods_model_no','goods_number','goods_price','goods_attr'];
+        $title =
+            ['Order No', 'mobile', 'consignee',
+                'Shop','Time','Total Price',
+                'Status','goods_brand','goods_model_no',
+                'goods_number','goods_price','goods_attr'
+            ];
         fputcsv($fp, $title);
 
         $model_goods = M('order_goods');
@@ -217,7 +223,7 @@ class IndexController extends Controller
             $goods_info = $model_goods->where(['order_id'=>$order_info['order_id']])->select();
             foreach ($goods_info as $goods){
                 $column = [];
-                $column['Order No'] = $order_info['order_sn'];
+                $column['Order No'] = '`'.$order_info['order_sn'];
                 $column['mobile'] = $order_info['mobile'];
                 $column['consignee'] = $order_info['consignee'];
                 $column['Shop'] = getShopNameById($order_info['shop']);
@@ -230,7 +236,6 @@ class IndexController extends Controller
                 $column['goods_number'] =  $goods['goods_number'];
                 $column['goods_price'] =  $goods['goods_price'];
                 $column['goods_attr'] =  $goods['goods_attr'];
-
 
             }
 

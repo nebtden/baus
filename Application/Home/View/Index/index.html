@@ -62,11 +62,11 @@
 					<td >
 						<input class="submit" type="text" value="Search" onclick="search()" /></td>
 					</td>
-					<?php if($_GET['order_step']){ ?>
+
 					<td>
 						<input class="submit" type="text" onclick="exportExcel()" value="Export" />
 					</td>
-					<?php  } ?>
+
 
 				</tr>
 			</form>
@@ -189,7 +189,7 @@
             //var url = {:U('Index/exportExcel')};
             $('#a').val('export');
             $("#search_form").attr('target','_blank');
-
+			alert('Order quantity is restricted to 1000, download will open in a new window, please wait');
             $("#search_form").submit();
         }
 
