@@ -199,7 +199,7 @@ class IndexController extends Controller
             ->field('order_sn,order_id,mobile,consignee,shop,add_time,receiptno,order_step')->order('order_id DESC')->limit(1000)->select();
 
         $file = 'Order' . date('YmdHis', time());
-        $downloads = dirname(dirname(dirname(dirname(__FILE__)))). DIRECTORY_SEPARATOR.'public' . DIRECTORY_SEPARATOR . 'downs' .DIRECTORY_SEPARATOR. $file . '.csv';
+        $downloads = dirname(dirname(dirname(dirname(__FILE__)))). DIRECTORY_SEPARATOR.'Public' . DIRECTORY_SEPARATOR . 'downs' .DIRECTORY_SEPARATOR. $file . '.csv';
         $fp = fopen($downloads, 'a');
         $title =
             ['Order No', 'mobile', 'consignee',
