@@ -245,7 +245,7 @@ class IndexController extends Controller
         }
 
         fclose($fp);
-        $downloadurl = 'http://' . $_SERVER['HTTP_HOST'].'/public/downs/' . $file . '.csv';
+        $downloadurl = 'http://' . $_SERVER['HTTP_HOST'].'/Public/downs/' . $file . '.csv';
         $this->success('export success',$downloadurl);
 //        $downloadurl = 'http://' . $_SERVER['HTTP_HOST'].'/public/downs/' . $file . '.csv';
 //        $this->assign('downloadurl',$downloadurl);
