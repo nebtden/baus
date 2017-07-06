@@ -196,7 +196,7 @@ class IndexController extends Controller
 
         $condition = $this->getCondition();
         $order_info_lists = $order_info_model->where($condition)
-            ->field('order_sn,order_id,mobile,consignee,shop,add_time,receiptno,order_step')->order('order_id DESC')->limit(1000)->select();
+            ->field('order_sn,order_id,mobile,consignee,shop,add_time,receiptno,order_step')->order('order_id DESC')->select();
 
         $file = 'Order' . date('YmdHis', time());
         $downloads = dirname(dirname(dirname(dirname(__FILE__)))). DIRECTORY_SEPARATOR.'Public' . DIRECTORY_SEPARATOR . 'downs' .DIRECTORY_SEPARATOR. $file . '.csv';
