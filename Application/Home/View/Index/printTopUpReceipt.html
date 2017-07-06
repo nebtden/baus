@@ -63,7 +63,7 @@
     </table>                               
     <table border="0" cellspacing="0" cellpadding="0" width="100%" class="tabelclass2">
         <tr>
-            <td style="font-size:15px;"><strong>Payment method</strong>:
+            <td style="font-size:15px;"><strong>Order Type</strong>:
                 Cash<?php if($receiptno['payment_method']=="cash" or $receiptno['payment_method']=="combine"){echo '☑';}else{echo '□';}?>
                     
                 Insurance<?php if($receiptno['payment_method']=="insurance_1" || $receiptno['payment_method']=="insurance_0"){echo '☑';}else{echo '□';}?>
@@ -119,7 +119,7 @@
 
     </table>
     <table>
-        <tr>
+        <tr style="font-size: large">
             <td>
                 <strong>
                     Total Amount:Ksh {$total_price};  
@@ -129,6 +129,9 @@
                     {$corporate['corporate_amount']}
                       Total paid:Ksh {$payed_price};
                     Balance:Ksh {$initial_balance}
+
+                </strong>
+                <strong>
                     Current Payment:ksh {$cash_info['pay_amount']}
                 </strong>
 
