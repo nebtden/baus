@@ -85,32 +85,16 @@
         <td>Kshs.{$cash_info['pay_amount']?:0}</td>
 
     </tr>
+    <?php  if($receiptno['payment_method']=="insurance_0" || $receiptno['payment_method']=="insurance_1" ){  ?>
+    <tr >
+        <td colspan="4">
+        Insurance Approved: KSh {$corporate['corporate_amount']}
+        </td>
+    </tr>
+    <?php  } ?>
 </table>
     
-  <!-- Balance Section for remaining balances -->
-  <!-- For Cash Balances -->
 
-    <!-- Insurance Balances if any -->
-    <table>
-        <tr>
-            <td style="font-size: large">
-                <strong >
-                    Total Amount:Ksh {$total_price};  
-                    <?php  if($receiptno['payment_method']=="insurance_0" || $receiptno['payment_method']=="insurance_1" ){  ?>
-                    Insurance Approved: KSh {$corporate['corporate_amount']}
-                    <?php  } ?>
-                      Total paid:Ksh {$payed_price};
-                    Balance:Ksh {$initial_balance}
-
-                </strong>
-                <br>
-                <strong>
-                    Current Payment:ksh {$cash_info['pay_amount']}
-                </strong>
-
-            </td>
-        </tr>
-    </table>
   </div>
 </body>
 </html>
