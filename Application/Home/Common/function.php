@@ -302,9 +302,11 @@ function getLastCashInfo($order_id){
 
 function getLastCashList($order_id){
     $cash_info = M('cash')
-        ->field('max(cash_id) as cash_id,add_time')
+        ->field('max(add_time) as add_time')
         ->where(['order_id' => $order_id])
         ->find();
+//    var_dump($cash_info);
+//    die();
 
     $cash_list =
         M('cash')

@@ -76,7 +76,7 @@
             <td style="font-size: larger">
                 <strong>
                     <?php  foreach($paylist as $pay){?>
-                    <?php echo $pay['payment_method'].':'.$pay['amount']; ?>
+                    <?php echo $pay['payment_method'].':'.$pay['pay_amount']; ?>
                     <?php   if($pay['payment_remark']){
                   echo $pay['payment_remark'];  } ?>
                     <?php  } ?>
