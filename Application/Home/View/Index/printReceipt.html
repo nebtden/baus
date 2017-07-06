@@ -22,10 +22,8 @@
 </head>
 <body>
 <br />
-  <br />
-<div style="float:right;font-size: x-large"><strong>O/N</strong>:<?php echo $order_info['order_sn']; ?></div>
+<div style="float:right;font-size: large"><strong>O/N</strong>:<?php echo $order_info['order_sn']; ?></div>
   <div style="clear:both;"></div>
-  <br />
   <br />
   <div><div style="float:left;"><strong>O/N:Head office Tel:</strong>0723-737272<br>(Hilton Hotel bldg)</div><div style="float:left; padding-left:15%; font-size:18px;">
   <?php if($cash_receipt[0]=='D'): ?>
@@ -43,8 +41,7 @@
       <strong>Card NO.</strong>:<?php echo $distance_info['cardno']?></td>
     <td width="33%"><strong>Stock Source:</strong>central warehouse<br />
       <strong>Date:</strong><?php echo date('Y-m-d H:i:s',$order_info['add_time']);?><br />
-      <strong>P.O.BOX:</strong><?php echo $order_info['address'];?></td>  </tr></table>
-<br />                                        
+      <strong>P.O.BOX:</strong><?php echo $order_info['address'];?></td>  </tr></table>                                   
 <table border="0" cellspacing="0" cellpadding="0" width="100%" class="tabelclass2">
 <tr>
 <td style="font-size:15px;"><strong>Payment method</strong>: Cash<?php if($receiptno['payment_method']=="cash"){echo '☑';}else{echo '□';}?>   M-Pesa<?php if($receiptno['payment_method']=="m-pesa"){echo '☑';}else{echo '□';}?>    Cheque<?php if($receiptno['payment_method']=="cheque"){echo '☑';}else{echo '□';}?>  Card<?php if($receiptno['payment_method']=="card"){echo '☑';}else{echo '□';}?>   Insurance<?php if($receiptno['payment_method']=="insurance_1" || $receiptno['payment_method']=="insurance_0"){echo '☑';}else{echo '□';}?><span style="border-bottom:1px solid #000; padding-left:5px; padding-right:5px; min-width:50px;"><?php if($receiptno['payment_method']=="insurance_1" || $receiptno['payment_method']=="insurance_0"){echo $receiptno['insurancetext'];}else{echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';}?></span></td></tr></table> 

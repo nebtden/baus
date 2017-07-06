@@ -11,7 +11,7 @@
 
             <a href="{:U('Index/index')}" title=""  >All Order</a></span>
 
-            <?php if(($member_group_info['manager'] == 1) ){ ?>
+            <?php if(($member_group_info['manager'] == 1) || ($member_group_info['seller'] == 1)){ ?>
             <a href="{:U('index/topuplist')}" title=""> Top Up</a>
             <?php } ?>
 
