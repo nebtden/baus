@@ -38,15 +38,13 @@
       <strong>P.O.BOX:</strong></td>  </tr></table>                                    
 <table border="0" cellspacing="0" cellpadding="0" width="100%" class="tabelclass2">
   <tr>
-    <td style="font-size:15px;"><strong>Order Type</strong>: Cash<?php if($receiptno['payment_method']=="cash" || $receiptno['payment_method']=="combine"){echo '☑';}else{echo '□';}?>     Insurance<?php if($receiptno['payment_method']=="insurance_1" || $receiptno['payment_method']=="insurance_0" || $receiptno['payment_method']=="insurance"){echo '☑';}else{echo '□';}?><span style="border-bottom:1px solid #000; padding-left:5px; padding-right:5px; min-width:50px;"><?php if($receiptno['payment_method']=="insurance_1" || $receiptno['payment_method']=="insurance_0"){echo $receiptno['insurancetext'];}else{echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';}?></span></td></tr></table> 
-
-<table class="" >
+    <td style="font-size:15px;"><strong>Order Type</strong>: Cash<?php if($receiptno['payment_method']=="cash" || $receiptno['payment_method']=="combine"){echo '☑';}else{echo '□';}?>     Insurance<?php if($receiptno['payment_method']=="insurance_1" || $receiptno['payment_method']=="insurance_0" || $receiptno['payment_method']=="insurance"){echo '☑';}else{echo '□';}?><span style="border-bottom:1px solid #000; padding-left:5px; padding-right:5px; min-width:50px;"><?php if($receiptno['payment_method']=="insurance_1" || $receiptno['payment_method']=="insurance_0"){echo $receiptno['insurancetext'];}else{echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';}?></span></td></tr></table>
+<table class="" border="0" cellspacing="0" cellpadding="0" style="padding-bottom: 15px;">
   <tr>
     <td style="font-size: larger">
       <strong>
         <?php  foreach($paylist as $pay){?>
         <?php echo $pay['payment_method'].':'.$pay['amount']; ?>
-
         <?php   if($pay['payment_remark']){
                   echo $pay['payment_remark'];  } ?>
         <?php  } ?>
