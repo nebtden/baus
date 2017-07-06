@@ -74,6 +74,21 @@
         </td>
     </tr>
 </table>
+
+<table class="" border="0" cellspacing="0" cellpadding="0" style="padding-bottom: 15px;">
+    <tr>
+        <td style="font-size: larger">
+            <strong>
+                <?php  foreach($paylist as $pay){?>
+                <?php echo $pay['payment_method'].':'.$pay['amount']; ?>
+                <?php   if($pay['payment_remark']){
+              echo $pay['payment_remark'];  } ?>
+                <?php  } ?>
+            </strong>
+        </td>
+    </tr>
+</table>
+
  
 <table border="0" cellspacing="0" cellpadding="0" class="tabelclass">
     <tr>
@@ -109,7 +124,7 @@
         <td><strong>Current Payment</strong></td>
     </tr>
     <tr>
-        <td>&nbsp; Ksh. {$total_price}</td>
+        <td>Kshs. {$total_price}</td>
         <td>Kshs.{$payed_price?:0}</td>
         <td>Kshs.{$initial_balance}</td>
         <td>Kshs.{$cash_info['pay_amount']?:0}</td>
