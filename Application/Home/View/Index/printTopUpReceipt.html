@@ -116,29 +116,16 @@
 
 
         </tr>
-
-    </table>
-    <table>
-        <tr style="font-size: large">
-            <td>
-                <strong>
-                    Total Amount:Ksh {$total_price};  
-                    <?php  if($receiptno['payment_method']=="insurance_0" || $receiptno['payment_method']=="insurance_1" ){  ?>
-                    Insurance Approved: KSh {$corporate['corporate_amount']}
-                    <?php  } ?>
-                    {$corporate['corporate_amount']}
-                      Total paid:Ksh {$payed_price};
-                    Balance:Ksh {$initial_balance}
-
-                </strong>
-                <br>
-                <strong>
-                    Current Payment:ksh {$cash_info['pay_amount']}
-                </strong>
-
+        <?php  if($receiptno['payment_method']=="insurance_0" || $receiptno['payment_method']=="insurance_1" ){  ?>
+        <tr >
+            <td colspan="4">
+                Insurance Approved: KSh {$corporate['corporate_amount']}
             </td>
         </tr>
+        <?php  } ?>
+
     </table>
+
 </div>
 </body>
 </html>
