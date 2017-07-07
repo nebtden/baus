@@ -80,9 +80,9 @@
         <td style="font-size: larger">
             <strong>
                 <?php  foreach($paylist as $pay){?>
-                <?php echo $pay['payment_method'].':'.$pay['pay_amount']; ?>
+                <?php echo $pay['payment_method'].':'.$pay['amount']; ?>
                 <?php   if($pay['payment_remark']){
-              echo $pay['payment_remark'];  } ?>
+                  echo $pay['payment_remark'];  } ?>
                 <?php  } ?>
             </strong>
         </td>
@@ -121,13 +121,13 @@
 
         <td><strong>Total paid</strong></td>
         <td><strong>Balance</strong></td>
-        <td><strong>Current Payment</strong></td>
+        <td><strong>Discount</strong></td>
     </tr>
     <tr>
         <td>Kshs. {$total_price}</td>
         <td>Kshs.{$payed_price?:0}</td>
         <td>Kshs.{$initial_balance}</td>
-        <td>Kshs.{$cash_info['pay_amount']?:0}</td>
+        <td>{$discountseals}</td>
     </tr>
     <?php  if($receiptno['payment_method']=="insurance_0" || $receiptno['payment_method']=="insurance_1" ){  ?>
     <tr >

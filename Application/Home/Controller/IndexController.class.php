@@ -685,7 +685,11 @@ class IndexController extends Controller
         $this->assign('payed_price', $payed_price);
         $this->assign('initial_balance', $initial_balance);
 
-        $mypaylist = getLastCashList($order_id);
+        $mypaylist = M('cash')
+            ->where(['order_id' => $order_id, 'pay_amount' => ['neq', 0]])
+            ->field('sum(pay_amount) as amount,payment_method,payment_remark')
+            ->group('payment_method')
+            ->select();
         $this->assign('paylist', $mypaylist);
 
         $this->display();
