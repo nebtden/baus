@@ -1,0 +1,17 @@
+<script type="text/javascript">
+
+    $(function () {
+
+        $('.nav').find('a').each(function () {
+            var length_ = $(this).attr('href').length;
+            var mylength= html_decode('__SELF__').substring(0,length_)
+
+            if($(this).attr('href')== mylength){
+                $('.nav').find('a').removeClass('on');
+                $(this).addClass('on');
+            }
+
+        })
+    });
+
+</script>

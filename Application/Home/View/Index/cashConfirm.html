@@ -38,6 +38,7 @@
                 <input value="Home" name="m" type="hidden"/>
                 <input value="index" name="c" type="hidden"/>
                 <input value="{$a}" name="a" type="hidden"/>
+                <input type="hidden" name="reverse_status" value="<?php echo $_GET['reverse_status']; ?>"/>
                 <tr>
                     <td width="10%"><input name="sdate" value="<?php echo $_GET['sdate'];?>" class="laydate-icon"
                                            onclick="laydate()"></td>
@@ -52,7 +53,7 @@
                             <?php if($_GET['member_shop'] == $vo['shop_id']){ echo 'selected';} ?>>{$vo.title}</option>
                         </foreach>
                     </select></td>
-                    <input type="hidden" name="reverse_status" value="<?php echo $_GET['reverse_status']; ?>"/></td>
+                    </td>
                     <td>
 
                         <input class="submit" type="submit" value="Search"/></td>
