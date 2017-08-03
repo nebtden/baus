@@ -220,8 +220,8 @@ class AdminController extends Controller
 
         $balance = I('post.balance');
 
-        if($balance>3000){
-            $this->error('balance > 3000!');
+        if($balance>5000){
+            $this->error('balance > 5000!');
         }
 
         $updatedata = [];
