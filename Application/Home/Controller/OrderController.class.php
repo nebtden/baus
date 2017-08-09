@@ -587,6 +587,7 @@ class OrderController extends Controller
 
 
         $goods_id = I('post.goods_id');
+        $goods_num = I('post.goods_num');
         $goods_info = M('goods')->find($goods_id);
 
         $data['goods_amount'] = $goods_info['goods_price'];
@@ -705,7 +706,7 @@ class OrderController extends Controller
             $data_order_goods['goods_brand'] = $goods_info['goods_brand'];
             $data_order_goods['goods_cat'] = $goods_info['goods_cat'];
             $data_order_goods['goods_number'] = 1; // THIS MAY CHANGE
-            $data_order_goods['goods_price'] = $goods_info['goods_price'];
+            $data_order_goods['goods_price'] = $goods_info['goods_price'] * $goods_num;
 
             $data_order_goods['goods_attr'] = $goods_info['goods_attr'];
             $data_order_goods['goods_remark'] = I('post.goods_remark');

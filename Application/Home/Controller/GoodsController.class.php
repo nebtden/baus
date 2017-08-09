@@ -376,7 +376,12 @@ class GoodsController extends Controller {
             //     $str.=" <td>".getAttrNameById($goods_info['goods_attr'])."</td>";
             // }
                 /* This may change to allow multiple goods */
-            $str.="     <td><input type='radio' name='goods_id' data-attr=".$goods_info['goods_price']." value='".$goods_info['goods_id']."'></td>
+            $str.="     <td>
+         <input type='radio' name='goods_id' data-attr=".$goods_info['goods_price']." value='".$goods_info['goods_id']."'>
+         </td>
+         <td>
+         <input type='number' name='goods_num'   value=1>
+         </td>
                     </tr>";
         }
 
