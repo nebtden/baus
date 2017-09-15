@@ -108,8 +108,11 @@ class OrderController extends Controller
             $update_data['order_step'] = -1; //Cancelled Order
         }
         //@todo simon.zhang
+        //考虑topup的情况
+        $payed_total = M('cash')->field('sum(pay_amount) as count')->where(['order_id' => $order_id, 'pay_amount' => ['neq', 0]])->find();
+
         $update_data['corporate'] = serialize($data);
-        $update_data['balance'] = $totol_amount-$data['corporate_amount'];
+        $update_data['balance'] = $totol_amount-$data['corporate_amount']-$payed_total['count'];
         $update_data['is_insurance_checked'] = 1;
 
         //M('order_info')->where(['order_id' => $order_id])->save($update_data);
