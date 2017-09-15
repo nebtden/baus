@@ -11,7 +11,7 @@
 
             <a href="{:U('Index/index')}" title=""  >All Order</a></span>
 
-            <?php if(($member_group_info['manager'] == 1) ){ ?>
+            <?php if(($member_group_info['manager'] == 1) || ($member_group_info['seller'] == 1)){ ?>
             <a href="{:U('index/topuplist')}" title=""> Top Up</a>
             <?php } ?>
 
@@ -70,14 +70,5 @@
         <!--<a href="/admin/order" class="list on"></a>-->
     </div>
 </div>
+<include file="Public:js"/>
 
-<script type="text/javascript">
-    $(function () {
-        $('.nav').find('a').each(function () {
-            if($(this).attr('href')== html_decode('__SELF__')){
-                $(this).addClass('on');
-            }
-        })
-    });
-
-</script>

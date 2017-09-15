@@ -41,15 +41,13 @@
 </head>
 <body>
 <br/>
-<br/>
-<div style="float:right;"><strong>O/N</strong>:<?php echo $order_info['order_sn']; ?></div>
+<div style="float:right;font-size: large"><strong>O/N</strong>:<?php echo $order_info['order_sn']; ?></div>
 <div style="clear:both;"></div>
-<br/>
 <br/>
 <div>
     <div style="float:left;"><strong>O/N:Head office Tel:</strong>0723-737272<br>(Hilton Hotel bldg)</div>
     <div style="float:left; padding-left:15%; font-size:18px;">
-        <strong>BALANCE RECEIPT <!-- {$cash_info['receipt_no']} --></strong>
+        <strong>TOPUP RECEIPT <!-- {$cash_info['receipt_no']} --></strong>
     </div>
     <div style="clear:both;"></div>
     <table border="0" cellspacing="0" cellpadding="0" width="100%" class="tabelclass2">
@@ -62,11 +60,10 @@
                 <strong>P.O.BOX:</strong><?php echo $order_info['address'];?></td>
               
         </tr>
-    </table>
-    <br/>                                     
+    </table>                               
     <table border="0" cellspacing="0" cellpadding="0" width="100%" class="tabelclass2">
         <tr>
-            <td style="font-size:15px;"><strong>Payment method</strong>:
+            <td style="font-size:15px;"><strong>Order Type</strong>:
                 Cash<?php if($receiptno['payment_method']=="cash" or $receiptno['payment_method']=="combine"){echo '☑';}else{echo '□';}?>
                     
                 Insurance<?php if($receiptno['payment_method']=="insurance_1" || $receiptno['payment_method']=="insurance_0"){echo '☑';}else{echo '□';}?>
@@ -74,6 +71,20 @@
             </td>
         </tr>
     </table>
+    <table class="" border="0" cellspacing="0" cellpadding="0" style="padding-bottom: 15px;">
+        <tr>
+            <td style="font-size: larger">
+                <strong>
+                    <?php  foreach($paylist as $pay){?>
+                    <?php echo $pay['payment_method'].':'.$pay['pay_amount']; ?>
+                    <?php   if($pay['payment_remark']){
+                  echo $pay['payment_remark'];  } ?>
+                    <?php  } ?>
+                </strong>
+            </td>
+        </tr>
+    </table>
+
      
     <table border="0" cellspacing="0" cellpadding="0" class="tabelclass">
         <tr>
@@ -119,25 +130,16 @@
 
 
         </tr>
-
-    </table>
-    <table>
-        <tr>
-            <td>
-                <strong>
-                    Total Amount:Ksh {$total_price};  
-                    <?php  if($receiptno['payment_method']=="insurance_0" || $receiptno['payment_method']=="insurance_1" ){  ?>
-                    Insurance Approved: KSh {$corporate['corporate_amount']}
-                    <?php  } ?>
-                    {$corporate['corporate_amount']}
-                      Total paid:Ksh {$payed_price};
-                    Balance:Ksh {$initial_balance}
-                    Current Payment:ksh {$cash_info['pay_amount']}
-                </strong>
-
+        <?php  if($receiptno['payment_method']=="insurance_0" || $receiptno['payment_method']=="insurance_1" ){  ?>
+        <tr >
+            <td colspan="4">
+                Insurance Approved: KSh {$corporate['corporate_amount']}
             </td>
         </tr>
+        <?php  } ?>
+
     </table>
+
 </div>
 </body>
 </html>

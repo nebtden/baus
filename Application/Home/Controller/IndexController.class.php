@@ -16,6 +16,14 @@ class IndexController extends Controller
         2=>'Insurance'
     ];
 
+
+    private function lastPaylist($order_id){
+        $paylist = M('cash')
+            ->where(['order_id' => $order_id, 'pay_amount' => ['neq', 0]])
+            ->field('sum(pay_amount) as amount')
+            ->find();
+    }
+
     public function __construct()
     {
         parent::__construct();
@@ -196,10 +204,10 @@ class IndexController extends Controller
 
         $condition = $this->getCondition();
         $order_info_lists = $order_info_model->where($condition)
-            ->field('order_sn,order_id,mobile,consignee,shop,add_time,receiptno,order_step')->order('order_id DESC')->limit(1000)->select();
+            ->field('order_sn,order_id,mobile,consignee,shop,add_time,receiptno,order_step')->order('order_id DESC')->select();
 
         $file = 'Order' . date('YmdHis', time());
-        $downloads = dirname(dirname(dirname(dirname(__FILE__)))). DIRECTORY_SEPARATOR.'public' . DIRECTORY_SEPARATOR . 'downs' .DIRECTORY_SEPARATOR. $file . '.csv';
+        $downloads = dirname(dirname(dirname(dirname(__FILE__)))). DIRECTORY_SEPARATOR.'Public' . DIRECTORY_SEPARATOR . 'downs' .DIRECTORY_SEPARATOR. $file . '.csv';
         $fp = fopen($downloads, 'a');
         $title =
             ['Order No', 'mobile', 'consignee',
@@ -245,7 +253,7 @@ class IndexController extends Controller
         }
 
         fclose($fp);
-        $downloadurl = 'http://' . $_SERVER['HTTP_HOST'].'/public/downs/' . $file . '.csv';
+        $downloadurl = 'http://' . $_SERVER['HTTP_HOST'].'/Public/downs/' . $file . '.csv';
         $this->success('export success',$downloadurl);
 //        $downloadurl = 'http://' . $_SERVER['HTTP_HOST'].'/public/downs/' . $file . '.csv';
 //        $this->assign('downloadurl',$downloadurl);
@@ -676,6 +684,14 @@ class IndexController extends Controller
         $this->assign('total_price', $total_price);
         $this->assign('payed_price', $payed_price);
         $this->assign('initial_balance', $initial_balance);
+
+        $mypaylist = M('cash')
+            ->where(['order_id' => $order_id, 'pay_amount' => ['neq', 0]])
+            ->field('sum(pay_amount) as amount,payment_method,payment_remark')
+            ->group('payment_method')
+            ->select();
+        $this->assign('paylist', $mypaylist);
+
         $this->display();
 
         M('order_info')->where(['order_id' => $order_id])->save([
@@ -855,6 +871,9 @@ class IndexController extends Controller
             $initial_balance = $total_price - $receiptno['payment_price'];
         }
 
+        $paylist =  getLastCashInfo($order_info['order_id']);
+        $this->assign('paylist', $paylist);
+
         $this->assign('cash_receipt', $cash_info['receipt_no'][0]);
         $this->assign('cash_info', $cash_info);
         $this->assign('order_goods_lists', $order_goods_lists);
@@ -881,7 +900,8 @@ class IndexController extends Controller
         $order_info = M('order_info')->where(['order_id' => $order_id])->find();
 
         $cash_info =  getLastCashInfo($order_id);
-
+        $mypaylist =  getLastCashList($order_id);
+        $this->assign('paylist', $mypaylist);
         //print_r($cash_info[0]['receipt_no']);die;
 
         $order_goods_lists = M('order_goods')->where(['order_id' => $order_id])->select();
@@ -970,6 +990,8 @@ class IndexController extends Controller
         $this->assign('total_price', $total_price);
         $this->assign('payed_price', $payed_price);
         $this->assign('initial_balance', $initial_balance);
+
+
         $this->display();
 
         //M('order_info')->where(['order_id'=>$order_id])->save(['printdate'=>time()]);
@@ -1071,6 +1093,11 @@ class IndexController extends Controller
         $this->assign('total_price', $total_price);
         $this->assign('payed_price', $payed_price);
         $this->assign('initial_balance', $initial_balance);
+
+        $mypaylist =  getLastCashList($order_id);
+        $this->assign('paylist', $mypaylist);
+
+
         $this->display();
     }
 

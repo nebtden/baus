@@ -53,7 +53,7 @@
 						<div class="orderinfo_label">
 							 Birthday:
 						</div>
-						<input class="laydate-icon" id="birthday" name="birthday" type="text" value="" onclick="laydate()" required/><br />
+						<input class="laydate-icon" id="birthday" name="birthday" type="text" value="" onclick="laydate()" /><br />
 					</div>
 					<div style="/*border:1px solid green;*/height:100px;float:right;width:50%">
 
@@ -101,6 +101,7 @@
 						<th>Goods Price</th>
 						<th>Goods Color</th>
 						<th>Operate</th>
+						<th>Goods Num</th>
 					</tr>
 					</thead>
 					<tbody id="goods_lists">
@@ -446,8 +447,10 @@
         $(document).on('click',"input:radio[name=goods_id]",function () {
 
             goodsprice = $(this).data('attr');
-
-            goodsprice = goodsprice*1;
+			goodsnum = $(this).closest('tr').find("input[name=goods_num]");
+			console.log(goodsnum);
+			goodsnum = goodsnum*1;
+            goodsprice = goodsprice * goodsnum;
             lengprice = $("#lensprice").val();
             lengprice = lengprice*1;
             $('#final_price').html(String(lengprice*1+goodsprice*1)+'KSH');

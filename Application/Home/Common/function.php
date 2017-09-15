@@ -299,4 +299,20 @@ function getLastCashInfo($order_id){
             ->find();
     return $cash_info;
 }
+
+function getLastCashList($order_id){
+    $cash_info = M('cash')
+        ->field('max(add_time) as add_time')
+        ->where(['order_id' => $order_id])
+        ->find();
+//    var_dump($cash_info);
+//    die();
+
+    $cash_list =
+        M('cash')
+            ->where(['add_time' => $cash_info['add_time'],
+                ['order_id' => $order_id]])
+            ->select();
+    return $cash_list;
+}
 ?>
