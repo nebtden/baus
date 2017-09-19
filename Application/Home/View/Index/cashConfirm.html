@@ -107,7 +107,7 @@
                     <td> <input type="checkbox" name="cash_id" value="{$vo.cash_id}"> </td>
                     <td>{$vo.cash_id}</td>
                     <td><a target="_blank" href="{:U('Index/orderShowOnly',array('order_id'=>$vo['order_id']))}"> {$vo.order_sn}</a></td>
-                    <td><?php echo getShopNameByOrderId($vo['order_id']);?></td>
+                    <td><?php echo getShopNameById($vo['shop']);?></td>
                     <td>{$vo.pay_amount}</td>
                     <td>
                         <?php if($vo['payment_method']=='insurance_0')

@@ -1617,7 +1617,12 @@ class IndexController extends Controller
         $cash_model = M('cash');
 
         $condition = $this->getCondition();
+        $condition['pay_amount'] = ['gt',0];
+        unset($condition['order_step'] );
         $condition['payment_method'] = ['in',['m_pesa','eft']];
+        if(I('get.reverse_status')){
+            $condition['reverse_status'] = I('get.reverse_status');
+        }
 
         $count = $cash_model->where($condition)->count();
 
